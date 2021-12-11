@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { routePaths } from 'src/app/constants/routing.constants';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class MenuComponent implements OnInit {
 
   logout() {
     this.authService.logout().then(() => {
-      this.router.navigateByUrl('/login');
+      this.router.navigateByUrl(routePaths.LOGIN);
     });
   }
 }

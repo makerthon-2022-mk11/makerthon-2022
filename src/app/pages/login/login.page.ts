@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
-import { authErrorCodes } from 'src/app/constants/auth-constants';
+import { authErrorCodes } from 'src/app/constants/auth.constants';
+import { routePaths } from 'src/app/constants/routing.constants';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -54,6 +55,6 @@ export class LoginPage implements OnInit {
   }
 
   navToHome() {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl(routePaths.HOME);
   }
 }
