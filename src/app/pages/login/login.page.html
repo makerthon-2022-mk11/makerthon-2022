@@ -9,15 +9,27 @@
     <img src="../../../../assets/images/totoro.jpeg" />
   </ion-avatar>
 
-  <ion-item class="input">
-    <ion-label position="floating">Email</ion-label>
-    <ion-input placeholder="Enter your email"> </ion-input>
-  </ion-item>
+  <form [formGroup]="loginForm" (submit)="login()" (keyup.enter)="login()">
+    <ion-item class="input">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input formControlName="email" placeholder="Enter your email">
+      </ion-input>
+    </ion-item>
 
-  <ion-item class="input">
-    <ion-label position="floating">Password</ion-label>
-    <ion-input placeholder="Enter your password"> </ion-input>
-  </ion-item>
+    <ion-item class="input">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input
+        type="password"
+        formControlName="password"
+        placeholder="Enter your password"
+      >
+      </ion-input>
+    </ion-item>
 
-  <ion-button expand="block"> Login </ion-button>
+    <div id="formAlert">
+      <ion-text color="danger" *ngIf="errorMsg">{{errorMsg}}</ion-text>
+    </div>
+
+    <ion-button type="submit" expand="block"> Login </ion-button>
+  </form>
 </ion-content>
