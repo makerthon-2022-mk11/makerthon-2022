@@ -29,3 +29,6 @@ npm-debug.log*
 
 # Exclude specs for now
 *.spec.ts
+
+# Exclude credentials stored locally
+/credentials
