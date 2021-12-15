@@ -1,15 +1,11 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Totoro</ion-title>
+    <ion-title>Sign Up</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-avatar>
-    <img src="../../../../assets/images/totoro.jpeg" />
-  </ion-avatar>
-
-  <form [formGroup]="loginForm" (submit)="login()" (keyup.enter)="login()">
+  <form [formGroup]="signUpForm" (submit)="signUp()">
     <ion-item class="input">
       <ion-label position="floating">Email</ion-label>
       <ion-input formControlName="email" placeholder="Enter your email">
@@ -26,27 +22,33 @@
       </ion-input>
     </ion-item>
 
-    <ion-button
-      id="forgotPassword"
-      fill="clear"
-      color="secondary"
-      expand="block"
-    >
-      Forgot Password?
-    </ion-button>
+    <ion-item class="input">
+      <ion-label position="floating">Re enter Password</ion-label>
+      <ion-input
+        type="password"
+        formControlName="reenteredPassword"
+        placeholder="Re enter your password"
+      >
+      </ion-input>
+    </ion-item>
 
     <div id="formAlert">
       <ion-text color="danger" *ngIf="errorMsg">{{errorMsg}}</ion-text>
     </div>
+    <div id="formAlert">
+      <ion-text id="success" color="success" *ngIf="successMsg"
+        >{{successMsg}}</ion-text
+      >
+    </div>
 
-    <ion-button type="submit" expand="block"> Login </ion-button>
+    <ion-button type="submit" expand="block"> Sign Up </ion-button>
   </form>
 
-  <ion-row id="signUp">
+  <ion-row id="login">
     <ion-col size="5">
-      <ion-label>Don't have an account?</ion-label>
-      <ion-button color="secondary" (click)="navToSignUp()" fill="clear">
-        Sign Up
+      <ion-label>Already have an account?</ion-label>
+      <ion-button color="secondary" (click)="navToLogin()" fill="clear">
+        Login
       </ion-button>
     </ion-col>
   </ion-row>

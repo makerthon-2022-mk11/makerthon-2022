@@ -34,8 +34,12 @@ export class LoginPage implements OnInit {
       this.authService
         .login(email, password)
         .then(() => {
-          if (this.authService.isLoggedIn) {
+          if (!this.authService.isVerified) {
+            this.errorMsg =
+              'Email is not verified. Please check your email account and verify this email before logging in again.';
+          } else if (this.authService.isLoggedIn) {
             this.navToHome();
+          } else {
           }
         })
         .catch((err: FirebaseError) => {
@@ -45,6 +49,12 @@ export class LoginPage implements OnInit {
               break;
             case authErrorCodes.WRONG_PASSWORD:
               this.errorMsg = 'The password is incorrect';
+              break;
+            case authErrorCodes.USER_DISABLED:
+              this.errorMsg = 'This account has been disabled';
+              break;
+            case authErrorCodes.USER_NOT_FOUND:
+              this.errorMsg = 'This user is not found';
               break;
             default:
               this.errorMsg =
@@ -59,7 +69,6 @@ export class LoginPage implements OnInit {
   }
 
   navToSignUp() {
-    console.log('signed up');
     this.router.navigateByUrl(routePaths.SIGNUP);
   }
 

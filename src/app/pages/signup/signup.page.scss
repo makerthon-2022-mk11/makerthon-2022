@@ -1,0 +1,35 @@
+.input {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#formAlert,
+#success {
+  margin: 2% auto;
+  width: 80%;
+  font-size: small;
+}
+
+ion-button {
+  width: 80%;
+  margin: 8% auto;
+}
+
+#login {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  ion-button {
+    width: fit-content;
+    margin: 0 auto;
+    vertical-align: middle;
+    font-size: small;
+  }
+
+  ion-label {
+    height: fit-content;
+    vertical-align: middle;
+    font-size: small;
+  }
+}

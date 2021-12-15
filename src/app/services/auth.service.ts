@@ -23,6 +23,16 @@ export class AuthService {
     return user !== null;
   }
 
+  get isVerified(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const isVerified = user.emailVerified;
+
+    if (isVerified == null) {
+      return false;
+    }
+    return isVerified;
+  }
+
   login(email, password) {
     return this.ngFireAuth.signInWithEmailAndPassword(email, password);
   }
@@ -31,5 +41,13 @@ export class AuthService {
     return this.ngFireAuth.signOut().then(() => {
       localStorage.removeItem('user');
     });
+  }
+
+  signUp(email, password) {
+    return this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+  }
+
+  async sendEmailVerification() {
+    return (await this.ngFireAuth.currentUser).sendEmailVerification();
   }
 }
