@@ -25,6 +25,14 @@
       >
       </ion-input>
     </ion-item>
+    <ion-button
+      id="forgotPassword"
+      fill="clear"
+      color="secondary"
+      expand="block"
+    >
+      Forgot Password?
+    </ion-button>
 
     <div id="formAlert">
       <ion-text color="danger" *ngIf="errorMsg">{{errorMsg}}</ion-text>
@@ -32,4 +40,14 @@
 
     <ion-button type="submit" expand="block"> Login </ion-button>
   </form>
+
+  <ion-row id="signUp">
+    <ion-col size="5">
+      <ion-label>Don't have an account?</ion-label>
+
+      <ion-button color="secondary" (click)="navToSignUp()" fill="clear">
+        Sign Up
+      </ion-button>
+    </ion-col>
+  </ion-row>
 </ion-content>

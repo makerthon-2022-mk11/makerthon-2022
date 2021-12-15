@@ -57,4 +57,13 @@ export class LoginPage implements OnInit {
   navToHome() {
     this.router.navigateByUrl(routePaths.HOME);
   }
+
+  navToSignUp() {
+    console.log('signed up');
+    this.router.navigateByUrl(routePaths.SIGNUP);
+  }
+
+  navToPasswordReset() {
+    console.log('reset password');
+  }
 }
