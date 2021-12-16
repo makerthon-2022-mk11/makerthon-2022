@@ -64,11 +64,13 @@ export class SignUpPage implements OnInit {
                 'There is a problem signing up, please try again later';
           }
         })
-        .then(() => {
-          this.authService.sendEmailVerification();
-          this.successMsg =
-            'Account Successfully created! Please check your email account and verify your email before loggin in.';
-          this.errorMsg = '';
+        .then((userCredential) => {
+          if (userCredential != null) {
+            this.authService.sendEmailVerification();
+            this.successMsg =
+              'Account Successfully created! Please check your email account and verify your email before loggin in.';
+            this.errorMsg = '';
+          }
         });
     }
   }
