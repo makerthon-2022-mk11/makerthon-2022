@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { FirebaseError } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
@@ -49,5 +50,9 @@ export class AuthService {
 
   async sendEmailVerification() {
     return (await this.ngFireAuth.currentUser).sendEmailVerification();
+  }
+
+  resetPassword(email): Promise<void> {
+    return this.ngFireAuth.sendPasswordResetEmail(email);
   }
 }

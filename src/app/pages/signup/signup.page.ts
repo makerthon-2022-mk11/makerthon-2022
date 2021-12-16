@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
+import { authErrorMessages } from 'src/app/constants/auth-errors.constants';
 import { authErrorCodes } from 'src/app/constants/auth.constants';
 import { routePaths } from 'src/app/constants/routing.constants';
 import { AuthService } from 'src/app/services/auth.service';
@@ -46,18 +47,17 @@ export class SignUpPage implements OnInit {
           this.successMsg = '';
           switch (err.code) {
             case authErrorCodes.EMAIL_EXISTS:
-              this.errorMsg =
-                'This email is already associated with an account. Try logging in instead.';
+              this.errorMsg = authErrorMessages.EMAIL_EXISTS;
               break;
             case authErrorCodes.INVALID_EMAIL:
-              this.errorMsg =
-                'Email entered is invalid. Please try a different email.';
+              this.errorMsg = authErrorMessages.INVALID_EMAIL;
               break;
             case authErrorCodes.EMAIL_PASSWORD_ACCOUNTS_DISABLED:
-              this.errorMsg = 'Email/Password accounts are not enabled.';
+              this.errorMsg =
+                authErrorMessages.EMAIL_PASSWORD_ACCOUNTS_DISABLED;
               break;
             case authErrorCodes.WEAK_PASSWORD:
-              this.errorMsg = 'Password should be at least 6 characters long.';
+              this.errorMsg = authErrorMessages.WEAK_PASSWORD;
               break;
             default:
               this.errorMsg =

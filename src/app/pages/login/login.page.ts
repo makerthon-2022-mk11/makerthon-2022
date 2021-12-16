@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
+import { authErrorMessages } from 'src/app/constants/auth-errors.constants';
 import { authErrorCodes } from 'src/app/constants/auth.constants';
 import { routePaths } from 'src/app/constants/routing.constants';
 import { AuthService } from 'src/app/services/auth.service';
@@ -45,16 +46,16 @@ export class LoginPage implements OnInit {
         .catch((err: FirebaseError) => {
           switch (err.code) {
             case authErrorCodes.INVALID_EMAIL:
-              this.errorMsg = 'Please enter a valid email';
+              this.errorMsg = authErrorMessages.INVALID_EMAIL;
               break;
             case authErrorCodes.WRONG_PASSWORD:
-              this.errorMsg = 'The password is incorrect';
+              this.errorMsg = authErrorMessages.WRONG_PASSWORD;
               break;
             case authErrorCodes.USER_DISABLED:
-              this.errorMsg = 'This account has been disabled';
+              this.errorMsg = authErrorMessages.USER_DISABLED;
               break;
             case authErrorCodes.USER_NOT_FOUND:
-              this.errorMsg = 'This user is not found';
+              this.errorMsg = authErrorMessages.USER_NOT_FOUND;
               break;
             default:
               this.errorMsg =
@@ -72,7 +73,25 @@ export class LoginPage implements OnInit {
     this.router.navigateByUrl(routePaths.SIGNUP);
   }
 
-  navToPasswordReset() {
-    console.log('reset password');
+  resetPassword() {
+    const email = this.loginForm.controls.email.value;
+
+    this.authService
+      .resetPassword(email)
+      .catch((err: FirebaseError) => {
+        switch (err.code) {
+          case authErrorCodes.INVALID_EMAIL:
+            this.errorMsg = authErrorMessages.INVALID_EMAIL;
+          case authErrorCodes.USER_NOT_FOUND:
+            this.errorMsg = authErrorMessages.USER_NOT_FOUND;
+          default:
+            this.errorMsg =
+              'There is a problem resetting your password, please try again later';
+        }
+      })
+      .then(() => {
+        this.errorMsg =
+          'An email has been sent to your email account, please reset your email there';
+      });
   }
 }
