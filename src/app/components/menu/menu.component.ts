@@ -9,6 +9,17 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
+  pages = [
+    {
+      name: 'Home',
+      path: routePaths.HOME,
+    },
+    {
+      name: 'Upload',
+      path: routePaths.UPLOAD,
+    },
+  ];
+
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {}
