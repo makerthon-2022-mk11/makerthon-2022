@@ -8,8 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
-import { authErrorMessages } from 'src/app/constants/auth-errors.constants';
-import { authErrorCodes } from 'src/app/constants/auth.constants';
+import { authErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
 import { routePaths } from 'src/app/constants/routing.constants';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -104,18 +103,9 @@ export class SignUpPage implements OnInit {
             'Account successfully created! Please check your email account and verify your email before logging in.';
         })
         .catch((err: FirebaseError) => {
-          switch (err.code) {
-            case authErrorCodes.EMAIL_EXISTS:
-              this.errorMsg = authErrorMessages.EMAIL_EXISTS;
-              break;
-            case authErrorCodes.EMAIL_PASSWORD_ACCOUNTS_DISABLED:
-              this.errorMsg =
-                authErrorMessages.EMAIL_PASSWORD_ACCOUNTS_DISABLED;
-              break;
-            default:
-              this.errorMsg =
-                'There is a problem signing up, please try again later';
-          }
+          this.errorMsg =
+            authErrorCodeToMessageMap.get(err.code) ??
+            'There is a problem signing up, please try again later';
         });
     }
   }
