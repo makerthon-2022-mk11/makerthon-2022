@@ -28,8 +28,8 @@ export class LoginPage implements OnInit {
   ngOnInit() {}
 
   login() {
-    const email = this.loginForm.controls.email.value;
-    const password = this.loginForm.controls.password.value;
+    let email = this.loginForm.controls.email.value;
+    let password = this.loginForm.controls.password.value;
 
     if (email && password) {
       this.authService
@@ -39,6 +39,10 @@ export class LoginPage implements OnInit {
             this.errorMsg =
               'Email is not verified. Please check your email account and verify this email before logging in again.';
           } else if (this.authService.isLoggedIn) {
+            this.loginForm = new FormGroup({
+              email: new FormControl(''),
+              password: new FormControl(''),
+            });
             this.navToHome();
           } else {
           }
