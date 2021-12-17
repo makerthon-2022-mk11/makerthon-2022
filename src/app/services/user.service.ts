@@ -17,7 +17,7 @@ export class UserService {
     });
   }
 
-  private getUser(uid: String) {
+  private getUser(uid: string) {
     this.storeService
       .getSnapshotChange(this.dbPath, (ref) =>
         ref.where('uid', '==', uid).limit(1)

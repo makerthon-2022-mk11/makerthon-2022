@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
-  errorMsg: String;
+  errorMsg: string;
   isSubmitted: boolean;
 
   validationMsgs = {

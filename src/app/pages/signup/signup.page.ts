@@ -19,8 +19,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SignUpPage implements OnInit {
   signUpForm: FormGroup;
-  errorMsg: String;
-  successMsg: String;
+  errorMsg: string;
+  successMsg: string;
   isSubmitted: boolean;
 
   validationMsgs = {
