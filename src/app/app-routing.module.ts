@@ -20,6 +20,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
   },
+  {
+    path: 'upload',
+    loadChildren: () =>
+      import('./pages/upload/upload.module').then((m) => m.UploadPageModule),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
