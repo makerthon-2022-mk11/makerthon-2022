@@ -6,7 +6,7 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: routePaths.HOME,
     pathMatch: 'full',
   },
   {
@@ -24,6 +24,12 @@ const routes: Routes = [
     path: routePaths.SIGNUP,
     loadChildren: () =>
       import('./pages/signup/signup.module').then((m) => m.SignUpPageModule),
+  },
+  {
+    path: routePaths.UPLOAD,
+    loadChildren: () =>
+      import('./pages/upload/upload.module').then((m) => m.UploadPageModule),
+    canActivate: [AuthGuard],
   },
 ];
 
