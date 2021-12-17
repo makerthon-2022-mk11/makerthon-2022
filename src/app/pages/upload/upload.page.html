@@ -14,7 +14,7 @@
       required
     ></ion-textarea>
 
-    <ion-list *ngFor="let validation of errMessages.textContent">
+    <ion-list *ngFor="let validation of validationMsgs.textContent">
       <div
         class="form-msg"
         *ngIf="isSubmitted && controls.textContent.getError(validation.type)"

@@ -12,6 +12,15 @@
       </ion-input>
     </ion-item>
 
+    <ion-list *ngFor="let validation of validationMsgs.email">
+      <div
+        class="form-msg"
+        *ngIf="isSubmitted && controls.email.getError(validation.type)"
+      >
+        <ion-text color="danger">{{ validation.message }}</ion-text>
+      </div>
+    </ion-list>
+
     <ion-item class="input">
       <ion-label position="floating">Password</ion-label>
       <ion-input
@@ -22,15 +31,33 @@
       </ion-input>
     </ion-item>
 
+    <ion-list *ngFor="let validation of validationMsgs.password">
+      <div
+        class="form-msg"
+        *ngIf="isSubmitted && controls.password.getError(validation.type)"
+      >
+        <ion-text color="danger">{{ validation.message }}</ion-text>
+      </div>
+    </ion-list>
+
     <ion-item class="input">
       <ion-label position="floating">Re enter Password</ion-label>
       <ion-input
         type="password"
-        formControlName="reenteredPassword"
+        formControlName="passwordConfirmation"
         placeholder="Re enter your password"
       >
       </ion-input>
     </ion-item>
+
+    <ion-list *ngFor="let validation of validationMsgs.passwordConfirmation">
+      <div
+        class="form-msg"
+        *ngIf="isSubmitted && controls.passwordConfirmation.getError(validation.type)"
+      >
+        <ion-text color="danger">{{ validation.message }}</ion-text>
+      </div>
+    </ion-list>
 
     <div id="formAlert">
       <ion-text color="danger" *ngIf="errorMsg">{{errorMsg}}</ion-text>

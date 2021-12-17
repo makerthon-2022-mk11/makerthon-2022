@@ -13,7 +13,7 @@ export class UploadPage implements OnInit {
   errorMsg: string;
   isSubmitted: boolean;
 
-  errMessages = {
+  validationMsgs = {
     textContent: [{ type: 'required', message: 'Text is required.' }],
   };
 

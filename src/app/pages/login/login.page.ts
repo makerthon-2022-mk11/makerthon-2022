@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { authErrorMessages } from 'src/app/constants/auth-errors.constants';
@@ -15,43 +15,53 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
   errorMsg: String;
+  isSubmitted: boolean;
+
+  validationMsgs = {
+    email: [
+      { type: 'required', message: 'Email is required.' },
+      { type: 'pattern', message: 'Please enter a valid email' },
+    ],
+    password: [{ type: 'required', message: 'Password is required' }],
+  };
 
   constructor(private authService: AuthService, private router: Router) {
     this.loginForm = new FormGroup({
-      email: new FormControl(''),
-      password: new FormControl(''),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
+      ]),
+      password: new FormControl('', Validators.required),
     });
 
     this.errorMsg = '';
+    this.isSubmitted = false;
   }
 
   ngOnInit() {}
 
   login() {
-    let email = this.loginForm.controls.email.value;
-    let password = this.loginForm.controls.password.value;
+    this.isSubmitted = true;
 
-    if (email && password) {
+    if (this.loginForm.valid) {
+      const email = this.loginForm.controls.email.value;
+      const password = this.loginForm.controls.password.value;
+
       this.authService
         .login(email, password)
         .then(() => {
+          this.isSubmitted = false;
+
           if (!this.authService.isVerified) {
             this.errorMsg =
               'Email is not verified. Please check your email account and verify this email before logging in again.';
           } else if (this.authService.isLoggedIn) {
-            this.loginForm = new FormGroup({
-              email: new FormControl(''),
-              password: new FormControl(''),
-            });
+            this.loginForm.reset();
             this.navToHome();
-          } else {
           }
         })
         .catch((err: FirebaseError) => {
           switch (err.code) {
-            case authErrorCodes.INVALID_EMAIL:
-              this.errorMsg = authErrorMessages.INVALID_EMAIL;
-              break;
             case authErrorCodes.WRONG_PASSWORD:
               this.errorMsg = authErrorMessages.WRONG_PASSWORD;
               break;
@@ -97,5 +107,9 @@ export class LoginPage implements OnInit {
         this.errorMsg =
           'An email has been sent to your email account, please reset your email there';
       });
+  }
+
+  get controls() {
+    return this.loginForm.controls;
   }
 }

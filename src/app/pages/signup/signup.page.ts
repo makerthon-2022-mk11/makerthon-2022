@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { authErrorMessages } from 'src/app/constants/auth-errors.constants';
@@ -16,60 +22,99 @@ export class SignUpPage implements OnInit {
   signUpForm: FormGroup;
   errorMsg: String;
   successMsg: String;
+  isSubmitted: boolean;
+
+  validationMsgs = {
+    email: [
+      { type: 'required', message: 'Email is required.' },
+      { type: 'pattern', message: 'Please enter a valid email' },
+    ],
+    password: [
+      { type: 'required', message: 'Password is required' },
+      {
+        type: 'minlength',
+        message: 'Passwords should have at least 6 characters',
+      },
+    ],
+    passwordConfirmation: [
+      { type: 'required', message: 'Please re-enter your password' },
+      { type: 'notSamePassword', message: 'Passwords do not match' },
+    ],
+  };
 
   constructor(private authService: AuthService, private router: Router) {
-    this.signUpForm = new FormGroup({
-      email: new FormControl(''),
-      password: new FormControl(''),
-      reenteredPassword: new FormControl(''),
-    });
+    this.signUpForm = new FormGroup(
+      {
+        email: new FormControl('', [
+          Validators.required,
+          Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
+        ]),
+        password: new FormControl('', [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
+        passwordConfirmation: new FormControl('', [Validators.required]),
+      },
+      {
+        validators: this.validateSamePassword(
+          'password',
+          'passwordConfirmation'
+        ),
+      }
+    );
     this.errorMsg = '';
     this.successMsg = '';
+    this.isSubmitted = false;
   }
 
   ngOnInit() {}
 
+  validateSamePassword(pwdCtlName, pwdConCtlName): ValidatorFn {
+    return (formGroup: AbstractControl) => {
+      const pwdCtl = formGroup.get(pwdCtlName);
+      const pwdConCtl = formGroup.get(pwdConCtlName);
+
+      if (pwdConCtl.dirty && pwdConCtl.value != pwdCtl.value) {
+        pwdConCtl.setErrors({ notSamePassword: true });
+      } else {
+        pwdConCtl.setErrors(null);
+      }
+
+      return null;
+    };
+  }
+
   signUp() {
-    const email = this.signUpForm.controls.email.value;
-    const password = this.signUpForm.controls.password.value;
-    const reenteredpassword = this.signUpForm.controls.reenteredPassword.value;
+    this.isSubmitted = true;
+    this.successMsg = '';
+    this.errorMsg = '';
 
-    if (password !== reenteredpassword) {
-      this.errorMsg = 'Password and re-entered password do not match.';
-      this.successMsg = '';
-      return;
-    }
+    if (this.signUpForm.valid) {
+      const email = this.signUpForm.controls.email.value;
+      const password = this.signUpForm.controls.password.value;
 
-    if (email && password) {
       this.authService
         .signUp(email, password)
+        .then(() => {
+          this.isSubmitted = false;
+          this.authService.sendEmailVerification();
+          this.signUpForm.reset();
+
+          this.successMsg =
+            'Account successfully created! Please check your email account and verify your email before logging in.';
+        })
         .catch((err: FirebaseError) => {
-          this.successMsg = '';
           switch (err.code) {
             case authErrorCodes.EMAIL_EXISTS:
               this.errorMsg = authErrorMessages.EMAIL_EXISTS;
-              break;
-            case authErrorCodes.INVALID_EMAIL:
-              this.errorMsg = authErrorMessages.INVALID_EMAIL;
               break;
             case authErrorCodes.EMAIL_PASSWORD_ACCOUNTS_DISABLED:
               this.errorMsg =
                 authErrorMessages.EMAIL_PASSWORD_ACCOUNTS_DISABLED;
               break;
-            case authErrorCodes.WEAK_PASSWORD:
-              this.errorMsg = authErrorMessages.WEAK_PASSWORD;
-              break;
             default:
               this.errorMsg =
                 'There is a problem signing up, please try again later';
-          }
-        })
-        .then((userCredential) => {
-          if (userCredential != null) {
-            this.authService.sendEmailVerification();
-            this.successMsg =
-              'Account Successfully created! Please check your email account and verify your email before loggin in.';
-            this.errorMsg = '';
           }
         });
     }
@@ -77,5 +122,9 @@ export class SignUpPage implements OnInit {
 
   navToLogin() {
     this.router.navigateByUrl(routePaths.LOGIN);
+  }
+
+  get controls() {
+    return this.signUpForm.controls;
   }
 }
