@@ -1,4 +1,9 @@
 export type User = {
-  email: String;
-  uid: String;
+  email: string;
+  uid: string;
+};
+
+export type UserPostData = {
+  email: string;
+  uid: string;
 };

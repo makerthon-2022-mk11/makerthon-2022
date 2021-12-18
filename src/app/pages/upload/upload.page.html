@@ -14,14 +14,11 @@
       required
     ></ion-textarea>
 
-    <ion-list *ngFor="let validation of errMessages.textContent">
-      <div
-        class="form-msg"
-        *ngIf="isSubmitted && controls.textContent.getError(validation.type)"
-      >
-        <ion-text color="danger">{{ validation.message }}</ion-text>
-      </div>
-    </ion-list>
+    <app-form-validation
+      [isSubmitted]="isSubmitted"
+      [validations]="validations.textContent"
+      [control]="controls.textContent"
+    ></app-form-validation>
 
     <div class="form-msg">
       <ion-text color="success" *ngIf="successMsg">{{successMsg}}</ion-text>

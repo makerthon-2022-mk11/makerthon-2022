@@ -8,13 +8,14 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Validations } from 'src/app/types/form.types';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-reset-password',
+  templateUrl: './reset-password.page.html',
+  styleUrls: ['./reset-password.page.scss'],
 })
-export class LoginPage implements OnInit {
-  loginForm: FormGroup;
+export class ResetPasswordPage implements OnInit {
+  resetPasswordForm: FormGroup;
   errorMsg: string;
+  successMsg: string;
   isSubmitted: boolean;
 
   validations: Validations = {
@@ -22,7 +23,6 @@ export class LoginPage implements OnInit {
       { type: 'required', message: 'Email is required.' },
       { type: 'pattern', message: 'Please enter a valid email' },
     ],
-    password: [{ type: 'required', message: 'Password is required' }],
   };
 
   constructor(
@@ -33,61 +33,45 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(() => {
-      this.loginForm = new FormGroup({
+      this.resetPasswordForm = new FormGroup({
         email: new FormControl('', [
           Validators.required,
           Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
         ]),
-        password: new FormControl('', Validators.required),
       });
-
       this.errorMsg = '';
+      this.successMsg = '';
       this.isSubmitted = false;
     });
   }
 
-  login() {
+  resetPassword() {
     this.isSubmitted = true;
+    this.successMsg = '';
     this.errorMsg = '';
 
-    if (this.loginForm.valid) {
-      const email = this.loginForm.controls.email.value;
-      const password = this.loginForm.controls.password.value;
+    if (this.resetPasswordForm.valid) {
+      const email = this.resetPasswordForm.controls.email.value;
 
       this.authService
-        .login(email, password)
+        .resetPassword(email)
         .then(() => {
-          this.isSubmitted = false;
-
-          if (!this.authService.isVerified) {
-            this.errorMsg =
-              'Email is not verified. Please check your email account and verify this email before logging in again.';
-          } else {
-            this.loginForm.reset();
-            this.navToHome();
-          }
+          this.successMsg =
+            'An email has been sent to your email account, please reset your password there';
         })
         .catch((err: FirebaseError) => {
           this.errorMsg =
             authErrorCodeToMessageMap.get(err.code) ??
-            'There is a problem logging in, please try again later';
+            'There is a problem resetting your password, please try again later';
         });
     }
   }
 
-  navToHome() {
-    this.router.navigateByUrl(routePaths.HOME);
-  }
-
-  navToSignUp() {
-    this.router.navigateByUrl(routePaths.SIGNUP);
-  }
-
-  navToResetPassword() {
-    this.router.navigateByUrl(routePaths.RESET_PASSWORD);
+  navToLogin() {
+    this.router.navigateByUrl(routePaths.LOGIN);
   }
 
   get controls() {
-    return this.loginForm.controls;
+    return this.resetPasswordForm.controls;
   }
 }

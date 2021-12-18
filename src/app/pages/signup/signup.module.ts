@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { UploadPageRoutingModule } from './upload-routing.module';
+import { SignUpPageRoutingModule } from './signup-routing.module';
 
-import { UploadPage } from './upload.page';
+import { SignUpPage } from './signup.page';
 import { FormValidationComponent } from 'src/app/components/form-validation/form-validation.component';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { FormValidationComponent } from 'src/app/components/form-validation/form
     CommonModule,
     FormsModule,
     IonicModule,
-    UploadPageRoutingModule,
+    SignUpPageRoutingModule,
     ReactiveFormsModule,
   ],
-  declarations: [UploadPage, FormValidationComponent],
+  declarations: [SignUpPage, FormValidationComponent],
 })
-export class UploadPageModule {}
+export class SignUpPageModule {}

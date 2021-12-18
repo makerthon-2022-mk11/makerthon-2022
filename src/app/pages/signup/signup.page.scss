@@ -3,14 +3,11 @@
   margin: 0 auto;
 }
 
-#formAlert {
+#formAlert,
+#success {
   margin: 2% auto;
   width: 80%;
   font-size: small;
-}
-
-ion-title {
-  text-align: center !important;
 }
 
 ion-button {
@@ -18,11 +15,7 @@ ion-button {
   margin: 8% auto;
 }
 
-ion-avatar {
-  margin: 10% auto;
-}
-
-#signUp {
+#login {
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -39,10 +32,4 @@ ion-avatar {
     vertical-align: middle;
     font-size: small;
   }
-}
-
-#forgotPassword {
-  width: fit-content;
-  margin: 0 auto;
-  font-size: x-small;
 }

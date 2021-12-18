@@ -1,4 +1,4 @@
 export type TextPostData = {
-  userRef: String;
-  content: String;
+  userRef: string;
+  content: string;
 };
