@@ -76,18 +76,25 @@ export class LoginPage implements OnInit {
   }
 
   navToHome() {
+    this.resetMsgs();
     this.router.navigateByUrl(routePaths.HOME);
   }
 
   navToSignUp() {
+    this.resetMsgs;
     this.router.navigateByUrl(routePaths.SIGNUP);
   }
 
   navToResetPassword() {
+    this.resetMsgs();
     this.router.navigateByUrl(routePaths.RESET_PASSWORD);
   }
 
   get controls() {
     return this.loginForm.controls;
+  }
+
+  resetMsgs() {
+    this.errorMsg = '';
   }
 }
