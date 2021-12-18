@@ -7,6 +7,8 @@ import { UserService } from './user.service';
 })
 export class AuthService {
   userData: firebase.default.User;
+  isLoggedIn: boolean;
+  isVerified: boolean;
 
   constructor(
     private ngFireAuth: AngularFireAuth,
@@ -15,6 +17,8 @@ export class AuthService {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
+        this.isLoggedIn = user !== null;
+        this.isVerified = user.emailVerified;
         localStorage.setItem('user', JSON.stringify(this.userData));
       } else {
         localStorage.setItem('user', null);
@@ -22,23 +26,14 @@ export class AuthService {
     });
   }
 
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return user !== null;
-  }
-
-  get isVerified(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const isVerified = user.emailVerified;
-
-    if (isVerified == null) {
-      return false;
-    }
-    return isVerified;
-  }
-
   login(email, password) {
-    return this.ngFireAuth.signInWithEmailAndPassword(email, password);
+    return this.ngFireAuth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCred) => {
+        this.userData = userCred.user;
+        this.isLoggedIn = true;
+        this.isVerified = userCred.user.emailVerified;
+      });
   }
 
   logout(): Promise<void> {

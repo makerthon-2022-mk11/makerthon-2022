@@ -42,6 +42,7 @@ export class LoginPage implements OnInit {
 
   login() {
     this.isSubmitted = true;
+    this.errorMsg = '';
 
     if (this.loginForm.valid) {
       const email = this.loginForm.controls.email.value;
@@ -55,7 +56,7 @@ export class LoginPage implements OnInit {
           if (!this.authService.isVerified) {
             this.errorMsg =
               'Email is not verified. Please check your email account and verify this email before logging in again.';
-          } else if (this.authService.isLoggedIn) {
+          } else {
             this.loginForm.reset();
             this.navToHome();
           }
