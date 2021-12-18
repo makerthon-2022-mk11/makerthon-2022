@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { authErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
 import { routePaths } from 'src/app/constants/routing.constants';
@@ -25,19 +25,25 @@ export class ResetPasswordPage implements OnInit {
     ],
   };
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.resetPasswordForm = new FormGroup({
-      email: new FormControl('', [
-        Validators.required,
-        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
-      ]),
-    });
-    this.errorMsg = '';
-    this.successMsg = '';
-    this.isSubmitted = false;
-  }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(() => {
+      this.resetPasswordForm = new FormGroup({
+        email: new FormControl('', [
+          Validators.required,
+          Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
+        ]),
+      });
+      this.errorMsg = '';
+      this.successMsg = '';
+      this.isSubmitted = false;
+    });
+  }
 
   resetPassword() {
     this.isSubmitted = true;

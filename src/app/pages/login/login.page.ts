@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { authErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
 import { routePaths } from 'src/app/constants/routing.constants';
@@ -25,20 +25,26 @@ export class LoginPage implements OnInit {
     password: [{ type: 'required', message: 'Password is required' }],
   };
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.loginForm = new FormGroup({
-      email: new FormControl('', [
-        Validators.required,
-        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
-      ]),
-      password: new FormControl('', Validators.required),
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(() => {
+      this.loginForm = new FormGroup({
+        email: new FormControl('', [
+          Validators.required,
+          Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
+        ]),
+        password: new FormControl('', Validators.required),
+      });
+
+      this.errorMsg = '';
+      this.isSubmitted = false;
     });
-
-    this.errorMsg = '';
-    this.isSubmitted = false;
   }
-
-  ngOnInit() {}
 
   login() {
     this.isSubmitted = true;

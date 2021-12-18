@@ -6,7 +6,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { authErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
 import { routePaths } from 'src/app/constants/routing.constants';
@@ -42,32 +42,38 @@ export class SignUpPage implements OnInit {
     ],
   };
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.signUpForm = new FormGroup(
-      {
-        email: new FormControl('', [
-          Validators.required,
-          Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
-        ]),
-        password: new FormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-        ]),
-        passwordConfirmation: new FormControl('', [Validators.required]),
-      },
-      {
-        validators: this.validateSamePassword(
-          'password',
-          'passwordConfirmation'
-        ),
-      }
-    );
-    this.errorMsg = '';
-    this.successMsg = '';
-    this.isSubmitted = false;
-  }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(() => {
+      this.signUpForm = new FormGroup(
+        {
+          email: new FormControl('', [
+            Validators.required,
+            Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
+          ]),
+          password: new FormControl('', [
+            Validators.required,
+            Validators.minLength(6),
+          ]),
+          passwordConfirmation: new FormControl('', [Validators.required]),
+        },
+        {
+          validators: this.validateSamePassword(
+            'password',
+            'passwordConfirmation'
+          ),
+        }
+      );
+      this.errorMsg = '';
+      this.successMsg = '';
+      this.isSubmitted = false;
+    });
+  }
 
   validateSamePassword(pwdCtlName, pwdConCtlName): ValidatorFn {
     return (formGroup: AbstractControl) => {
