@@ -112,10 +112,16 @@ export class SignUpPage implements OnInit {
   }
 
   navToLogin() {
+    this.resetMsgs();
     this.router.navigateByUrl(routePaths.LOGIN);
   }
 
   get controls() {
     return this.signUpForm.controls;
+  }
+
+  resetMsgs() {
+    this.errorMsg = '';
+    this.successMsg = '';
   }
 }

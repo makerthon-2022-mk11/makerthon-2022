@@ -62,10 +62,16 @@ export class ResetPasswordPage implements OnInit {
   }
 
   navToLogin() {
+    this.resetMsgs();
     this.router.navigateByUrl(routePaths.LOGIN);
   }
 
   get controls() {
     return this.resetPasswordForm.controls;
+  }
+
+  resetMsgs() {
+    this.errorMsg = '';
+    this.successMsg = '';
   }
 }
