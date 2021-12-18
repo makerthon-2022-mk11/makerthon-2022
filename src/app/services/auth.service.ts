@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Auth, authState } from '@angular/fire/auth';
 import {
+  Auth,
+  authState,
   createUserWithEmailAndPassword,
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-} from 'firebase/auth';
+} from '@angular/fire/auth';
 import { User } from '../types/user.types';
 import { UserService } from './user.service';
 
