@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { UploadPageRoutingModule } from './upload-routing.module';
 
 import { UploadPage } from './upload.page';
+import { FormValidationComponent } from 'src/app/components/form-validation/form-validation.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { UploadPage } from './upload.page';
     UploadPageRoutingModule,
     ReactiveFormsModule,
   ],
-  declarations: [UploadPage],
+  declarations: [UploadPage, FormValidationComponent],
 })
 export class UploadPageModule {}

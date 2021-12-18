@@ -16,14 +16,11 @@
       </ion-input>
     </ion-item>
 
-    <ion-list *ngFor="let validation of validationMsgs.email">
-      <div
-        class="form-msg"
-        *ngIf="isSubmitted && controls.email.getError(validation.type)"
-      >
-        <ion-text color="danger">{{ validation.message }}</ion-text>
-      </div>
-    </ion-list>
+    <app-form-validation
+      [isSubmitted]="isSubmitted"
+      [validations]="validations.email"
+      [control]="controls.email"
+    ></app-form-validation>
 
     <ion-item class="input">
       <ion-label position="floating">Password</ion-label>
@@ -35,14 +32,11 @@
       </ion-input>
     </ion-item>
 
-    <ion-list *ngFor="let validation of validationMsgs.password">
-      <div
-        class="form-msg"
-        *ngIf="isSubmitted && controls.password.getError(validation.type)"
-      >
-        <ion-text color="danger">{{ validation.message }}</ion-text>
-      </div>
-    </ion-list>
+    <app-form-validation
+      [isSubmitted]="isSubmitted"
+      [validations]="validations.password"
+      [control]="controls.password"
+    ></app-form-validation>
 
     <ion-button
       id="forgotPassword"

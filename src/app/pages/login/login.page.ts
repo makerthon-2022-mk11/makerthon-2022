@@ -5,6 +5,7 @@ import { FirebaseError } from 'firebase/app';
 import { authErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
 import { routePaths } from 'src/app/constants/routing.constants';
 import { AuthService } from 'src/app/services/auth.service';
+import { Validations } from 'src/app/types/form.types';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginPage implements OnInit {
   errorMsg: string;
   isSubmitted: boolean;
 
-  validationMsgs = {
+  validations: Validations = {
     email: [
       { type: 'required', message: 'Email is required.' },
       { type: 'pattern', message: 'Please enter a valid email' },

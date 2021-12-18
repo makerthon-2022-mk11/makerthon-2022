@@ -1,0 +1,8 @@
+<ion-list *ngFor="let validation of validations">
+  <div
+    class="validation"
+    *ngIf="isSubmitted && control.getError(validation.type)"
+  >
+    <ion-text color="danger">{{ validation.message }}</ion-text>
+  </div>
+</ion-list>

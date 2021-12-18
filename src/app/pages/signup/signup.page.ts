@@ -11,6 +11,7 @@ import { FirebaseError } from 'firebase/app';
 import { authErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
 import { routePaths } from 'src/app/constants/routing.constants';
 import { AuthService } from 'src/app/services/auth.service';
+import { Validations } from 'src/app/types/form.types';
 
 @Component({
   selector: 'app-signup',
@@ -23,7 +24,7 @@ export class SignUpPage implements OnInit {
   successMsg: string;
   isSubmitted: boolean;
 
-  validationMsgs = {
+  validations: Validations = {
     email: [
       { type: 'required', message: 'Email is required.' },
       { type: 'pattern', message: 'Please enter a valid email' },
@@ -37,7 +38,7 @@ export class SignUpPage implements OnInit {
     ],
     passwordConfirmation: [
       { type: 'required', message: 'Please re-enter your password' },
-      { type: 'notSamePassword', message: 'Passwords do not match' },
+      { type: 'notSame', message: 'Passwords do not match' },
     ],
   };
 
@@ -74,7 +75,7 @@ export class SignUpPage implements OnInit {
       const pwdConCtl = formGroup.get(pwdConCtlName);
 
       if (pwdConCtl.dirty && pwdConCtl.value != pwdCtl.value) {
-        pwdConCtl.setErrors({ notSamePassword: true });
+        pwdConCtl.setErrors({ notSame: true });
       } else {
         pwdConCtl.setErrors(null);
       }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TextService } from 'src/app/services/text.service';
+import { Validations } from 'src/app/types/form.types';
 
 @Component({
   selector: 'app-upload',
@@ -13,7 +14,7 @@ export class UploadPage implements OnInit {
   errorMsg: string;
   isSubmitted: boolean;
 
-  validationMsgs = {
+  validations: Validations = {
     textContent: [{ type: 'required', message: 'Text is required.' }],
   };
 
