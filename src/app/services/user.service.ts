@@ -1,20 +1,30 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { User } from '../types/user.types';
+import { User, UserPostData } from '../types/user.types';
 import { StoreService } from './store.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private dbPath = '/users';
+  private dbPath = 'users';
   docId: string;
   user: User;
 
   constructor(ngFireAuth: AngularFireAuth, private storeService: StoreService) {
     ngFireAuth.authState.subscribe((authUser) => {
-      this.getUser(authUser.uid);
+      if (authUser) {
+        this.getUser(authUser.uid);
+      }
     });
+  }
+
+  createUser(userCred: firebase.default.auth.UserCredential) {
+    const postData: UserPostData = {
+      email: userCred.user.email,
+      uid: userCred.user.uid,
+    };
+    this.storeService.post(this.dbPath, postData);
   }
 
   private getUser(uid: string) {

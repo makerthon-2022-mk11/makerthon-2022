@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FirebaseError } from 'firebase/app';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  userData: any;
+  userData: firebase.default.User;
 
-  constructor(private ngFireAuth: AngularFireAuth) {
+  constructor(
+    private ngFireAuth: AngularFireAuth,
+    private userService: UserService
+  ) {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
@@ -45,7 +48,9 @@ export class AuthService {
   }
 
   signUp(email, password) {
-    return this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+    return this.ngFireAuth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCred) => this.userService.createUser(userCred));
   }
 
   async sendEmailVerification() {
