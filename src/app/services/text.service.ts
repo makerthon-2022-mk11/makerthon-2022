@@ -16,7 +16,7 @@ export class TextService {
 
   create(content: string) {
     const postData: TextPostData = {
-      userRef: this.userService.userDocPath,
+      userRef: this.userService.docId,
       content: content,
     };
 
