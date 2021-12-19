@@ -1,58 +1,67 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import {
+  Auth,
+  authState,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
+} from '@angular/fire/auth';
+import { User } from '../types/user.types';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  userData: firebase.default.User;
+  userData: User;
   isLoggedIn: boolean;
   isVerified: boolean;
 
-  constructor(
-    private ngFireAuth: AngularFireAuth,
-    private userService: UserService
-  ) {
-    this.ngFireAuth.authState.subscribe((user) => {
-      if (user) {
-        this.userData = user;
-        this.isLoggedIn = user !== null;
-        this.isVerified = user.emailVerified;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-      } else {
-        localStorage.setItem('user', null);
-      }
-    });
+  constructor(private auth: Auth, private userService: UserService) {
+    if (auth) {
+      authState(this.auth).subscribe((user) => {
+        if (user) {
+          this.userData = user;
+          this.isLoggedIn = user !== null;
+          this.isVerified = user.emailVerified;
+          localStorage.setItem('user', JSON.stringify(this.userData));
+        } else {
+          localStorage.setItem('user', null);
+        }
+      });
+    }
   }
 
   login(email, password) {
-    return this.ngFireAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((userCred) => {
+    return signInWithEmailAndPassword(this.auth, email, password).then(
+      (userCred) => {
         this.userData = userCred.user;
         this.isLoggedIn = true;
         this.isVerified = userCred.user.emailVerified;
-      });
+      }
+    );
   }
 
   logout(): Promise<void> {
-    return this.ngFireAuth.signOut().then(() => {
+    return signOut(this.auth).then(() => {
       localStorage.removeItem('user');
     });
   }
 
   signUp(email, password) {
-    return this.ngFireAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCred) => this.userService.createUser(userCred));
+    return createUserWithEmailAndPassword(this.auth, email, password).then(
+      (userCred) => this.userService.createUser(userCred)
+    );
   }
 
   async sendEmailVerification() {
-    return (await this.ngFireAuth.currentUser).sendEmailVerification();
+    const user = await this.auth.currentUser;
+    return sendEmailVerification(user);
   }
 
   resetPassword(email): Promise<void> {
-    return this.ngFireAuth.sendPasswordResetEmail(email);
+    return sendPasswordResetEmail(this.auth, email);
   }
 }

@@ -1,5 +1,7 @@
 {
   "name": "makerthon-2022",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

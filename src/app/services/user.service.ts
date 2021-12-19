@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Auth, authState, UserCredential } from '@angular/fire/auth';
+import { where } from '@angular/fire/firestore';
 import { User, UserPostData } from '../types/user.types';
 import { StoreService } from './store.service';
 
@@ -11,15 +12,15 @@ export class UserService {
   docId: string;
   user: User;
 
-  constructor(ngFireAuth: AngularFireAuth, private storeService: StoreService) {
-    ngFireAuth.authState.subscribe((authUser) => {
+  constructor(auth: Auth, private storeService: StoreService) {
+    authState(auth).subscribe((authUser) => {
       if (authUser) {
         this.getUser(authUser.uid);
       }
     });
   }
 
-  createUser(userCred: firebase.default.auth.UserCredential) {
+  createUser(userCred: UserCredential) {
     const postData: UserPostData = {
       email: userCred.user.email,
       uid: userCred.user.uid,
@@ -27,15 +28,14 @@ export class UserService {
     this.storeService.post(this.dbPath, postData);
   }
 
-  private getUser(uid: string) {
-    this.storeService
-      .getSnapshotChange(this.dbPath, (ref) =>
-        ref.where('uid', '==', uid).limit(1)
-      )
-      .subscribe((action) => {
-        this.user = action.payload.doc.data() as User;
-        this.docId = action.payload.doc.id;
-      });
+  private async getUser(uid: string) {
+    const snapshot = await this.storeService.getSnapshotChange(
+      this.dbPath,
+      () => where('uid', '==', uid)
+    );
+
+    this.docId = snapshot.id;
+    this.user = snapshot.data() as User;
   }
 
   get userDocPath() {

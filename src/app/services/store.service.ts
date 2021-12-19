@@ -1,34 +1,46 @@
+import { Injectable } from '@angular/core';
 import {
-  AngularFirestore,
-  DocumentChangeAction,
+  addDoc,
+  collection,
   DocumentData,
   DocumentReference,
-  QueryFn,
-} from '@angular/fire/compat/firestore';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+  Firestore,
+  getDocs,
+  query,
+  QueryConstraint,
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StoreService {
-  constructor(private ngFirestore: AngularFirestore) {}
+  constructor(private firestore: Firestore) {}
 
   getSnapshotChanges(
     path: string,
-    queryFn?: QueryFn<DocumentData>
-  ): Observable<DocumentChangeAction<unknown>[]> {
-    return this.ngFirestore.collection(path, queryFn).snapshotChanges();
+    queryFn?: () => QueryConstraint
+  ): Promise<QuerySnapshot<DocumentData>> {
+    let q;
+    if (queryFn) {
+      q = query(collection(this.firestore, path), queryFn());
+    } else {
+      q = collection(this.firestore, path);
+    }
+    return getDocs(q);
   }
 
-  getSnapshotChange(path: string, queryFn: QueryFn<DocumentData>) {
-    return this.getSnapshotChanges(path, queryFn).pipe(
-      map((actions) => (actions.length > 0 ? actions[0] : null))
-    );
+  getSnapshotChange(
+    path: string,
+    queryFn: () => QueryConstraint
+  ): Promise<QueryDocumentSnapshot | null> {
+    return this.getSnapshotChanges(path, queryFn).then((snapshot) => {
+      return snapshot.size > 0 ? snapshot.docs[0] : null;
+    });
   }
 
-  post(path: string, postData: any): Promise<DocumentReference<unknown>> {
-    return this.ngFirestore.collection(path).add(postData);
+  post(path: string, postData: any): Promise<DocumentReference<any>> {
+    return addDoc(collection(this.firestore, path), postData);
   }
 }
