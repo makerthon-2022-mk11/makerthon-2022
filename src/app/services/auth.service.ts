@@ -7,6 +7,8 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
+  user,
 } from '@angular/fire/auth';
 import { User } from '../types/user.types';
 import { UserService } from './user.service';
@@ -50,10 +52,19 @@ export class AuthService {
     });
   }
 
-  signUp(email, password) {
+  signUp(email, password, username) {
     return createUserWithEmailAndPassword(this.auth, email, password).then(
-      (userCred) => this.userService.createUser(userCred)
+      (userCred) => {
+        this.updateUsername(username).then(() =>
+          this.userService.createUser(userCred)
+        );
+      }
     );
+  }
+
+  async updateUsername(username) {
+    const user = await this.auth.currentUser;
+    return updateProfile(user, { displayName: username });
   }
 
   async sendEmailVerification() {
@@ -63,5 +74,9 @@ export class AuthService {
 
   resetPassword(email): Promise<void> {
     return sendPasswordResetEmail(this.auth, email);
+  }
+
+  getUser(): User {
+    return this.auth.currentUser;
   }
 }

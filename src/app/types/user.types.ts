@@ -5,5 +5,6 @@ export type User = {
 
 export type UserPostData = {
   email: string;
+  username: string;
   uid: string;
 };

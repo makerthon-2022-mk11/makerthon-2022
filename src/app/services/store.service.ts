@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   addDoc,
   collection,
+  doc,
   DocumentData,
   DocumentReference,
   Firestore,
@@ -10,6 +11,7 @@ import {
   QueryConstraint,
   QueryDocumentSnapshot,
   QuerySnapshot,
+  updateDoc,
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -42,5 +44,10 @@ export class StoreService {
 
   post(path: string, postData: any): Promise<DocumentReference<any>> {
     return addDoc(collection(this.firestore, path), postData);
+  }
+
+  updateUser(path: string, updateData: any, uid: string): Promise<void> {
+    const docRef = doc(this.firestore, path, uid);
+    return updateDoc(docRef, updateData);
   }
 }

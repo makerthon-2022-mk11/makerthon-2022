@@ -25,6 +25,13 @@ export class SignUpPage implements OnInit {
   isSubmitted: boolean;
 
   validations: Validations = {
+    username: [
+      { type: 'required', message: 'Username is required.' },
+      {
+        type: 'pattern',
+        message: 'Username only allows _ and alphanumeric characters',
+      },
+    ],
     email: [
       { type: 'required', message: 'Email is required.' },
       { type: 'pattern', message: 'Please enter a valid email' },
@@ -52,6 +59,10 @@ export class SignUpPage implements OnInit {
     this.activatedRoute.params.subscribe(() => {
       this.signUpForm = new FormGroup(
         {
+          username: new FormControl('', [
+            Validators.required,
+            Validators.pattern('^[a-zA-z0-9_]+$'),
+          ]),
           email: new FormControl('', [
             Validators.required,
             Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
@@ -98,9 +109,10 @@ export class SignUpPage implements OnInit {
     if (this.signUpForm.valid) {
       const email = this.signUpForm.controls.email.value;
       const password = this.signUpForm.controls.password.value;
+      const username = this.signUpForm.controls.username.value;
 
       this.authService
-        .signUp(email, password)
+        .signUp(email, password, username)
         .then(() => {
           this.isSubmitted = false;
           this.authService.sendEmailVerification();

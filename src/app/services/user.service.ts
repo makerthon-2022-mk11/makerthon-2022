@@ -23,6 +23,7 @@ export class UserService {
   createUser(userCred: UserCredential) {
     const postData: UserPostData = {
       email: userCred.user.email,
+      username: userCred.user.displayName,
       uid: userCred.user.uid,
     };
     this.storeService.post(this.dbPath, postData);

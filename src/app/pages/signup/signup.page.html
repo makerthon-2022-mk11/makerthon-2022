@@ -7,6 +7,18 @@
 <ion-content>
   <form [formGroup]="signUpForm" (submit)="signUp()">
     <ion-item class="input">
+      <ion-label position="floating">Username</ion-label>
+      <ion-input formControlName="username" placeholder="Enter your username">
+      </ion-input>
+    </ion-item>
+
+    <app-form-validation
+      [isSubmitted]="isSubmitted"
+      [validations]="validations.username"
+      [control]="controls.username"
+    ></app-form-validation>
+
+    <ion-item class="input">
       <ion-label position="floating">Email</ion-label>
       <ion-input formControlName="email" placeholder="Enter your email">
       </ion-input>
