@@ -37,8 +37,4 @@ export class UserService {
     this.docId = snapshot.id;
     this.user = snapshot.data() as User;
   }
-
-  get userDocPath() {
-    return `${this.dbPath}/${this.docId}`;
-  }
 }
