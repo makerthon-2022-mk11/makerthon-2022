@@ -9,8 +9,10 @@
   font-size: small;
 }
 
-ion-title {
-  text-align: center !important;
+ion-avatar {
+  margin: 8% auto;
+  width: 40vw;
+  height: 40vw;
 }
 
 ion-button {
@@ -18,8 +20,8 @@ ion-button {
   margin: 8% auto;
 }
 
-ion-avatar {
-  margin: 10% auto;
+ion-title {
+  text-align: center !important;
 }
 
 #signUp {
@@ -44,5 +46,5 @@ ion-avatar {
 #forgotPassword {
   width: fit-content;
   margin: 0 auto;
-  font-size: x-small;
+  font-size: small;
 }
