@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
 import { authErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
 import { routePaths } from 'src/app/constants/routing.constants';
-import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 import { Validations } from 'src/app/types/form.types';
 
 @Component({
@@ -15,6 +15,7 @@ import { Validations } from 'src/app/types/form.types';
 export class EditProfilePage implements OnInit {
   editForm: FormGroup;
   errorMsg: string;
+  successMsg: string;
   isSubmitted: boolean;
 
   validations: Validations = {
@@ -27,7 +28,11 @@ export class EditProfilePage implements OnInit {
     ],
   };
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(() => {
@@ -39,12 +44,34 @@ export class EditProfilePage implements OnInit {
       });
 
       this.errorMsg = '';
+      this.successMsg = '';
       this.isSubmitted = false;
     });
   }
 
-  editProfile() {
+  async editProfile() {
+    this.errorMsg = '';
+    this.successMsg = '';
     const updatedDisplayName = this.editForm.controls.displayName.value;
+
+    const inUse = await this.userService.isDisplayNameAlreadyUsed(
+      updatedDisplayName
+    );
+
+    if (inUse) {
+      this.errorMsg = 'This Username has already been taken';
+    } else {
+      await this.userService
+        .updateDisplayName(updatedDisplayName)
+        .then(() => {
+          this.successMsg = 'Successfully updated your username';
+        })
+        .catch((err: FirebaseError) => {
+          this.errorMsg =
+            authErrorCodeToMessageMap.get(err.code) ??
+            'There is a problem updating your username, please try again later';
+        });
+    }
   }
 
   navToProfile() {

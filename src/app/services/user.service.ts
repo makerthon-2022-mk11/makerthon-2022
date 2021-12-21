@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, authState, UserCredential } from '@angular/fire/auth';
 import { where } from '@angular/fire/firestore';
+import { FirebaseError } from 'firebase/app';
 import { User, UserPostData } from '../types/user.types';
 import { StoreService } from './store.service';
 
@@ -29,8 +30,21 @@ export class UserService {
     this.storeService.post(this.dbPath, postData);
   }
 
-  updateUser(user, updateData: any) {
-    this.storeService.updateUser(this.dbPath, updateData, user.uid);
+  async updateDisplayName(displayName: string) {
+    return await this.storeService.updateDisplayname(
+      this.dbPath,
+      displayName,
+      this.user.uid
+    );
+  }
+
+  async isDisplayNameAlreadyUsed(displayName: string) {
+    const snapshot = await this.storeService.getSnapshotChange(
+      this.dbPath,
+      () => where('displayName', '==', displayName)
+    );
+
+    return snapshot != null;
   }
 
   private async getUser(uid: string) {
@@ -43,7 +57,7 @@ export class UserService {
     this.user = snapshot.data() as User;
   }
 
-  get getUserProfile() {
+  getUserProfile() {
     const displayName = this.user.displayName;
     const email = this.user.email;
     return [displayName, email];
