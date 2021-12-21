@@ -1,15 +1,32 @@
 <ion-content (click)="getImageFromGallery()">
-  <img src="{{previewImgUrl}}" alt="Tap anywhere to upload an image" />
-  <div class="ion-text-center">
+  <div class="ion-text-center instruction">
     <ion-text color="light" *ngIf="hasSelectedImage() && !isUploading" class=""
-      >Tap anywhere to select another photo</ion-text
+      >Tap to select another photo</ion-text
     >
   </div>
+
+  <img src="{{previewImgUrl}}" alt="Tap anywhere to upload an image" />
 </ion-content>
 
-<div id="errorMsg">
-  <ion-text color="danger" *ngIf="errorMsg">{{errorMsg}}</ion-text>
-</div>
+<form *ngIf="hasSelectedImage()">
+  <ion-item class="input ion-no-padding">
+    <ion-label color="dark" position="floating">Title (Optional)</ion-label>
+    <ion-input color="dark" formControlName="title" placeholder="Enter a title">
+    </ion-input>
+  </ion-item>
+
+  <ion-item class="input ion-no-padding">
+    <ion-label color="dark" position="floating"
+      >Description (Optional)</ion-label
+    >
+    <ion-input
+      color="dark"
+      formControlName="description"
+      placeholder="Enter a description"
+    >
+    </ion-input>
+  </ion-item>
+</form>
 
 <ion-button
   *ngIf="hasSelectedImage()"
@@ -17,5 +34,9 @@
   (click)="upload()"
   [disabled]="isUploading"
 >
-  {{uploadButtonValue}}
+  {{uploadButtonText}}
 </ion-button>
+
+<div id="errorMsg">
+  <ion-text color="danger" *ngIf="errorMsg">{{errorMsg}}</ion-text>
+</div>

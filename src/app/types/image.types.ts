@@ -1,9 +1,13 @@
 import { UploadData } from './storage.types';
 
 export type ImagePostData = {
-  fileName?: string;
   storageRef: string;
   userRef: string;
+  title?: string;
+  description?: string;
 };
 
-export type ImageUploadData = UploadData;
+export type ImageUploadData = UploadData & {
+  title?: string;
+  description?: string;
+};

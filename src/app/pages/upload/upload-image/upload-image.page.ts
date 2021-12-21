@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Platform } from '@ionic/angular';
 import { ERR_NO_IMAGE_SELECTED } from 'src/app/constants/upload.contants';
 import { ImageService } from 'src/app/services/image.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { ImageUploadData } from 'src/app/types/image.types';
 import { UploadData } from 'src/app/types/storage.types';
 import { v4 } from 'uuid';
 
@@ -18,7 +20,8 @@ export class UploadImagePage implements OnInit {
   base64ImgUrl: string;
   errorMsg: string;
   isUploading: boolean;
-  uploadButtonValue: string = 'Upload';
+  uploadButtonText: string = 'Upload';
+  uploadForm: FormGroup;
 
   galleryOptions: CameraOptions = {
     quality: 100,
@@ -40,9 +43,16 @@ export class UploadImagePage implements OnInit {
     this.setDefault();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.uploadForm = new FormGroup({
+      title: new FormControl(''),
+      description: new FormControl(''),
+    });
+  }
 
   getImageFromGallery() {
+    this.errorMsg = '';
+
     this.camera
       .getPicture(this.galleryOptions)
       .then((imgData) => {
@@ -64,12 +74,14 @@ export class UploadImagePage implements OnInit {
   upload() {
     if (this.hasSelectedImage()) {
       this.isUploading = true;
-      this.uploadButtonValue = 'Uploading...';
+      this.uploadButtonText = 'Uploading...';
 
       const blob = this.convertBase64ToBlob(this.base64ImgUrl);
-      const uploadData: UploadData = {
+      const uploadData: ImageUploadData = {
         blob: blob,
         fileName: v4(),
+        title: this.uploadForm.controls.title.value ?? undefined,
+        description: this.uploadForm.controls.description.value ?? undefined,
       };
       this.imageService
         .upload(uploadData)
@@ -85,7 +97,7 @@ export class UploadImagePage implements OnInit {
         })
         .finally(() => {
           this.isUploading = false;
-          this.uploadButtonValue = 'Upload';
+          this.uploadButtonText = 'Upload';
         });
     }
   }
