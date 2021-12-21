@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+<<<<<<< HEAD
   constructor() {}
 
   ngOnInit() {}
+=======
+  username: string;
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit() {
+    this.username = this.userService.user.email;
+  }
+>>>>>>> master
 }

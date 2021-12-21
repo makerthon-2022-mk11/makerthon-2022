@@ -6,6 +6,7 @@
 
 <ion-content>
   <form [formGroup]="signUpForm" (submit)="signUp()">
+<<<<<<< HEAD
     <ion-item class="input">
       <ion-label position="floating">Username</ion-label>
       <ion-input
@@ -22,6 +23,9 @@
     ></app-form-validation>
 
     <ion-item class="input">
+=======
+    <ion-item class="input ion-no-padding">
+>>>>>>> master
       <ion-label position="floating">Email</ion-label>
       <ion-input formControlName="email" placeholder="Enter your email">
       </ion-input>
@@ -33,7 +37,7 @@
       [control]="controls.email"
     ></app-form-validation>
 
-    <ion-item class="input">
+    <ion-item class="input ion-no-padding">
       <ion-label position="floating">Password</ion-label>
       <ion-input
         type="password"
@@ -49,7 +53,7 @@
       [control]="controls.password"
     ></app-form-validation>
 
-    <ion-item class="input">
+    <ion-item class="input ion-no-padding">
       <ion-label position="floating">Re enter Password</ion-label>
       <ion-input
         type="password"

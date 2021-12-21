@@ -1,16 +1,16 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Totoro</ion-title>
+    <ion-title>Rody</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-avatar>
-    <img src="../../../../assets/images/totoro.jpeg" />
+    <img src="../../../../assets/images/icon.png" />
   </ion-avatar>
 
   <form [formGroup]="loginForm" (submit)="login()" (keyup.enter)="login()">
-    <ion-item class="input">
+    <ion-item class="input ion-no-padding">
       <ion-label position="floating">Email</ion-label>
       <ion-input formControlName="email" placeholder="Enter your email">
       </ion-input>
@@ -22,7 +22,7 @@
       [control]="controls.email"
     ></app-form-validation>
 
-    <ion-item class="input">
+    <ion-item class="input ion-no-padding">
       <ion-label position="floating">Password</ion-label>
       <ion-input
         type="password"
