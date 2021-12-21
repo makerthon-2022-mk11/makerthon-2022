@@ -75,6 +75,7 @@ export class UploadImagePage implements OnInit {
     if (this.hasSelectedImage()) {
       this.isUploading = true;
       this.uploadButtonText = 'Uploading...';
+      this.errorMsg = '';
 
       const blob = this.convertBase64ToBlob(this.base64ImgUrl);
       const uploadData: ImageUploadData = {
@@ -117,5 +118,6 @@ export class UploadImagePage implements OnInit {
   private setDefault() {
     this.base64ImgUrl = '';
     this.previewImgUrl = '../../../../assets/images/upload-image.png';
+    this.uploadForm && this.uploadForm.reset();
   }
 }

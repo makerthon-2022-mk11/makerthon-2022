@@ -8,7 +8,7 @@
   <img src="{{previewImgUrl}}" alt="Tap anywhere to upload an image" />
 </ion-content>
 
-<form *ngIf="hasSelectedImage()">
+<form [formGroup]="uploadForm" *ngIf="hasSelectedImage()">
   <ion-item class="input ion-no-padding">
     <ion-label color="dark" position="floating">Title (Optional)</ion-label>
     <ion-input color="dark" formControlName="title" placeholder="Enter a title">
