@@ -1,12 +1,28 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Upload</ion-title>
-    <ion-menu-button slot="start" menu="appMenu"></ion-menu-button>
+    <ion-menu-button slot="start" menu="appMenu" color="dark"></ion-menu-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="uploadForm" (ngSubmit)="submit()" novalidate>
+  <ion-tabs>
+    <ion-tab-bar color="primary" slot="top">
+      <ion-tab-button tab="upload-image">
+        <ion-label>Image</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="upload-link">
+        <ion-label>Link</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="upload-text">
+        <ion-label>Text</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+
+  <!-- <form [formGroup]="uploadForm" (ngSubmit)="submit()" novalidate>
     <ion-textarea
       class="input"
       formControlName="textContent"
@@ -31,5 +47,5 @@
     <ion-button type="submit" expand="block">Upload</ion-button>
   </form>
 
-  <app-upload-image></app-upload-image>
+  <app-upload-image></app-upload-image> -->
 </ion-content>

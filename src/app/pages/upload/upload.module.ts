@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { UploadPageRoutingModule } from './upload-routing.module';
 
 import { UploadPage } from './upload.page';
-import { FormValidationComponent } from 'src/app/components/form-validation/form-validation.component';
 import { UploadImageComponent } from 'src/app/components/upload-image/upload-image.component';
+import { FormValidationModule } from 'src/app/components/form-validation/form-validation.module';
 
 @NgModule({
   imports: [
@@ -17,7 +17,8 @@ import { UploadImageComponent } from 'src/app/components/upload-image/upload-ima
     IonicModule,
     UploadPageRoutingModule,
     ReactiveFormsModule,
+    FormValidationModule,
   ],
-  declarations: [UploadPage, FormValidationComponent, UploadImageComponent],
+  declarations: [UploadPage, UploadImageComponent],
 })
 export class UploadPageModule {}
