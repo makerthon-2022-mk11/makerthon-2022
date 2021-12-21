@@ -1,9 +1,40 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>upload-text</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <form [formGroup]="uploadForm" (submit)="upload()" (keyup.enter)="upload()">
+    <ion-item class="input ion-no-padding">
+      <ion-input color="dark" formControlName="text" placeholder="Enter text">
+      </ion-input>
+    </ion-item>
 
+    <app-form-validation
+      [isSubmitted]="isSubmitted"
+      [validations]="validations.text"
+      [control]="controls.text"
+    ></app-form-validation>
+
+    <ion-item class="input ion-no-padding">
+      <ion-input
+        color="dark"
+        formControlName="title"
+        placeholder="Title (optional)"
+      >
+      </ion-input>
+    </ion-item>
+
+    <ion-item class="input ion-no-padding">
+      <ion-input
+        color="dark"
+        formControlName="description"
+        placeholder="Description (optional)"
+      >
+      </ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="isUploading">
+      {{uploadButtonText}}
+    </ion-button>
+
+    <div id="errorMsg">
+      <ion-text color="danger" *ngIf="errorMsg">{{errorMsg}}</ion-text>
+    </div>
+  </form>
 </ion-content>

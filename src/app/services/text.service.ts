@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TextPostData } from '../types/text.types';
+import { TextFormData, TextPostData } from '../types/text.types';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
 
@@ -14,10 +14,10 @@ export class TextService {
     private userService: UserService
   ) {}
 
-  create(content: string) {
+  create(textFormData: TextFormData) {
     const postData: TextPostData = {
+      ...textFormData,
       userRef: this.userService.docId,
-      content: content,
     };
 
     return this.storeService.post(this.dbPath, postData);
