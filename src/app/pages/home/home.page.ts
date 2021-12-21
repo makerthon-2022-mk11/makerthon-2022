@@ -7,11 +7,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-<<<<<<< HEAD
-  constructor() {}
-
-  ngOnInit() {}
-=======
   username: string;
 
   constructor(private userService: UserService) {}
@@ -19,5 +14,4 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.username = this.userService.user.email;
   }
->>>>>>> master
 }
