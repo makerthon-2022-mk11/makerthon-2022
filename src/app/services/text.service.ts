@@ -7,7 +7,7 @@ import { UserService } from './user.service';
   providedIn: 'root',
 })
 export class TextService {
-  private dbPath = '/texts';
+  private dbPath = 'texts';
 
   constructor(
     private storeService: StoreService,

@@ -8,6 +8,7 @@ import { UploadPageRoutingModule } from './upload-routing.module';
 
 import { UploadPage } from './upload.page';
 import { FormValidationComponent } from 'src/app/components/form-validation/form-validation.component';
+import { UploadImageComponent } from 'src/app/components/upload-image/upload-image.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { FormValidationComponent } from 'src/app/components/form-validation/form
     UploadPageRoutingModule,
     ReactiveFormsModule,
   ],
-  declarations: [UploadPage, FormValidationComponent],
+  declarations: [UploadPage, FormValidationComponent, UploadImageComponent],
 })
 export class UploadPageModule {}
