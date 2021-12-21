@@ -10,6 +10,14 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: routePaths.EDIT_PROFILE,
+    loadChildren: () =>
+      import('./pages/edit-profile/edit-profile.module').then(
+        (m) => m.EditProfilePageModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: routePaths.HOME,
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomePageModule),

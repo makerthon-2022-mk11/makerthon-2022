@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Edit Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="editForm" (submit)="editProfile()">
+    <ion-item class="input ion-no-padding">
+      <ion-label position="floating">New Username</ion-label>
+      <ion-input
+        formControlName="displayName"
+        placeholder="Enter your new username"
+      >
+      </ion-input>
+    </ion-item>
+
+    <app-form-validation
+      [isSubmitted]="isSubmitted"
+      [validations]="validations.email"
+      [control]="controls.email"
+    ></app-form-validation>
+
+    <div id="formAlert">
+      <ion-text color="danger" *ngIf="errorMsg">{{errorMsg}}</ion-text>
+    </div>
+    <div id="formAlert">
+      <ion-text id="success" color="success" *ngIf="successMsg"
+        >{{successMsg}}</ion-text
+      >
+    </div>
+
+    <ion-button type="submit" expand="block"> Update </ion-button>
+  </form>
+
+  <ion-row id="profile">
+    <ion-col size="5">
+      <ion-label>Go back to Profile?</ion-label>
+      <ion-button color="secondary" (click)="navToProfile()" fill="clear">
+        Profile
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>
