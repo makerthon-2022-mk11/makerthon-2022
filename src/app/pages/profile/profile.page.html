@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Profile</ion-title>
+    <ion-menu-button slot="start" menu="appMenu"></ion-menu-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-grid id="userProfile">
+      <ion-row>
+        <ion-col>
+          <ion-icon name="contact"></ion-icon>
+          <ion-label position="floating">{{displayName}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-icon name="mail"></ion-icon>
+          <ion-label position="floating">{{email}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-button expand="block">Edit Profile</ion-button>
+</ion-content>

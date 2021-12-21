@@ -20,13 +20,17 @@ export class UserService {
     });
   }
 
-  createUser(userCred: UserCredential) {
+  createUser(userCred: UserCredential, displayName: string) {
     const postData: UserPostData = {
+      displayName: displayName,
       email: userCred.user.email,
-      username: userCred.user.displayName,
       uid: userCred.user.uid,
     };
     this.storeService.post(this.dbPath, postData);
+  }
+
+  updateUser(user, updateData: any) {
+    this.storeService.updateUser(this.dbPath, updateData, user.uid);
   }
 
   private async getUser(uid: string) {
@@ -37,5 +41,11 @@ export class UserService {
 
     this.docId = snapshot.id;
     this.user = snapshot.data() as User;
+  }
+
+  get getUserProfile() {
+    const displayName = this.user.displayName;
+    const email = this.user.email;
+    return [displayName, email];
   }
 }

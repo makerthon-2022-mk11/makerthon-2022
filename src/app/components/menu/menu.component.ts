@@ -15,6 +15,10 @@ export class MenuComponent implements OnInit {
       path: routePaths.HOME,
     },
     {
+      name: 'Profile',
+      path: routePaths.PROFILE,
+    },
+    {
       name: 'Upload',
       path: routePaths.UPLOAD,
     },

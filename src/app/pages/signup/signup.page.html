@@ -8,14 +8,17 @@
   <form [formGroup]="signUpForm" (submit)="signUp()">
     <ion-item class="input">
       <ion-label position="floating">Username</ion-label>
-      <ion-input formControlName="username" placeholder="Enter your username">
+      <ion-input
+        formControlName="displayName"
+        placeholder="Enter your username"
+      >
       </ion-input>
     </ion-item>
 
     <app-form-validation
       [isSubmitted]="isSubmitted"
-      [validations]="validations.username"
-      [control]="controls.username"
+      [validations]="validations.displayName"
+      [control]="controls.displayName"
     ></app-form-validation>
 
     <ion-item class="input">

@@ -25,7 +25,7 @@ export class SignUpPage implements OnInit {
   isSubmitted: boolean;
 
   validations: Validations = {
-    username: [
+    displayName: [
       { type: 'required', message: 'Username is required.' },
       {
         type: 'pattern',
@@ -59,7 +59,7 @@ export class SignUpPage implements OnInit {
     this.activatedRoute.params.subscribe(() => {
       this.signUpForm = new FormGroup(
         {
-          username: new FormControl('', [
+          displayName: new FormControl('', [
             Validators.required,
             Validators.pattern('^[a-zA-z0-9_]+$'),
           ]),
@@ -107,12 +107,12 @@ export class SignUpPage implements OnInit {
     this.errorMsg = '';
 
     if (this.signUpForm.valid) {
+      const displayName = this.signUpForm.controls.displayName.value;
       const email = this.signUpForm.controls.email.value;
       const password = this.signUpForm.controls.password.value;
-      const username = this.signUpForm.controls.username.value;
 
       this.authService
-        .signUp(email, password, username)
+        .signUp(email, password, displayName)
         .then(() => {
           this.isSubmitted = false;
           this.authService.sendEmailVerification();

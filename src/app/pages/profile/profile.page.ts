@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TextService } from 'src/app/services/text.service';
-import { Validations } from 'src/app/types/form.types';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,28 +7,14 @@ import { Validations } from 'src/app/types/form.types';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  editForm: FormGroup;
-  successMsg: string;
-  errorMsg: string;
-  isSubmitted: boolean;
+  displayName: string;
+  email: string;
 
-  validations: Validations = {
-    textContent: [{ type: 'required', message: 'Text is required.' }],
-  };
-
-  constructor(private textService: TextService) {
-    this.editForm = new FormGroup({
-      textContent: new FormControl('', Validators.required),
-    });
-
-    this.successMsg = '';
-    this.errorMsg = '';
-    this.isSubmitted = false;
+  constructor(private userService: UserService) {
+    const userProfileData = this.userService.getUserProfile;
+    this.displayName = userProfileData[0];
+    this.email = userProfileData[1];
   }
 
   ngOnInit() {}
-
-  get controls() {
-    return this.editForm.controls;
-  }
 }
