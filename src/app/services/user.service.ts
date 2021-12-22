@@ -30,12 +30,13 @@ export class UserService {
     this.storeService.post(this.dbPath, postData);
   }
 
-  async updateDisplayName(displayName: string) {
-    return await this.storeService.updateDisplayname(
-      this.dbPath,
-      displayName,
-      this.user.uid
-    );
+  updateDisplayName(displayName: string) {
+    const userPath = this.dbPath + '/' + this.docId;
+    const updatedData = {
+      displayName: displayName,
+    };
+
+    return this.storeService.update(userPath, updatedData);
   }
 
   async isDisplayNameAlreadyUsed(displayName: string) {

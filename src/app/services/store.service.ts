@@ -12,7 +12,6 @@ import {
   QueryDocumentSnapshot,
   QuerySnapshot,
   updateDoc,
-  where,
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -52,20 +51,8 @@ export class StoreService {
     return addDoc(collection(this.firestore, path), postData);
   }
 
-  async updateDisplayname(
-    path: string,
-    updatedDisplayName: any,
-    uid: string
-  ): Promise<void> {
-    const snapshot = await this.getSnapshotChange(path, () =>
-      where('uid', '==', uid)
-    );
-    const docId = snapshot.id;
-
-    const docRef = doc(this.firestore, path, docId);
-    const updateData = {
-      displayName: updatedDisplayName,
-    };
-    return updateDoc(docRef, updateData);
+  update(path: string, updatedData: any): Promise<void> {
+    const docRef = doc(this.firestore, path);
+    return updateDoc(docRef, updatedData);
   }
 }
