@@ -50,27 +50,33 @@ export class EditProfilePage implements OnInit {
   }
 
   async editProfile() {
+    this.isSubmitted = true;
     this.errorMsg = '';
     this.successMsg = '';
-    const updatedDisplayName = this.editForm.controls.displayName.value;
 
-    const inUse = await this.userService.isDisplayNameAlreadyUsed(
-      updatedDisplayName
-    );
+    if (this.editForm.valid) {
+      const updatedDisplayName = this.editForm.controls.displayName.value;
 
-    if (inUse) {
-      this.errorMsg = 'This Username has already been taken';
-    } else {
-      await this.userService
-        .updateDisplayName(updatedDisplayName)
-        .then(() => {
-          this.successMsg = 'Successfully updated your username';
-        })
-        .catch((err: FirebaseError) => {
-          this.errorMsg =
-            authErrorCodeToMessageMap.get(err.code) ??
-            'There is a problem updating your username, please try again later';
-        });
+      const inUse = await this.userService.isDisplayNameAlreadyUsed(
+        updatedDisplayName
+      );
+
+      if (inUse) {
+        this.errorMsg = 'This Username has already been taken';
+      } else {
+        await this.userService
+          .updateDisplayName(updatedDisplayName)
+          .then(() => {
+            this.isSubmitted = false;
+            this.editForm.reset();
+            this.successMsg = 'Successfully updated your username';
+          })
+          .catch((err: FirebaseError) => {
+            this.errorMsg =
+              authErrorCodeToMessageMap.get(err.code) ??
+              'There is a problem updating your username, please try again later';
+          });
+      }
     }
   }
 
