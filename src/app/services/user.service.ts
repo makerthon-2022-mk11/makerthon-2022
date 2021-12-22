@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, authState, UserCredential } from '@angular/fire/auth';
-import { where } from '@angular/fire/firestore';
-import { FirebaseError } from 'firebase/app';
+import { where, onSnapshot, Unsubscribe } from '@angular/fire/firestore';
 import { User, UserPostData } from '../types/user.types';
 import { StoreService } from './store.service';
 
@@ -12,6 +11,7 @@ export class UserService {
   private dbPath = 'users';
   docId: string;
   user: User;
+  observer: Unsubscribe;
 
   constructor(auth: Auth, private storeService: StoreService) {
     authState(auth).subscribe((authUser) => {
@@ -55,6 +55,21 @@ export class UserService {
 
     this.docId = snapshot.id;
     this.user = snapshot.data() as User;
+
+    const docRef = this.storeService.getObservableDoc(this.dbPath, this.docId);
+    this.observer = onSnapshot(
+      docRef,
+      (docSnapshot) => {
+        this.user = docSnapshot.data() as User;
+      },
+      (err) => {
+        console.log(`Encountered error: ${err}`);
+      }
+    );
+  }
+
+  getDocRef() {
+    return this.storeService.getObservableDoc(this.dbPath, this.docId);
   }
 
   getUserProfile() {

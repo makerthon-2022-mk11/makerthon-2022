@@ -43,6 +43,11 @@ export class StoreService {
     });
   }
 
+  getObservableDoc(path, docId): DocumentReference {
+    const docRef = doc(this.firestore, path, docId);
+    return docRef;
+  }
+
   post(path: string, postData: any): Promise<DocumentReference<any>> {
     return addDoc(collection(this.firestore, path), postData);
   }
