@@ -41,8 +41,8 @@ export class UploadLinkPage implements OnInit {
 
       const linkFormData: LinkFormData = {
         link: this.uploadForm.controls.link.value,
-        title: this.uploadForm.controls.title.value ?? undefined,
-        description: this.uploadForm.controls.description.value ?? undefined,
+        title: this.uploadForm.controls.title.value,
+        description: this.uploadForm.controls.description.value,
       };
 
       this.linkService

@@ -81,8 +81,8 @@ export class UploadImagePage implements OnInit {
       const uploadData: ImageUploadData = {
         blob: blob,
         fileName: v4(),
-        title: this.uploadForm.controls.title.value ?? undefined,
-        description: this.uploadForm.controls.description.value ?? undefined,
+        title: this.uploadForm.controls.title.value,
+        description: this.uploadForm.controls.description.value,
       };
       this.imageService
         .upload(uploadData)
