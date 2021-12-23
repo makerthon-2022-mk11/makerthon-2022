@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ResetPasswordPageRoutingModule } from './reset-password-routing.module';
 
 import { ResetPasswordPage } from './reset-password.page';
-import { FormValidationComponent } from 'src/app/components/form-validation/form-validation.component';
+import { FormValidationModule } from 'src/app/components/form-validation/form-validation.module';
 
 @NgModule({
   imports: [
@@ -16,7 +16,8 @@ import { FormValidationComponent } from 'src/app/components/form-validation/form
     IonicModule,
     ResetPasswordPageRoutingModule,
     ReactiveFormsModule,
+    FormValidationModule,
   ],
-  declarations: [ResetPasswordPage, FormValidationComponent],
+  declarations: [ResetPasswordPage],
 })
 export class ResetPasswordPageModule {}

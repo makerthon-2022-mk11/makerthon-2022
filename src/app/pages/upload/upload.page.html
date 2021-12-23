@@ -1,33 +1,24 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Upload</ion-title>
-    <ion-menu-button slot="start" menu="appMenu"></ion-menu-button>
+    <ion-menu-button slot="start" menu="appMenu" color="dark"></ion-menu-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="uploadForm" (ngSubmit)="submit()" novalidate>
-    <ion-textarea
-      class="input"
-      formControlName="textContent"
-      placeholder="Enter your moment"
-      required
-    ></ion-textarea>
+  <ion-tabs>
+    <ion-tab-bar color="primary" slot="top">
+      <ion-tab-button tab="upload-image">
+        <ion-label>Image</ion-label>
+      </ion-tab-button>
 
-    <app-form-validation
-      [isSubmitted]="isSubmitted"
-      [validations]="validations.textContent"
-      [control]="controls.textContent"
-    ></app-form-validation>
+      <ion-tab-button tab="upload-link">
+        <ion-label>Link</ion-label>
+      </ion-tab-button>
 
-    <div class="form-msg">
-      <ion-text color="success" *ngIf="successMsg">{{successMsg}}</ion-text>
-    </div>
-
-    <div class="form-msg">
-      <ion-text color="danger" *ngIf="errorMsg">{{errorMsg}}</ion-text>
-    </div>
-
-    <ion-button type="submit" expand="block">Upload</ion-button>
-  </form>
+      <ion-tab-button tab="upload-text">
+        <ion-label>Text</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>

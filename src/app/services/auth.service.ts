@@ -24,9 +24,9 @@ export class AuthService {
       authState(this.auth).subscribe((user) => {
         if (user) {
           this.userData = user;
-          this.isLoggedIn = user !== null;
-          this.isVerified = user.emailVerified;
           localStorage.setItem('user', JSON.stringify(this.userData));
+          this.isVerified = user.emailVerified;
+          this.isLoggedIn = this.isVerified && user !== null;
         } else {
           localStorage.setItem('user', null);
         }
