@@ -7,11 +7,11 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  username: string;
-
   constructor(private userService: UserService) {}
 
-  ngOnInit() {
-    this.username = this.userService.user.displayName;
+  ngOnInit() {}
+
+  get username(): string {
+    return this.userService.user.displayName;
   }
 }
