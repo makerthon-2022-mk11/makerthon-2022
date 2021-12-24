@@ -16,7 +16,7 @@ export class UserService {
   constructor(auth: Auth, private storeService: StoreService) {
     authState(auth).subscribe((authUser) => {
       if (authUser) {
-        this.getUser(authUser.uid);
+        this.initialize(authUser.uid);
       }
     });
   }
@@ -31,12 +31,11 @@ export class UserService {
   }
 
   updateDisplayName(displayName: string) {
-    const userPath = this.dbPath + '/' + this.docId;
     const updatedData = {
       displayName: displayName,
     };
 
-    return this.storeService.update(userPath, updatedData);
+    return this.storeService.update(this.dbPath, updatedData, this.docId);
   }
 
   async isDisplayNameAlreadyUsed(displayName: string) {
@@ -48,7 +47,7 @@ export class UserService {
     return snapshot != null;
   }
 
-  private async getUser(uid: string) {
+  private async initialize(uid: string) {
     const snapshot = await this.storeService.getSnapshotChange(
       this.dbPath,
       () => where('uid', '==', uid)
@@ -57,7 +56,7 @@ export class UserService {
     this.docId = snapshot.id;
     this.user = snapshot.data() as User;
 
-    const docRef = this.storeService.getObservableDoc(this.dbPath, this.docId);
+    const docRef = this.storeService.getDocRef(this.dbPath, this.docId);
     this.observer = onSnapshot(
       docRef,
       (docSnapshot) => {
@@ -67,15 +66,5 @@ export class UserService {
         console.log(`Encountered error: ${err}`);
       }
     );
-  }
-
-  getDocRef() {
-    return this.storeService.getObservableDoc(this.dbPath, this.docId);
-  }
-
-  getUserProfile() {
-    const displayName = this.user.displayName;
-    const email = this.user.email;
-    return [displayName, email];
   }
 }

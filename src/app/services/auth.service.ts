@@ -64,8 +64,4 @@ export class AuthService {
   resetPassword(email): Promise<void> {
     return sendPasswordResetEmail(this.auth, email);
   }
-
-  getUser(): User {
-    return this.auth.currentUser;
-  }
 }

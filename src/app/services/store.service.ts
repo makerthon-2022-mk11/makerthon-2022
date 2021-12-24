@@ -42,7 +42,7 @@ export class StoreService {
     });
   }
 
-  getObservableDoc(path, docId): DocumentReference {
+  getDocRef(path, docId): DocumentReference {
     const docRef = doc(this.firestore, path, docId);
     return docRef;
   }
@@ -51,8 +51,8 @@ export class StoreService {
     return addDoc(collection(this.firestore, path), postData);
   }
 
-  update(path: string, updatedData: any): Promise<void> {
-    const docRef = doc(this.firestore, path);
-    return updateDoc(docRef, updatedData);
+  update(path: string, updateData: any, docId: string): Promise<void> {
+    const docRef = doc(this.firestore, path, docId);
+    return updateDoc(docRef, updateData);
   }
 }
