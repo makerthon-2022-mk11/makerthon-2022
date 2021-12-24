@@ -4,20 +4,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { UploadPageRoutingModule } from './upload-routing.module';
+import { UploadTextPageRoutingModule } from './upload-text-routing.module';
 
-import { UploadPage } from './upload.page';
+import { UploadTextPage } from './upload-text.page';
 import { FormValidationModule } from 'src/app/components/form-validation/form-validation.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
-    UploadPageRoutingModule,
-    ReactiveFormsModule,
     FormValidationModule,
+    IonicModule,
+    ReactiveFormsModule,
+    UploadTextPageRoutingModule,
   ],
-  declarations: [UploadPage],
+  declarations: [UploadTextPage],
 })
-export class UploadPageModule {}
+export class UploadTextPageModule {}

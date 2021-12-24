@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { SignUpPageRoutingModule } from './signup-routing.module';
 
 import { SignUpPage } from './signup.page';
-import { FormValidationComponent } from 'src/app/components/form-validation/form-validation.component';
+import { FormValidationModule } from 'src/app/components/form-validation/form-validation.module';
 
 @NgModule({
   imports: [
@@ -16,7 +16,8 @@ import { FormValidationComponent } from 'src/app/components/form-validation/form
     IonicModule,
     SignUpPageRoutingModule,
     ReactiveFormsModule,
+    FormValidationModule,
   ],
-  declarations: [SignUpPage, FormValidationComponent],
+  declarations: [SignUpPage],
 })
 export class SignUpPageModule {}
