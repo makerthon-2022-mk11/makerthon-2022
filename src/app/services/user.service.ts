@@ -62,9 +62,7 @@ export class UserService {
       (docSnapshot) => {
         this.user = docSnapshot.data() as User;
       },
-      (err) => {
-        console.log(`Encountered error: ${err}`);
-      }
+      (err) => {}
     );
   }
 }
