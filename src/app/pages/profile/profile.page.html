@@ -1,28 +1,49 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Profile</ion-title>
     <ion-menu-button slot="start" menu="appMenu"></ion-menu-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div id="content">
-    <ion-row>
-      <ion-col>
-        <ion-icon name="person-outline" color="secondary"></ion-icon>
-        <ion-label position="floating">{{displayName}}</ion-label>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-icon name="mail" color="secondary"></ion-icon>
+  <form id="form" [formGroup]="editForm" (submit)="edit()">
+    <ion-item class="input ion-no-padding" id="editable">
+      <ion-label position="floating">Username</ion-label>
+      <ion-input
+        formControlName="displayName"
+        placeholder="Enter your username"
+      >
+      </ion-input>
+    </ion-item>
 
-        <ion-label position="floating">{{email}}</ion-label>
-      </ion-col>
-    </ion-row>
-  </div>
+    <app-form-validation
+      [isSubmitted]="isSubmitted"
+      [validations]="validations.displayName"
+      [control]="controls.displayName"
+    ></app-form-validation>
 
-  <ion-button expand="block" (click)="navToEditProfile()"
-    >Edit Profile</ion-button
-  >
+    <ion-item class="input ion-no-padding" id="static">
+      <ion-col>
+        <ion-row>
+          <ion-label size="2">Email</ion-label>
+        </ion-row>
+        <ion-row>
+          <ion-text>{{email}}</ion-text>
+        </ion-row>
+      </ion-col>
+    </ion-item>
+
+    <div id="formAlert">
+      <ion-text color="danger" *ngIf="errorMsg">{{errorMsg}}</ion-text>
+    </div>
+    <div id="formAlert">
+      <ion-text id="success" color="success" *ngIf="successMsg"
+        >{{successMsg}}</ion-text
+      >
+    </div>
+
+    <ion-button type="submit" expand="block" [disabled]="isNoChangeMade">
+      Save Changes
+    </ion-button>
+  </form>
 </ion-content>

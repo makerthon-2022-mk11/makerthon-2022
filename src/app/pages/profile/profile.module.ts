@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ProfilePageRoutingModule } from './profile-routing.module';
 
 import { ProfilePage } from './profile.page';
+import { FormValidationModule } from 'src/app/components/form-validation/form-validation.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { ProfilePage } from './profile.page';
     IonicModule,
     ProfilePageRoutingModule,
     ReactiveFormsModule,
+    FormValidationModule,
   ],
   declarations: [ProfilePage],
 })

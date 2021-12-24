@@ -1,5 +1,4 @@
 export const routePaths = {
-  EDIT_PROFILE: 'edit-profile',
   HOME: 'home',
   LOGIN: 'login',
   PROFILE: 'profile',

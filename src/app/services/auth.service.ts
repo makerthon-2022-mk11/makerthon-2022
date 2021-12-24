@@ -50,9 +50,9 @@ export class AuthService {
     });
   }
 
-  signUp(email, password, username) {
+  signUp(email, password, displayName) {
     return createUserWithEmailAndPassword(this.auth, email, password).then(
-      (userCred) => this.userService.createUser(userCred, username)
+      (userCred) => this.userService.createUser(userCred, displayName)
     );
   }
 
