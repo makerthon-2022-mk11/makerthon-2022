@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -11,27 +11,30 @@ import { MenuComponent } from './components/menu/menu.component';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { initializeApp } from 'firebase/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { initializeFirestore, provideFirestore } from '@angular/fire/firestore';
 import { Camera } from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { provideStorage } from '@angular/fire/storage';
 import { getStorage } from 'firebase/storage';
+
+function initializeFirebase(): ModuleWithProviders<any>[] {
+  const app = initializeApp(environment.firebaseConfig);
+  return [
+    provideFirebaseApp(() => app),
+    provideFirestore(() =>
+      initializeFirestore(app, { ignoreUndefinedProperties: true })
+    ),
+    provideAuth(() => getAuth()),
+    provideStorage(() => getStorage()),
+  ];
+}
 
 @NgModule({
   declarations: [AppComponent, MenuComponent],
   entryComponents: [],
   imports: [
     AppRoutingModule,
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideFirestore(() => {
-      return getFirestore();
-    }),
-    provideAuth(() => {
-      return getAuth();
-    }),
-    provideStorage(() => {
-      return getStorage();
-    }),
+    ...initializeFirebase(),
     BrowserModule,
     IonicModule.forRoot(),
   ],
