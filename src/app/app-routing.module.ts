@@ -33,6 +33,12 @@ const routes: Routes = [
       import('./pages/signup/signup.module').then((m) => m.SignUpPageModule),
   },
   {
+    path: routePaths.SHARE,
+    loadChildren: () =>
+      import('./pages/share/share.module').then((m) => m.SharePageModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: routePaths.UPLOAD,
     loadChildren: () =>
       import('./pages/upload/upload.module').then((m) => m.UploadPageModule),
