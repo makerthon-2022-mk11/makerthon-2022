@@ -101,7 +101,7 @@ export class SignUpPage implements OnInit {
     };
   }
 
-  signUp() {
+  async signUp() {
     this.isSubmitted = true;
     this.successMsg = '';
     this.errorMsg = '';
@@ -111,21 +111,29 @@ export class SignUpPage implements OnInit {
       const email = this.signUpForm.controls.email.value;
       const password = this.signUpForm.controls.password.value;
 
-      this.authService
-        .signUp(email, password, displayName)
-        .then(() => {
-          this.isSubmitted = false;
-          this.authService.sendEmailVerification();
-          this.signUpForm.reset();
+      const inUse = await this.authService.isDisplayNameAlreadyUsed(
+        displayName
+      );
 
-          this.successMsg =
-            'Account successfully created! Please check your email account and verify your email before logging in.';
-        })
-        .catch((err: FirebaseError) => {
-          this.errorMsg =
-            authErrorCodeToMessageMap.get(err.code) ??
-            'There is a problem signing up, please try again later';
-        });
+      if (inUse) {
+        this.errorMsg = 'This Username has already been taken';
+      } else {
+        this.authService
+          .signUp(email, password, displayName)
+          .then(() => {
+            this.isSubmitted = false;
+            this.authService.sendEmailVerification();
+            this.signUpForm.reset();
+
+            this.successMsg =
+              'Account successfully created! Please check your email account and verify your email before logging in.';
+          })
+          .catch((err: FirebaseError) => {
+            this.errorMsg =
+              authErrorCodeToMessageMap.get(err.code) ??
+              'There is a problem signing up, please try again later';
+          });
+      }
     }
   }
 

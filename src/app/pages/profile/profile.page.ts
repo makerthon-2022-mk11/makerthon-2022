@@ -3,8 +3,8 @@ import { UserService } from 'src/app/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Validations } from 'src/app/types/form.types';
-import { authErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
-import { FirebaseError } from 'firebase/app';
+import { firestoreErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
+import { FirestoreError } from 'firebase/firestore';
 
 @Component({
   selector: 'app-profile',
@@ -71,9 +71,9 @@ export class ProfilePage implements OnInit {
             this.isSubmitted = false;
             this.successMsg = 'Successfully updated your username';
           })
-          .catch((err: FirebaseError) => {
+          .catch((err: FirestoreError) => {
             this.errorMsg =
-              authErrorCodeToMessageMap.get(err.code) ??
+              firestoreErrorCodeToMessageMap.get(err.code) ??
               'There is a problem updating your username, please try again later';
           });
       }
