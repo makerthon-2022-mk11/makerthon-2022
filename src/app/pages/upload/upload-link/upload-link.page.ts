@@ -4,6 +4,7 @@ import { LinkService } from 'src/app/services/link.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Validations } from 'src/app/types/form.types';
 import { LinkFormData } from 'src/app/types/link.types';
+import { isEmpty, trimInput } from 'src/app/utils/form.util';
 
 @Component({
   selector: 'app-upload-link',
@@ -17,7 +18,10 @@ export class UploadLinkPage implements OnInit {
   uploadButtonText: string = 'Upload';
 
   validations: Validations = {
-    link: [{ type: 'required', message: 'Link is required' }],
+    link: [
+      { type: 'required', message: 'Link is required' },
+      { type: 'pattern', message: 'Empty link is not allowed' },
+    ],
   };
 
   constructor(
@@ -27,7 +31,10 @@ export class UploadLinkPage implements OnInit {
 
   ngOnInit() {
     this.uploadForm = new FormGroup({
-      link: new FormControl('', Validators.required),
+      link: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/(.|\s)*\S(.|\s)*/),
+      ]),
       title: new FormControl(''),
       description: new FormControl(''),
     });
@@ -39,10 +46,14 @@ export class UploadLinkPage implements OnInit {
     if (this.uploadForm.valid) {
       this.errorMsg = '';
 
+      const link = trimInput(this.controls.link.value);
+      const title = trimInput(this.controls.title.value);
+      const description = trimInput(this.controls.description.value);
+
       const linkFormData: LinkFormData = {
-        link: this.uploadForm.controls.link.value,
-        title: this.uploadForm.controls.title.value,
-        description: this.uploadForm.controls.description.value,
+        link: link,
+        title: isEmpty(title) ? undefined : title,
+        description: isEmpty(description) ? undefined : description,
       };
 
       this.linkService
@@ -66,7 +77,7 @@ export class UploadLinkPage implements OnInit {
     this.isSubmitted = false;
   }
 
-  get controls() {
-    return this.uploadForm?.controls;
+  private get controls() {
+    return this.uploadForm.controls;
   }
 }

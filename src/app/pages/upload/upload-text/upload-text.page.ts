@@ -4,6 +4,7 @@ import { TextService } from 'src/app/services/text.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Validations } from 'src/app/types/form.types';
 import { TextFormData } from 'src/app/types/text.types';
+import { isEmpty, trimInput } from 'src/app/utils/form.util';
 
 @Component({
   selector: 'app-upload-text',
@@ -18,7 +19,10 @@ export class UploadTextPage implements OnInit {
   isUploading: boolean;
 
   validations: Validations = {
-    text: [{ type: 'required', message: 'Text is required' }],
+    text: [
+      { type: 'required', message: 'Text is required' },
+      { type: 'pattern', message: 'Empty text is not allowed' },
+    ],
   };
 
   constructor(
@@ -28,9 +32,12 @@ export class UploadTextPage implements OnInit {
 
   ngOnInit() {
     this.uploadForm = new FormGroup({
-      text: new FormControl('', Validators.required),
-      title: new FormControl(''),
-      description: new FormControl(''),
+      text: new FormControl(undefined, [
+        Validators.required,
+        Validators.pattern(/(.|\s)*\S(.|\s)*/),
+      ]),
+      title: new FormControl(undefined),
+      description: new FormControl(undefined),
     });
   }
 
@@ -41,10 +48,14 @@ export class UploadTextPage implements OnInit {
       this.errorMsg = '';
       this.isUploading = true;
 
+      const text = trimInput(this.controls.text.value);
+      const title = trimInput(this.controls.title.value);
+      const description = trimInput(this.controls.description.value);
+
       const textFormData: TextFormData = {
-        text: this.uploadForm.controls.text.value,
-        title: this.uploadForm.controls.title.value,
-        description: this.uploadForm.controls.description.value,
+        text: text,
+        title: isEmpty(title) ? undefined : title,
+        description: isEmpty(description) ? undefined : description,
       };
 
       this.textService
@@ -71,7 +82,7 @@ export class UploadTextPage implements OnInit {
     this.isSubmitted = false;
   }
 
-  get controls() {
-    return this.uploadForm?.controls;
+  private get controls() {
+    return this.uploadForm.controls;
   }
 }

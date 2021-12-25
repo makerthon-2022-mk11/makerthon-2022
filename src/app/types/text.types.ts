@@ -1,7 +1,7 @@
 export type TextFormData = {
   text: string;
   title?: string;
-  description: string;
+  description?: string;
 };
 
 export type TextPostData = TextFormData & {
