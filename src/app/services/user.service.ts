@@ -57,12 +57,8 @@ export class UserService {
     this.user = snapshot.data() as User;
 
     const docRef = this.storeService.getDocRef(this.dbPath, this.docId);
-    this.observer = onSnapshot(
-      docRef,
-      (docSnapshot) => {
-        this.user = docSnapshot.data() as User;
-      },
-      (err) => {}
-    );
+    this.observer = onSnapshot(docRef, (docSnapshot) => {
+      this.user = docSnapshot.data() as User;
+    });
   }
 }
