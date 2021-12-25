@@ -11,6 +11,7 @@ import { FirebaseError } from 'firebase/app';
 import { authErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
 import { routePaths } from 'src/app/constants/routing.constants';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 import { Validations } from 'src/app/types/form.types';
 
 @Component({
@@ -52,6 +53,7 @@ export class SignUpPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
+    private userService: UserService,
     private router: Router
   ) {}
 
@@ -111,7 +113,7 @@ export class SignUpPage implements OnInit {
       const email = this.signUpForm.controls.email.value;
       const password = this.signUpForm.controls.password.value;
 
-      const inUse = await this.authService.isDisplayNameAlreadyUsed(
+      const inUse = await this.userService.isDisplayNameAlreadyUsed(
         displayName
       );
 

@@ -8,13 +8,6 @@ export const authErrorCodes = {
   WRONG_PASSWORD: 'auth/wrong-password',
 };
 
-export const firestoreErrorCodes = {
-  UNKNOWN: 'unknown',
-  NOT_FOUND: 'not_found',
-  ALREADY_EXISTS: 'already_exists',
-  PERMISSION_DENIED: 'permission_denied',
-};
-
 export const authErrorCodeToMessageMap = new Map([
   [
     authErrorCodes.EMAIL_EXISTS,
@@ -31,17 +24,4 @@ export const authErrorCodeToMessageMap = new Map([
     'Password should be at least 6 characters long.',
   ],
   [authErrorCodes.WRONG_PASSWORD, 'The password is incorrect'],
-]);
-
-export const firestoreErrorCodeToMessageMap = new Map([
-  [firestoreErrorCodes.UNKNOWN, 'Encountered an unknown error'],
-  [firestoreErrorCodes.NOT_FOUND, 'Document(s) not found in database'],
-  [
-    firestoreErrorCodes.ALREADY_EXISTS,
-    'Document creation failed. Document already exists',
-  ],
-  [
-    firestoreErrorCodes.PERMISSION_DENIED,
-    'User does not have access to execute this function',
-  ],
 ]);

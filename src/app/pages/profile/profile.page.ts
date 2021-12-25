@@ -3,8 +3,8 @@ import { UserService } from 'src/app/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Validations } from 'src/app/types/form.types';
-import { firestoreErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
 import { FirestoreError } from 'firebase/firestore';
+import { firestoreErrorCodeToMessageMap } from 'src/app/constants/store.constants';
 
 @Component({
   selector: 'app-profile',

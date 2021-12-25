@@ -71,8 +71,4 @@ export class AuthService {
     this.userData = user;
     localStorage.setItem('user', JSON.stringify(this.userData));
   }
-
-  async isDisplayNameAlreadyUsed(displayName: string) {
-    return await this.userService.isDisplayNameAlreadyUsed(displayName);
-  }
 }
