@@ -72,6 +72,6 @@ export class UploadTextPage implements OnInit {
   }
 
   get controls() {
-    return this.uploadForm.controls;
+    return this.uploadForm?.controls;
   }
 }

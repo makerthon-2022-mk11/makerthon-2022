@@ -67,6 +67,6 @@ export class UploadLinkPage implements OnInit {
   }
 
   get controls() {
-    return this.uploadForm.controls;
+    return this.uploadForm?.controls;
   }
 }

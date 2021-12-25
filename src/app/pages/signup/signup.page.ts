@@ -134,6 +134,6 @@ export class SignUpPage implements OnInit {
   }
 
   get controls() {
-    return this.signUpForm.controls;
+    return this.signUpForm?.controls;
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { routePaths } from 'src/app/constants/routing.constants';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Validations } from 'src/app/types/form.types';
 import { authErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
@@ -86,7 +85,7 @@ export class ProfilePage implements OnInit {
   }
 
   get controls() {
-    return this.editForm.controls;
+    return this.editForm?.controls;
   }
 
   get isNoChangeMade() {

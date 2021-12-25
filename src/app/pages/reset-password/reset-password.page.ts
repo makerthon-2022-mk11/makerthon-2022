@@ -72,6 +72,6 @@ export class ResetPasswordPage implements OnInit {
   }
 
   get controls() {
-    return this.resetPasswordForm.controls;
+    return this.resetPasswordForm?.controls;
   }
 }

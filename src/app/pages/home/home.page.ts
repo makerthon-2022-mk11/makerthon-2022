@@ -12,6 +12,6 @@ export class HomePage implements OnInit {
   ngOnInit() {}
 
   get displayName(): string {
-    return this.userService.user.displayName;
+    return this.userService.user?.displayName;
   }
 }
