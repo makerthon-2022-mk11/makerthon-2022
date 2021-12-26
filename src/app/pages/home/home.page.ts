@@ -64,7 +64,6 @@ export class HomePage implements OnInit {
     this.machineUrl = this.machineImages[0].src;
     this.baseUrl = '../../../assets/images/gacha/base.png';
     this.knobUrl = '../../../assets/images/gacha/knob.png';
-    this.ballUrl = '../../../assets/images/gacha/gacha-balls/1.png';
     this.addButtonUrl = '../../assets/images/gacha/add-button.png';
     this.isShowingMessage = false;
     this.addButtonState = AddButtonStateEnum.Down;
@@ -76,6 +75,7 @@ export class HomePage implements OnInit {
 
   onClickKnob() {
     if (!this.isShowingMessage) {
+      this.setRandomBall();
       this.animateMachine();
       this.getRandomMessage();
     }
@@ -114,6 +114,11 @@ export class HomePage implements OnInit {
       this.addButtonState === AddButtonStateEnum.Down
         ? AddButtonStateEnum.Up
         : AddButtonStateEnum.Down;
+  }
+
+  setRandomBall() {
+    const ballId = getRandomInt(4);
+    this.ballUrl = `../../../assets/images/gacha/gacha-balls/${ballId}.png`;
   }
 
   getRandomMessage() {
