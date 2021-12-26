@@ -8,7 +8,7 @@
 <ion-content>
   <div id="overlay" *ngIf="isShowingMessage"></div>
 
-  <ion-card id="message" *ngIf="isShowingMessage">
+  <ion-card id="message" *ngIf="isShowingMessage" [@expand]>
     <ion-avatar><img src="{{ballUrl}}" alt="Gachapon ball" /></ion-avatar>
     Hello
     <ion-button expand="block" (click)="hideMessage()">Done</ion-button>

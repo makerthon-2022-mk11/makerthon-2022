@@ -1,10 +1,25 @@
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
+
+const expandEnter = trigger('expand', [
+  transition(':enter', [
+    style({ minHeight: 0, height: 0, width: 0 }),
+    animate('300ms', style({ height: '80vh', width: '90vw' })),
+  ]),
+]);
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
+  animations: [expandEnter],
 })
 export class HomePage implements OnInit {
   machineImages: HTMLImageElement[];
@@ -44,7 +59,7 @@ export class HomePage implements OnInit {
         this.machineUrl = this.machineImages[0].src;
         this.isShowingMessage = true;
       }
-    }, 300);
+    }, 200);
   }
 
   // Preload images so that transition will be smooth
