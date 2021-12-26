@@ -11,6 +11,8 @@ export class HomePage implements OnInit {
   machineUrl: string;
   baseUrl: string;
   knobUrl: string;
+  ballUrl: string;
+  isShowingMessage: boolean;
 
   constructor(private userService: UserService) {}
 
@@ -19,10 +21,18 @@ export class HomePage implements OnInit {
     this.machineUrl = this.machineImages[0].src;
     this.baseUrl = '../../../assets/images/gacha/base.png';
     this.knobUrl = '../../../assets/images/gacha/knob.png';
+    this.ballUrl = '../../../assets/images/gacha/gacha-balls/1.png';
+    this.isShowingMessage = false;
   }
 
   get displayName(): string {
     return this.userService.user?.displayName;
+  }
+
+  onClickKnob() {
+    if (!this.isShowingMessage) {
+      this.animateMachine();
+    }
   }
 
   animateMachine(index: number = 0) {
@@ -32,6 +42,7 @@ export class HomePage implements OnInit {
         this.animateMachine(index + 1);
       } else {
         this.machineUrl = this.machineImages[0].src;
+        this.isShowingMessage = true;
       }
     }, 300);
   }
@@ -46,5 +57,9 @@ export class HomePage implements OnInit {
         i
       ].src = `../../../assets/images/gacha/gacha-machine/${i}.png`;
     }
+  }
+
+  hideMessage() {
+    this.isShowingMessage = false;
   }
 }

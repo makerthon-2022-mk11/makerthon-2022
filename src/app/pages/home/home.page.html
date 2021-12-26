@@ -6,17 +6,26 @@
 </ion-header>
 
 <ion-content>
+  <div id="overlay" *ngIf="isShowingMessage"></div>
+
+  <ion-card id="message" *ngIf="isShowingMessage">
+    <ion-avatar><img src="{{ballUrl}}" alt="Gachapon ball" /></ion-avatar>
+    Hello
+    <ion-button expand="block" (click)="hideMessage()">Done</ion-button>
+  </ion-card>
+
   <div id="machine-container">
-    <img id="machine" src="{{machineUrl}}" alt="Gachapon machine" />
+    <div id="machine">
+      <img id="machine-img" src="{{machineUrl}}" alt="Gachapon machine" />
+
+      <img id="machine-base" src="{{baseUrl}}" alt="Gachapon machine base" />
+
+      <img
+        id="machine-knob"
+        src="{{knobUrl}}"
+        alt="Gachapon machine knob"
+        (click)="onClickKnob()"
+      />
+    </div>
   </div>
 </ion-content>
-
-<ion-footer>
-  <img id="machine-base" src="{{baseUrl}}" alt="Gachapon machine base" />
-  <img
-    id="machine-knob"
-    src="{{knobUrl}}"
-    alt="Gachapon machine knob"
-    (click)="animateMachine()"
-  />
-</ion-footer>
