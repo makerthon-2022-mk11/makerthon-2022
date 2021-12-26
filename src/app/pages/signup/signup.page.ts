@@ -11,6 +11,7 @@ import { FirebaseError } from 'firebase/app';
 import { authErrorCodeToMessageMap } from 'src/app/constants/auth.constants';
 import { routePaths } from 'src/app/constants/routing.constants';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 import { Validations } from 'src/app/types/form.types';
 
 @Component({
@@ -25,6 +26,13 @@ export class SignUpPage implements OnInit {
   isSubmitted: boolean;
 
   validations: Validations = {
+    displayName: [
+      { type: 'required', message: 'Username is required.' },
+      {
+        type: 'pattern',
+        message: 'Username only allows _ and alphanumeric characters',
+      },
+    ],
     email: [
       { type: 'required', message: 'Email is required.' },
       { type: 'pattern', message: 'Please enter a valid email' },
@@ -45,6 +53,7 @@ export class SignUpPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
+    private userService: UserService,
     private router: Router
   ) {}
 
@@ -52,6 +61,10 @@ export class SignUpPage implements OnInit {
     this.activatedRoute.params.subscribe(() => {
       this.signUpForm = new FormGroup(
         {
+          displayName: new FormControl('', [
+            Validators.required,
+            Validators.pattern('^[a-zA-z0-9_]+$'),
+          ]),
           email: new FormControl('', [
             Validators.required,
             Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
@@ -90,30 +103,39 @@ export class SignUpPage implements OnInit {
     };
   }
 
-  signUp() {
+  async signUp() {
     this.isSubmitted = true;
     this.successMsg = '';
     this.errorMsg = '';
 
     if (this.signUpForm.valid) {
+      const displayName = this.signUpForm.controls.displayName.value;
       const email = this.signUpForm.controls.email.value;
       const password = this.signUpForm.controls.password.value;
 
-      this.authService
-        .signUp(email, password)
-        .then(() => {
-          this.isSubmitted = false;
-          this.authService.sendEmailVerification();
-          this.signUpForm.reset();
+      const inUse = await this.userService.isDisplayNameAlreadyUsed(
+        displayName
+      );
 
-          this.successMsg =
-            'Account successfully created! Please check your email account and verify your email before logging in.';
-        })
-        .catch((err: FirebaseError) => {
-          this.errorMsg =
-            authErrorCodeToMessageMap.get(err.code) ??
-            'There is a problem signing up, please try again later';
-        });
+      if (inUse) {
+        this.errorMsg = 'This Username has already been taken';
+      } else {
+        this.authService
+          .signUp(email, password, displayName)
+          .then(() => {
+            this.isSubmitted = false;
+            this.authService.sendEmailVerification();
+            this.signUpForm.reset();
+
+            this.successMsg =
+              'Account successfully created! Please check your email account and verify your email before logging in.';
+          })
+          .catch((err: FirebaseError) => {
+            this.errorMsg =
+              authErrorCodeToMessageMap.get(err.code) ??
+              'There is a problem signing up, please try again later';
+          });
+      }
     }
   }
 
@@ -122,6 +144,6 @@ export class SignUpPage implements OnInit {
   }
 
   get controls() {
-    return this.signUpForm.controls;
+    return this.signUpForm?.controls;
   }
 }
