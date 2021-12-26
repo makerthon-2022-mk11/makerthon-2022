@@ -16,6 +16,14 @@
 
   <div id="machine-container">
     <div id="machine">
+      <img
+        id="add-button"
+        src="{{addButtonUrl}}"
+        alt="Add button"
+        [@float]="addButtonState"
+        (@float.done)="toggleAddButtonState()"
+      />
+
       <img id="machine-img" src="{{machineUrl}}" alt="Gachapon machine" />
 
       <img id="machine-base" src="{{baseUrl}}" alt="Gachapon machine base" />

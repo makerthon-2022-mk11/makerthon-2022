@@ -47,7 +47,7 @@ ion-avatar {
 #message {
   position: relative;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-52%);
   margin-left: auto;
   margin-right: auto;
   overflow: visible;
@@ -73,4 +73,10 @@ ion-button {
   margin-left: auto;
   margin-right: auto;
   bottom: 2%;
+}
+
+#add-button {
+  position: absolute;
+  max-height: 12vh;
+  left: 22%;
 }

@@ -15,11 +15,17 @@ const expandEnter = trigger('expand', [
   ]),
 ]);
 
+const float = trigger('float', [
+  state('up', style({ transform: 'translateY(-20%)' })),
+  state('down', style({ transform: 'translateY(0%)' })),
+  transition('* <=> *', [animate(500)]),
+]);
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  animations: [expandEnter],
+  animations: [expandEnter, float],
 })
 export class HomePage implements OnInit {
   machineImages: HTMLImageElement[];
@@ -27,7 +33,9 @@ export class HomePage implements OnInit {
   baseUrl: string;
   knobUrl: string;
   ballUrl: string;
+  addButtonUrl: string;
   isShowingMessage: boolean;
+  addButtonState: 'up' | 'down';
 
   constructor(private userService: UserService) {}
 
@@ -37,7 +45,9 @@ export class HomePage implements OnInit {
     this.baseUrl = '../../../assets/images/gacha/base.png';
     this.knobUrl = '../../../assets/images/gacha/knob.png';
     this.ballUrl = '../../../assets/images/gacha/gacha-balls/1.png';
+    this.addButtonUrl = '../../assets/images/gacha/add-button.png';
     this.isShowingMessage = false;
+    this.addButtonState = 'down';
   }
 
   get displayName(): string {
@@ -76,5 +86,9 @@ export class HomePage implements OnInit {
 
   hideMessage() {
     this.isShowingMessage = false;
+  }
+
+  toggleAddButtonState() {
+    this.addButtonState = this.addButtonState === 'down' ? 'up' : 'down';
   }
 }
