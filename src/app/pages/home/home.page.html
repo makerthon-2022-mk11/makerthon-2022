@@ -6,16 +6,17 @@
 </ion-header>
 
 <ion-content>
-  <div id="container">
-    <strong>This is our homepage</strong>
-    <p>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://ionicframework.com/docs/components"
-        >UI Components</a
-      >
-      for reference
-    </p>
+  <div id="machine-container">
+    <img id="machine" src="{{machineUrl}}" alt="Gachapon machine" />
   </div>
 </ion-content>
+
+<ion-footer>
+  <img id="machine-base" src="{{baseUrl}}" alt="Gachapon machine base" />
+  <img
+    id="machine-knob"
+    src="{{knobUrl}}"
+    alt="Gachapon machine knob"
+    (click)="animateMachine()"
+  />
+</ion-footer>

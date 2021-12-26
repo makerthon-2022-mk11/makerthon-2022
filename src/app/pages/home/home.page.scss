@@ -1,9 +1,31 @@
-#container {
-  text-align: center;
+#machine-container {
+  position: absolute;
+  bottom: 0%;
+}
 
+#machine {
+  display: block;
+  margin: 0 auto;
+  width: 90%;
+}
+
+#machine-base {
+  display: block;
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
+  margin: 0 auto;
+  width: 85%;
+  z-index: -1;
+}
+
+#machine-knob {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  max-height: 10vh;
+  width: auto;
+  height: auto;
+  z-index: 2;
 }
