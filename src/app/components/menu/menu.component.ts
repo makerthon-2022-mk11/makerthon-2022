@@ -18,6 +18,10 @@ export class MenuComponent implements OnInit {
       name: 'Upload',
       path: routePaths.UPLOAD,
     },
+    {
+      name: 'My Collection',
+      path: routePaths.MY_COLLECTION,
+    },
   ];
 
   constructor(private authService: AuthService, private router: Router) {}

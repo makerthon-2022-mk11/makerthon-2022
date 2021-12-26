@@ -38,6 +38,26 @@ const routes: Routes = [
       import('./pages/upload/upload.module').then((m) => m.UploadPageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: routePaths.MY_COLLECTION,
+    loadChildren: () => import('./pages/my-collection/my-collection.module').then( m => m.MyCollectionPageModule)
+  },
+  // {
+  //   path: routePaths.MY_COLLECTION_ALL,
+  //   loadChildren: () => import('./pages/my-collection/my-collection-all/my-collection-all.module').then( m => m.MyCollectionAllPageModule)
+  // },
+  // {
+  //   path: routePaths.MY_COLLECTION_TEXT,
+  //   loadChildren: () => import('./pages/my-collection/my-collection-text/my-collection-text.module').then( m => m.MyCollectionTextPageModule)
+  // },
+  // {
+  //   path: routePaths.MY_COLLECTION_LINKS,
+  //   loadChildren: () => import('./pages/my-collection/my-collection-links/my-collection-links.module').then( m => m.MyCollectionLinksPageModule)
+  // },
+  // {
+  //   path: routePaths.MY_COLLECTION_IMAGES,
+  //   loadChildren: () => import('./pages/my-collection/my-collection-images/my-collection-images.module').then( m => m.MyCollectionImagesPageModule)
+  // },
 ];
 
 @NgModule({

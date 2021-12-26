@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { TextPostData } from '../types/text.types';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
+import { where } from "firebase/firestore";  
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +22,12 @@ export class TextService {
     };
 
     return this.storeService.post(this.dbPath, postData);
+  }
+
+  private async getText(uid: string) {
+    const snapshot = await this.storeService.getSnapshotChanges(
+      this.dbPath, 
+      () => where('userRef', '==', uid)
+    );
   }
 }
