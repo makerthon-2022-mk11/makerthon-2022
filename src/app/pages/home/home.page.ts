@@ -6,7 +6,18 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { ImageService } from 'src/app/services/image.service';
+import { LinkService } from 'src/app/services/link.service';
+import { TextService } from 'src/app/services/text.service';
 import { UserService } from 'src/app/services/user.service';
+import {
+  AddButtonStateEnum,
+  BoosterTypeEnum,
+} from 'src/app/types/gachapon.types';
+import { ImageData } from 'src/app/types/image.types';
+import { LinkData } from 'src/app/types/link.types';
+import { TextData } from 'src/app/types/text.types';
+import { getRandomInt } from 'src/app/utils/random.util';
 
 const expandEnter = trigger('expand', [
   transition(':enter', [
@@ -16,8 +27,8 @@ const expandEnter = trigger('expand', [
 ]);
 
 const float = trigger('float', [
-  state('up', style({ transform: 'translateY(-20%)' })),
-  state('down', style({ transform: 'translateY(0%)' })),
+  state(AddButtonStateEnum.Up, style({ transform: 'translateY(-20%)' })),
+  state(AddButtonStateEnum.Down, style({ transform: 'translateY(0%)' })),
   transition('* <=> *', [animate(500)]),
 ]);
 
@@ -35,9 +46,18 @@ export class HomePage implements OnInit {
   ballUrl: string;
   addButtonUrl: string;
   isShowingMessage: boolean;
-  addButtonState: 'up' | 'down';
+  addButtonState: AddButtonStateEnum;
+  booster: BoosterTypeEnum;
+  imageData: ImageData;
+  linkData: LinkData;
+  textData: TextData;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private imageService: ImageService,
+    private linkService: LinkService,
+    private textService: TextService
+  ) {}
 
   ngOnInit() {
     this.initializeMachineImages();
@@ -47,7 +67,7 @@ export class HomePage implements OnInit {
     this.ballUrl = '../../../assets/images/gacha/gacha-balls/1.png';
     this.addButtonUrl = '../../assets/images/gacha/add-button.png';
     this.isShowingMessage = false;
-    this.addButtonState = 'down';
+    this.addButtonState = AddButtonStateEnum.Down;
   }
 
   get displayName(): string {
@@ -57,6 +77,7 @@ export class HomePage implements OnInit {
   onClickKnob() {
     if (!this.isShowingMessage) {
       this.animateMachine();
+      this.getRandomMessage();
     }
   }
 
@@ -89,6 +110,43 @@ export class HomePage implements OnInit {
   }
 
   toggleAddButtonState() {
-    this.addButtonState = this.addButtonState === 'down' ? 'up' : 'down';
+    this.addButtonState =
+      this.addButtonState === AddButtonStateEnum.Down
+        ? AddButtonStateEnum.Up
+        : AddButtonStateEnum.Down;
+  }
+
+  getRandomMessage() {
+    const collection = getRandomInt(3);
+    switch (collection) {
+      case 0:
+        this.booster = BoosterTypeEnum.Image;
+        this.imageService.getRandom().then((data) => (this.imageData = data));
+        break;
+      case 1:
+        this.booster = BoosterTypeEnum.Link;
+        this.linkService.getRandom().then((data) => (this.linkData = data));
+        break;
+      case 2:
+        this.booster = BoosterTypeEnum.Text;
+        this.textService.getRandom().then((data) => {
+          this.textData = data;
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  isBoosterImage() {
+    return this.booster === BoosterTypeEnum.Image;
+  }
+
+  isBoosterLink() {
+    return this.booster == BoosterTypeEnum.Link;
+  }
+
+  isBoosterText() {
+    return this.booster === BoosterTypeEnum.Text;
   }
 }

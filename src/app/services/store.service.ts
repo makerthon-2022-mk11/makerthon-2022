@@ -13,6 +13,7 @@ import {
   QuerySnapshot,
   updateDoc,
 } from '@angular/fire/firestore';
+import { getRandomInt } from '../utils/random.util';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +40,13 @@ export class StoreService {
   ): Promise<QueryDocumentSnapshot | null> {
     return this.getSnapshotChanges(path, queryFn).then((snapshot) => {
       return snapshot.size > 0 ? snapshot.docs[0] : null;
+    });
+  }
+
+  getRandomDoc(path: string, queryFn: () => QueryConstraint) {
+    return this.getSnapshotChanges(path, queryFn).then((snapshot) => {
+      const randomIndex = getRandomInt(snapshot.size);
+      return snapshot.size > 0 ? snapshot.docs[randomIndex] : null;
     });
   }
 
