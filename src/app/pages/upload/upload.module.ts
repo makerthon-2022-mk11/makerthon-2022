@@ -8,6 +8,7 @@ import { UploadPageRoutingModule } from './upload-routing.module';
 
 import { UploadPage } from './upload.page';
 import { FormValidationModule } from 'src/app/components/form-validation/form-validation.module';
+import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { FormValidationModule } from 'src/app/components/form-validation/form-va
     UploadPageRoutingModule,
     ReactiveFormsModule,
     FormValidationModule,
+    SuperTabsModule,
   ],
   declarations: [UploadPage],
 })

@@ -1,24 +1,32 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-title>Upload</ion-title>
     <ion-menu-button slot="start" menu="appMenu" color="dark"></ion-menu-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-tabs>
-    <ion-tab-bar color="primary" slot="top">
-      <ion-tab-button tab="upload-image">
-        <ion-label>Image</ion-label>
-      </ion-tab-button>
+<super-tabs>
+  <super-tabs-toolbar slot="top" scrollable>
+    <super-tab-button>
+      <ion-label>Image</ion-label>
+    </super-tab-button>
+    <super-tab-button>
+      <ion-label>Link</ion-label>
+    </super-tab-button>
+    <super-tab-button>
+      <ion-label>Text</ion-label>
+    </super-tab-button>
+  </super-tabs-toolbar>
 
-      <ion-tab-button tab="upload-link">
-        <ion-label>Link</ion-label>
-      </ion-tab-button>
-
-      <ion-tab-button tab="upload-text">
-        <ion-label>Text</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
-</ion-content>
+  <super-tabs-container>
+    <super-tab>
+      <ion-nav [root]="uploadImage"></ion-nav>
+    </super-tab>
+    <super-tab>
+      <ion-nav [root]="uploadLink"></ion-nav>
+    </super-tab>
+    <super-tab>
+      <ion-nav [root]="uploadText"></ion-nav>
+    </super-tab>
+  </super-tabs-container>
+</super-tabs>

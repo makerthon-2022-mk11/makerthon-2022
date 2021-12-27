@@ -16,6 +16,7 @@ import { Camera } from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { provideStorage } from '@angular/fire/storage';
 import { getStorage } from 'firebase/storage';
+import { SuperTabsModule } from '@ionic-super-tabs/angular';
 
 function initializeFirebase(): ModuleWithProviders<any>[] {
   const app = initializeApp(environment.firebaseConfig);
@@ -37,6 +38,7 @@ function initializeFirebase(): ModuleWithProviders<any>[] {
     ...initializeFirebase(),
     BrowserModule,
     IonicModule.forRoot(),
+    SuperTabsModule.forRoot(),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
