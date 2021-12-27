@@ -11,3 +11,9 @@ export type ImageUploadData = UploadData & {
   title?: string;
   description?: string;
 };
+
+export type ImageStoreData = ImagePostData;
+
+export type ImageData = ImageStoreData & {
+  downloadUrl: string;
+};
