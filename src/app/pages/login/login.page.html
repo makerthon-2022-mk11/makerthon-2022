@@ -11,8 +11,12 @@
 
   <form [formGroup]="loginForm" (submit)="login()" (keyup.enter)="login()">
     <ion-item class="input ion-no-padding">
-      <ion-label position="floating">Email</ion-label>
-      <ion-input formControlName="email" placeholder="Enter your email">
+      <ion-label color="dark" position="floating">Email</ion-label>
+      <ion-input
+        color="dark"
+        formControlName="email"
+        placeholder="Enter your email"
+      >
       </ion-input>
     </ion-item>
 
@@ -23,8 +27,9 @@
     ></app-form-validation>
 
     <ion-item class="input ion-no-padding">
-      <ion-label position="floating">Password</ion-label>
+      <ion-label color="dark" position="floating">Password</ion-label>
       <ion-input
+        color="dark"
         type="password"
         formControlName="password"
         placeholder="Enter your password"

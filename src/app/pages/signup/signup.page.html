@@ -7,8 +7,9 @@
 <ion-content>
   <form [formGroup]="signUpForm" (submit)="signUp()">
     <ion-item class="input ion-no-padding">
-      <ion-label position="floating">Username</ion-label>
+      <ion-label color="dark" position="floating">Username</ion-label>
       <ion-input
+        color="dark"
         formControlName="displayName"
         placeholder="Enter your username"
       >
@@ -22,8 +23,12 @@
     ></app-form-validation>
 
     <ion-item class="input ion-no-padding">
-      <ion-label position="floating">Email</ion-label>
-      <ion-input formControlName="email" placeholder="Enter your email">
+      <ion-label color="dark" position="floating">Email</ion-label>
+      <ion-input
+        color="dark"
+        formControlName="email"
+        placeholder="Enter your email"
+      >
       </ion-input>
     </ion-item>
 
@@ -34,8 +39,9 @@
     ></app-form-validation>
 
     <ion-item class="input ion-no-padding">
-      <ion-label position="floating">Password</ion-label>
+      <ion-label color="dark" position="floating">Password</ion-label>
       <ion-input
+        color="dark"
         type="password"
         formControlName="password"
         placeholder="Enter your password"
@@ -50,8 +56,9 @@
     ></app-form-validation>
 
     <ion-item class="input ion-no-padding">
-      <ion-label position="floating">Re enter Password</ion-label>
+      <ion-label color="dark" position="floating">Re enter Password</ion-label>
       <ion-input
+        color="dark"
         type="password"
         formControlName="passwordConfirmation"
         placeholder="Re enter your password"

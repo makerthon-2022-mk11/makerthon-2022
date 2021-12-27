@@ -8,8 +8,9 @@
 <ion-content>
   <form id="form" [formGroup]="editForm" (submit)="edit()">
     <ion-item class="input ion-no-padding" id="editable">
-      <ion-label position="floating">Username</ion-label>
+      <ion-label color="dark" position="floating">Username</ion-label>
       <ion-input
+        color="dark"
         formControlName="displayName"
         placeholder="Enter your username"
       >
@@ -25,10 +26,10 @@
     <ion-item class="input ion-no-padding" id="static">
       <ion-col>
         <ion-row>
-          <ion-label>Email</ion-label>
+          <ion-label color="dark">Email</ion-label>
         </ion-row>
         <ion-row>
-          <ion-text>{{email}}</ion-text>
+          <ion-text color="dark">{{email}}</ion-text>
         </ion-row>
       </ion-col>
     </ion-item>

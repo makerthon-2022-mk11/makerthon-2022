@@ -96,7 +96,7 @@ export class SignUpPage implements OnInit {
       if (pwdConCtl.dirty && pwdConCtl.value != pwdCtl.value) {
         pwdConCtl.setErrors({ notSame: true });
       } else {
-        pwdConCtl.setErrors(null);
+        delete pwdConCtl.errors.notSame;
       }
 
       return null;
