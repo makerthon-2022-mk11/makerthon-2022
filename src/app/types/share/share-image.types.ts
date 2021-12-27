@@ -1,17 +1,8 @@
-import { UploadData } from '../storage.types';
-
-export type ShareImageUploadData = UploadData & {
-  title?: string;
-  description?: string;
-
+export type ShareImageUploadData = {
+  docRef: string;
   recipientRef: string;
 };
 
-export type ShareImagePostData = {
-  storageRef: string;
-  title?: string;
-  description?: string;
-
+export type ShareImagePostData = ShareImageUploadData & {
   senderRef: string;
-  recipientRef: string;
 };

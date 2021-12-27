@@ -21,27 +21,26 @@ export class ShareImageService {
     private userService: UserService
   ) {}
 
-  async share(shareImageUploadData: ShareImageUploadData) {
-    const uploadData: UploadData = {
-      blob: shareImageUploadData.blob,
-      fileName: shareImageUploadData.fileName,
-    };
-    const uploadResult = await this.storageService.upload(uploadData);
+  // async share(shareImageUploadData: ShareImageUploadData) {
+  //   const uploadData: UploadData = {
+  //     blob: shareImageUploadData.blob,
+  //     fileName: shareImageUploadData.fileName,
+  //   };
+  //   const uploadResult = await this.storageService.upload(uploadData);
 
-    const postData: ShareImagePostData = {
-      storageRef: uploadResult.ref.fullPath,
-      title: shareImageUploadData.title,
-      description: shareImageUploadData.description,
-      senderRef: this.userService.docId,
-      recipientRef: shareImageUploadData.recipientRef,
-    };
+  //   const postData: ShareImagePostData = {
+  //     storageRef: uploadResult.ref.fullPath,
+  //     title: shareImageUploadData.title,
+  //     description: shareImageUploadData.description,
+  //     senderRef: this.userService.docId,
+  //     recipientRef: shareImageUploadData.recipientRef,
+  //   };
 
-    return this.create(postData);
-  }
-
-  private create(shareImagePostData: ShareImagePostData) {
-    this.storeService.post(this.dbPath, shareImagePostData);
-  }
+  //   return this.create(postData);
+  // }
+  // private create(shareImagePostData: ShareImagePostData) {
+  //   this.storeService.post(this.dbPath, shareImagePostData);
+  // }
 
   // async loadImagesByUser(): List[Image] {
   //   const snapshots = await this.storeService

@@ -4,20 +4,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SharePageRoutingModule } from './share-routing.module';
+import { SendImagePageRoutingModule } from './send-image-routing.module';
 
-import { SharePage } from './share.page';
+import { SendImagePage } from './send-image.page';
 import { FormValidationModule } from 'src/app/components/form-validation/form-validation.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
-    SharePageRoutingModule,
-    ReactiveFormsModule,
     FormValidationModule,
+    IonicModule,
+    ReactiveFormsModule,
+    SendImagePageRoutingModule,
   ],
-  declarations: [SharePage],
+  declarations: [SendImagePage],
 })
-export class SharePageModule {}
+export class SendImagePageModule {}

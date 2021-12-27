@@ -4,20 +4,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ShareWithUserPageRoutingModule } from './share-with-user-routing.module';
+import { SendPageRoutingModule } from './send-routing.module';
 
-import { ShareWithUserPage } from './share-with-user.page';
+import { SendPage } from './send.page';
 import { FormValidationModule } from 'src/app/components/form-validation/form-validation.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    FormValidationModule,
     IonicModule,
+    SendPageRoutingModule,
     ReactiveFormsModule,
-    ShareWithUserPageRoutingModule,
+    FormValidationModule,
   ],
-  declarations: [ShareWithUserPage],
+  declarations: [SendPage],
 })
-export class ShareWithUserPageModule {}
+export class SendPageModule {}

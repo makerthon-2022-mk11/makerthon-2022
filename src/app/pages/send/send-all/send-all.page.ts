@@ -5,11 +5,11 @@ import { ShareTextService } from 'src/app/services/share/share-text.service';
 import { ShareImageService } from 'src/app/services/share/share-image.service';
 
 @Component({
-  selector: 'app-share-with-user',
-  templateUrl: './share-with-user.page.html',
-  styleUrls: ['./share-with-user.page.scss'],
+  selector: 'app-send-all',
+  templateUrl: './send-all.page.html',
+  styleUrls: ['./send-all.page.scss'],
 })
-export class ShareWithUserPage implements OnInit {
+export class SendAllPage implements OnInit {
   constructor(
     private shareLinkService: ShareLinkService,
     private shareTextService: ShareTextService,

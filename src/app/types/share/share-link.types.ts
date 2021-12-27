@@ -1,9 +1,5 @@
-// use: (link, title and description) or (linkRef)??
 export type ShareLinkFormData = {
-  link: string;
-  title?: string;
-  description?: string;
-
+  docRef: string;
   recipientRef: string;
 };
 

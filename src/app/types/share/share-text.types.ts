@@ -1,8 +1,5 @@
 export type ShareTextFormData = {
-  text: string;
-  title?: string;
-  description?: string;
-
+  docRef: string;
   recipientRef: string;
 };
 

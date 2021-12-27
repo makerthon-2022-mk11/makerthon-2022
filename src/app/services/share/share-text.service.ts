@@ -17,12 +17,12 @@ export class ShareTextService {
     private userService: UserService
   ) {}
 
-  create(textFormData: ShareTextFormData) {
-    const postData: ShareTextPostData = {
-      ...textFormData,
-      senderRef: this.userService.docId,
-    };
+  // create(textFormData: ShareTextFormData) {
+  //   const postData: ShareTextPostData = {
+  //     ...textFormData,
+  //     senderRef: this.userService.docId,
+  //   };
 
-    return this.storeService.post(this.dbPath, postData);
-  }
+  //   return this.storeService.post(this.dbPath, postData);
+  // }
 }

@@ -19,8 +19,8 @@ export class MenuComponent implements OnInit {
       path: routePaths.UPLOAD,
     },
     {
-      name: 'Share',
-      path: routePaths.SHARE,
+      name: 'Send',
+      path: routePaths.SEND,
     },
   ];
 

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ShareWithUserPage } from './share-with-user.page';
+import { SendLinkPage } from './send-link.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ShareWithUserPage,
+    component: SendLinkPage,
   },
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ShareWithUserPageRoutingModule {}
+export class SendLinkPageRoutingModule {}

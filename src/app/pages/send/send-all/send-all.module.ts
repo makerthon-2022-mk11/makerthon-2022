@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ShareByUserPageRoutingModule } from './share-by-user-routing.module';
+import { SendAllPageRoutingModule } from './send-all-routing.module';
 
-import { ShareByUserPage } from './share-by-user.page';
+import { SendAllPage } from './send-all.page';
 import { FormValidationModule } from 'src/app/components/form-validation/form-validation.module';
 
 @NgModule({
@@ -16,8 +16,8 @@ import { FormValidationModule } from 'src/app/components/form-validation/form-va
     FormValidationModule,
     IonicModule,
     ReactiveFormsModule,
-    ShareByUserPageRoutingModule,
+    SendAllPageRoutingModule,
   ],
-  declarations: [ShareByUserPage],
+  declarations: [SendAllPage],
 })
-export class ShareByUserPageModule {}
+export class SendAllPageModule {}

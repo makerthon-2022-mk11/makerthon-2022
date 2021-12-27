@@ -17,12 +17,12 @@ export class ShareLinkService {
     private userService: UserService
   ) {}
 
-  create(formData: ShareLinkFormData) {
-    const postData: ShareLinkPostData = {
-      ...formData,
-      senderRef: this.userService.docId,
-    };
+  // create(formData: ShareLinkFormData) {
+  //   const postData: ShareLinkPostData = {
+  //     ...formData,
+  //     senderRef: this.userService.docId,
+  //   };
 
-    return this.storeService.post(this.dbPath, postData);
-  }
+  //   return this.storeService.post(this.dbPath, postData);
+  // }
 }
