@@ -12,6 +12,6 @@ export class HomePage implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.username = this.userService.user.email;
+    this.username = this.userService.user?.email;
   }
 }

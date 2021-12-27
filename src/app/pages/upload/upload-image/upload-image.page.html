@@ -10,19 +10,19 @@
 
 <form [formGroup]="uploadForm" *ngIf="hasSelectedImage()">
   <ion-item class="input ion-no-padding">
-    <ion-label color="dark" position="floating">Title (Optional)</ion-label>
-    <ion-input color="dark" formControlName="title" placeholder="Enter a title">
+    <ion-input
+      color="dark"
+      formControlName="title"
+      placeholder="Title (optional)"
+    >
     </ion-input>
   </ion-item>
 
   <ion-item class="input ion-no-padding">
-    <ion-label color="dark" position="floating"
-      >Description (Optional)</ion-label
-    >
     <ion-input
       color="dark"
       formControlName="description"
-      placeholder="Enter a description"
+      placeholder="Description (optional)"
     >
     </ion-input>
   </ion-item>

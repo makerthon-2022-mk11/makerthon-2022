@@ -16,17 +16,12 @@ import { UserService } from './user.service';
 })
 export class AuthService {
   userData: User;
-  isLoggedIn: boolean;
-  isVerified: boolean;
 
   constructor(private auth: Auth, private userService: UserService) {
     if (auth) {
       authState(this.auth).subscribe((user) => {
         if (user) {
-          this.userData = user;
-          localStorage.setItem('user', JSON.stringify(this.userData));
-          this.isVerified = user.emailVerified;
-          this.isLoggedIn = this.isVerified && user !== null;
+          this.setUser(user);
         } else {
           localStorage.setItem('user', null);
         }
@@ -34,12 +29,19 @@ export class AuthService {
     }
   }
 
+  get isVerified(): boolean {
+    const user = JSON.parse(localStorage.getItem('user')) as User;
+    return user?.emailVerified;
+  }
+
+  get isLoggedIn(): boolean {
+    return this.isVerified && localStorage.getItem('user') != null;
+  }
+
   login(email, password) {
     return signInWithEmailAndPassword(this.auth, email, password).then(
       (userCred) => {
-        this.userData = userCred.user;
-        this.isLoggedIn = true;
-        this.isVerified = userCred.user.emailVerified;
+        this.setUser(userCred.user);
       }
     );
   }
@@ -63,5 +65,10 @@ export class AuthService {
 
   resetPassword(email): Promise<void> {
     return sendPasswordResetEmail(this.auth, email);
+  }
+
+  private setUser(user: User) {
+    this.userData = user;
+    localStorage.setItem('user', JSON.stringify(this.userData));
   }
 }
