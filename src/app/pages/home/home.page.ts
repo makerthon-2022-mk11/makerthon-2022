@@ -6,6 +6,8 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { routePaths } from 'src/app/constants/routing.constants';
 import { ImageService } from 'src/app/services/image.service';
 import { LinkService } from 'src/app/services/link.service';
 import { TextService } from 'src/app/services/text.service';
@@ -56,7 +58,8 @@ export class HomePage implements OnInit {
     private userService: UserService,
     private imageService: ImageService,
     private linkService: LinkService,
-    private textService: TextService
+    private textService: TextService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -153,5 +156,9 @@ export class HomePage implements OnInit {
 
   isBoosterText() {
     return this.booster === BoosterTypeEnum.Text;
+  }
+
+  navToUpload() {
+    this.router.navigateByUrl(routePaths.UPLOAD);
   }
 }
