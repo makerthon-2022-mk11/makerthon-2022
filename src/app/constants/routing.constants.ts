@@ -3,9 +3,9 @@ export const routePaths = {
   LOGIN: 'login',
   PROFILE: 'profile',
   RESET_PASSWORD: 'reset-password',
-  SIGNUP: 'signUp',
+  SIGNUP: 'signup',
   UPLOAD: 'upload',
-  UPLOAD_IMAGE: 'upload-image',
-  UPLOAD_LINK: 'upload-link',
-  UPLOAD_TEXT: 'upload-text',
+  UPLOAD_IMAGE: 'image',
+  UPLOAD_LINK: 'link',
+  UPLOAD_TEXT: 'text',
 };
