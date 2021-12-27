@@ -1,0 +1,17 @@
+<div>
+  <div *ngIf="title">
+    <ion-label color="dark">Title:</ion-label>
+    <br />
+    <ion-text color="dark">{{ title }}</ion-text>
+  </div>
+
+  <div *ngIf="description">
+    <ion-label color="dark">Description:</ion-label>
+    <br />
+    <ion-text color="dark">{{ description }}</ion-text>
+  </div>
+
+  <div *ngIf="downloadUrl">
+    <img src="{{ downloadUrl }}" alt="Booster image" />
+  </div>
+</div>

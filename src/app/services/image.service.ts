@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ImagePostData, ImageUploadData } from '../types/image.types';
+import { where } from '@angular/fire/firestore';
+import {
+  ImagePostData,
+  ImageUploadData,
+  ImageStoreData,
+  ImageData,
+} from '../types/image.types';
 import { UploadData } from '../types/storage.types';
 import { StorageService } from './storage.service';
 import { StoreService } from './store.service';
@@ -36,5 +42,18 @@ export class ImageService {
 
   private create(imagePostData: ImagePostData) {
     this.storeService.post(this.dbPath, imagePostData);
+  }
+
+  async getRandom(): Promise<ImageData> {
+    const doc = await this.storeService.getRandomDoc(this.dbPath, () =>
+      where('userRef', '==', this.userService.docId)
+    );
+
+    const imageData: ImageStoreData = doc.data() as ImageStoreData;
+    const downloadUrl: string = await this.storageService.getDownloadUrl(
+      imageData.storageRef
+    );
+
+    return { ...imageData, downloadUrl: downloadUrl };
   }
 }
