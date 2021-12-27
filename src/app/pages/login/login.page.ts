@@ -88,6 +88,6 @@ export class LoginPage implements OnInit {
   }
 
   get controls() {
-    return this.loginForm.controls;
+    return this.loginForm?.controls;
   }
 }

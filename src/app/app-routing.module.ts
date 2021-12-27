@@ -21,6 +21,12 @@ const routes: Routes = [
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
   },
   {
+    path: routePaths.PROFILE,
+    loadChildren: () =>
+      import('./pages/profile/profile.module').then((m) => m.ProfilePageModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: routePaths.RESET_PASSWORD,
     loadChildren: () =>
       import('./pages/reset-password/reset-password.module').then(
