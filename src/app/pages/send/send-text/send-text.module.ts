@@ -7,17 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { SendTextPageRoutingModule } from './send-text-routing.module';
 
 import { SendTextPage } from './send-text.page';
-import { FormValidationModule } from 'src/app/components/form-validation/form-validation.module';
+import { TextComponent } from 'src/app/components/text/text.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    FormValidationModule,
-    IonicModule,
-    ReactiveFormsModule,
-    SendTextPageRoutingModule,
-  ],
-  declarations: [SendTextPage],
+  imports: [CommonModule, IonicModule, SendTextPageRoutingModule],
+  declarations: [SendTextPage, TextComponent],
 })
 export class SendTextPageModule {}

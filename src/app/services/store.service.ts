@@ -6,6 +6,7 @@ import {
   DocumentData,
   DocumentReference,
   Firestore,
+  getDoc,
   getDocs,
   query,
   QueryConstraint,
@@ -45,6 +46,10 @@ export class StoreService {
   getDocRef(path, docId): DocumentReference {
     const docRef = doc(this.firestore, path, docId);
     return docRef;
+  }
+
+  getDoc(path, docId) {
+    return getDoc(doc(this.firestore, path, docId));
   }
 
   post(path: string, postData: any): Promise<DocumentReference<any>> {

@@ -1,0 +1,17 @@
+<ion-content>
+  <ion-label color="secondary" *ngIf="!isLoading && texts.length == 0">
+    {{emptyListMsg}}
+  </ion-label>
+
+  <ion-label color="secondary" *ngIf="isLoading"> {{loadingMsg}} </ion-label>
+
+  <ion-content [scrollEvents]="true" *ngIf="!isLoading">
+    <ion-list *ngFor="let item of texts">
+      <app-text
+        [title]="item.title"
+        [description]="item.description"
+        [text]="item.text"
+      ></app-text>
+    </ion-list>
+  </ion-content>
+</ion-content>
