@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import {
   DocumentData,
-  FirestoreError,
   QuerySnapshot,
+  Timestamp,
   where,
 } from 'firebase/firestore';
-import {
-  ShareTextFormData,
-  ShareTextPostData,
-} from '../../types/share/share-text.types';
+import { ShareTextPostData } from '../../types/share/share-text.types';
 import { StoreService } from './../store.service';
 import { UserService } from './../user.service';
 import { TextService } from './../text.service';
@@ -49,20 +46,40 @@ export class ShareTextService {
         where('senderRef', '==', this.userService.docId)
       )
       .then(async (snapshot) => {
-        let promises = this.getTextDataWithDocId(snapshot);
+        const uniqueTextDocs = this.getUniqueTextDocs(snapshot);
+        let promises = this.getTextDataWithDocId(uniqueTextDocs);
         const result = await Promise.all(promises);
-        return [...new Set(result)];
-      })
-      .catch((err: FirestoreError) => {
-        console.log(err.code);
+        return result;
       });
   }
 
-  private getTextDataWithDocId(snapshotDocs: QuerySnapshot<DocumentData>) {
-    let promises = [];
+  private getUniqueTextDocs(snapshotDocs: QuerySnapshot<DocumentData>) {
+    let unique = new Map<String, Date>();
 
     snapshotDocs.forEach((doc) => {
-      const promise = this.textService.getTextDataByDocRef(doc.data().docRef);
+      const docRef = doc.data().docRef;
+      const date = (doc.data().createdAt as Timestamp).toDate();
+
+      if (unique.has(docRef)) {
+        if (unique[docRef] < date) {
+          unique.set(docRef, date);
+        }
+      } else {
+        unique.set(docRef, date);
+      }
+    });
+
+    return Array.from(unique).sort((a, b) => {
+      return a.values[1] - b.values[1];
+    });
+  }
+
+  private getTextDataWithDocId(uniqueTextDocs: [String, any][]) {
+    let promises = [];
+
+    uniqueTextDocs.forEach((doc) => {
+      const docRef = doc[0] as string;
+      const promise = this.textService.getTextDataByDocRef(doc[0] as string);
       promises.push(promise);
     });
 

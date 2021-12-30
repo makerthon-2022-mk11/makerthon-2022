@@ -5,6 +5,10 @@
 
   <ion-label color="secondary" *ngIf="isLoading"> {{loadingMsg}} </ion-label>
 
+  <ion-label>
+    <ion-text color="danger" *ngIf="errorMsg">{{errorMsg}}</ion-text>
+  </ion-label>
+
   <ion-content [scrollEvents]="true" *ngIf="!isLoading">
     <ion-list *ngFor="let item of texts">
       <app-text

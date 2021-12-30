@@ -3,6 +3,8 @@ import { ToastService } from 'src/app/services/toast.service';
 import { ShareTextService } from 'src/app/services/share/share-text.service';
 import { Observable } from 'rxjs';
 import { Text } from './../../../types/text.types';
+import { FirestoreError } from 'firebase/firestore';
+import { firestoreErrorCodeToMessageMap } from 'src/app/constants/store.constants';
 
 @Component({
   selector: 'app-send-text',
@@ -14,6 +16,7 @@ export class SendTextPage implements OnInit {
   emptyListMsg = 'You have yet to send any texts to others';
   loadingMsg = 'Loading...';
   isLoading = false;
+  errorMsg: string;
 
   constructor(private shareTextService: ShareTextService) {}
 
@@ -27,9 +30,16 @@ export class SendTextPage implements OnInit {
       }
       this.isLoading = false;
     });
+    this.errorMsg = '';
   }
 
   async loadTexts() {
-    return await this.shareTextService.getTextsSentByUser();
+    return await this.shareTextService
+      .getTextsSentByUser()
+      .catch((err: FirestoreError) => {
+        this.errorMsg =
+          firestoreErrorCodeToMessageMap.get(err.code) ??
+          'There is a problem logging in, please try again later';
+      });
   }
 }

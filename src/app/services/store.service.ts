@@ -12,8 +12,10 @@ import {
   QueryConstraint,
   QueryDocumentSnapshot,
   QuerySnapshot,
+  Timestamp,
   updateDoc,
 } from '@angular/fire/firestore';
+import { TextPostData } from '../types/text.types';
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +55,11 @@ export class StoreService {
   }
 
   post(path: string, postData: any): Promise<DocumentReference<any>> {
-    return addDoc(collection(this.firestore, path), postData);
+    const postDataWithTime = {
+      ...postData,
+      createdAt: Timestamp.now(),
+    };
+    return addDoc(collection(this.firestore, path), postDataWithTime);
   }
 
   update(path: string, updateData: any, docId: string): Promise<void> {
