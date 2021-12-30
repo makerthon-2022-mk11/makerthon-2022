@@ -11,3 +11,10 @@ export type ImageUploadData = UploadData & {
   title?: string;
   description?: string;
 };
+
+export type ImageDataFromDb = {
+  storageRef: string;
+  title?: string;
+  description?: string;
+  docRef: string;
+};

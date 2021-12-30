@@ -1,0 +1,11 @@
+<ion-card id="card">
+  <ion-card-title id="title" *ngIf="image.title != null" color="secondary">{{
+    image.title
+  }}</ion-card-title>
+  <ion-card-content>
+    <p id="description" *ngIf="image.description != null">
+      {{ image.description }}
+    </p>
+    <ion-img id="image" [src]="image.storageRef"></ion-img>
+  </ion-card-content>
+</ion-card>

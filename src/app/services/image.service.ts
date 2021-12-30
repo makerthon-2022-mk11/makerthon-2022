@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ImagePostData, ImageUploadData } from '../types/image.types';
+import {
+  ImageDataFromDb,
+  ImagePostData,
+  ImageUploadData,
+} from '../types/image.types';
 import { UploadData } from '../types/storage.types';
 import { StorageService } from './storage.service';
 import { StoreService } from './store.service';
@@ -36,5 +40,22 @@ export class ImageService {
 
   private create(imagePostData: ImagePostData) {
     this.storeService.post(this.dbPath, imagePostData);
+  }
+
+  getImage(storageRef) {
+    return this.storageService.getImage(storageRef);
+  }
+
+  async getImageDataByDocRef(docRef: string) {
+    const doc = await this.storeService.getDoc(this.dbPath, docRef);
+
+    const imageData = {
+      title: doc.data().title,
+      description: doc.data().description,
+      storageRef: doc.data().storageRef,
+      docRef: docRef,
+    } as ImageDataFromDb;
+
+    return imageData;
   }
 }

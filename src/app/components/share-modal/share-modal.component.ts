@@ -4,6 +4,7 @@ import { ShareImageService } from 'src/app/services/share/share-image.service';
 import { ShareLinkService } from 'src/app/services/share/share-link.service';
 import { ShareTextService } from 'src/app/services/share/share-text.service';
 import { UserService } from 'src/app/services/user.service';
+import { ShareImageUploadData } from 'src/app/types/share/share-image.types';
 import { ShareLinkFormData } from 'src/app/types/share/share-link.types';
 import { ShareTextFormData } from 'src/app/types/share/share-text.types';
 import { UserDataFromDb } from 'src/app/types/user.types';
@@ -62,7 +63,7 @@ export class ShareModalComponent implements OnInit {
       if (doc.text != undefined) {
         postTextDataRef.push(doc.docRef);
       }
-      if (doc.blob != undefined || doc.storageRef != undefined) {
+      if (doc.storageRef != undefined) {
         postImageDataRef.push(doc.docRef);
       }
       if (doc.link != undefined) {
@@ -78,13 +79,13 @@ export class ShareModalComponent implements OnInit {
       this.shareTextService.create(shareTextFormData);
     });
 
-    // postImageDataRef.forEach((docRef) => {
-    //   const shareImageFormData: ShareImageFormData = {
-    //     docRef: docRef,
-    //     recipientRef: recipientRef,
-    //   }
-    //   this.shareImageService.create(shareImageFormData);
-    // })
+    postImageDataRef.forEach((docRef) => {
+      const shareImageFormData: ShareImageUploadData = {
+        docRef: docRef,
+        recipientRef: recipientRef,
+      };
+      this.shareImageService.create(shareImageFormData);
+    });
 
     // postLinkDataRef.forEach((docRef) => {
     //   const shareLinkFormData: ShareLinkFormData = {
