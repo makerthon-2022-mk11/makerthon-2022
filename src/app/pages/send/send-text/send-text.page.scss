@@ -1,5 +1,17 @@
-ion-label {
+app-send-text {
+  ion-label {
+    display: flex;
+    justify-content: center;
+    padding: 2%;
+  }
+}
+
+ion-row {
   display: flex;
-  justify-content: center;
-  padding: 2%;
+  align-items: center;
+
+  #checkbox {
+    text-align: center;
+    font-size: large;
+  }
 }

@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { where } from 'firebase/firestore';
-import { TextFormData, TextPostData } from '../types/text.types';
+import {
+  TextDataFromDb,
+  TextFormData,
+  TextPostData,
+} from '../types/text.types';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
 
@@ -49,7 +53,8 @@ export class TextService {
       title: doc.data().title,
       description: doc.data().description,
       text: doc.data().text,
-    };
+      docRef: docRef,
+    } as TextDataFromDb;
 
     return textData;
   }

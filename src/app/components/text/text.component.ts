@@ -1,4 +1,4 @@
-import { Text } from './../../types/text.types';
+import { TextDataFromDb } from './../../types/text.types';
 import { Component, Input, OnInit } from '@angular/core';
 import { TextService } from 'src/app/services/text.service';
 
@@ -8,11 +8,9 @@ import { TextService } from 'src/app/services/text.service';
   styleUrls: ['./text.component.scss'],
 })
 export class TextComponent implements OnInit {
-  @Input() title;
-  @Input() description?;
-  @Input() text?;
+  @Input() text: TextDataFromDb;
 
-  constructor(private textService: TextService) {}
+  constructor() {}
 
   ngOnInit(): void {}
 }

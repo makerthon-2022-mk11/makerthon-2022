@@ -1,9 +1,11 @@
 <ion-card id="card">
-  <ion-card-title id="title" *ngIf="title != null" color="secondary">{{
-    title
+  <ion-card-title id="title" *ngIf="text.title != null" color="secondary">{{
+    text.title
   }}</ion-card-title>
   <ion-card-content>
-    <p id="description" *ngIf="description != null">{{ description }}</p>
-    <p id="text">{{ text }}</p>
+    <p id="description" *ngIf="text.description != null">
+      {{ text.description }}
+    </p>
+    <p id="text">{{ text.text }}</p>
   </ion-card-content>
 </ion-card>

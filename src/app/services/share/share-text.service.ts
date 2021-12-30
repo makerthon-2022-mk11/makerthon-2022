@@ -5,7 +5,10 @@ import {
   Timestamp,
   where,
 } from 'firebase/firestore';
-import { ShareTextPostData } from '../../types/share/share-text.types';
+import {
+  ShareTextFormData,
+  ShareTextPostData,
+} from '../../types/share/share-text.types';
 import { StoreService } from './../store.service';
 import { UserService } from './../user.service';
 import { TextService } from './../text.service';
@@ -22,21 +25,12 @@ export class ShareTextService {
     private textService: TextService
   ) {}
 
-  // create(shareTextFormData: ShareTextFormData) {
-  //   const postData: ShareTextPostData = shareTextFormData & {
-  //     senderRef: this.userService.docId,
-  //   };
-
-  //   return this.storeService.post(this.dbPath, postData);
-  // }
-
-  // TEMP
-  create(recipientRef: string, docRef: string) {
+  create(shareTextFormData: ShareTextFormData) {
     const postData: ShareTextPostData = {
-      recipientRef: recipientRef,
-      docRef: docRef,
+      ...shareTextFormData,
       senderRef: this.userService.docId,
     };
+
     return this.storeService.post(this.dbPath, postData);
   }
 
@@ -86,5 +80,5 @@ export class ShareTextService {
     return promises;
   }
 
-  getTextsSentToUser() {}
+  // getTextsSentToUser() {}
 }

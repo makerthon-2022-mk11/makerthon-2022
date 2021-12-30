@@ -1,7 +1,8 @@
-export type Text = {
+export type TextDataFromDb = {
   text: string;
   title?: string;
   description?: string;
+  docRef: string;
 };
 
 export type TextFormData = {

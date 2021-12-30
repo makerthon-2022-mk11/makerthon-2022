@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, authState, UserCredential } from '@angular/fire/auth';
 import { where, onSnapshot, Unsubscribe } from '@angular/fire/firestore';
-import { User, UserPostData } from '../types/user.types';
+import { User, UserDataFromDb, UserPostData } from '../types/user.types';
 import { StoreService } from './store.service';
 
 @Injectable({
@@ -60,5 +60,28 @@ export class UserService {
     this.observer = onSnapshot(docRef, (docSnapshot) => {
       this.user = docSnapshot.data() as User;
     });
+  }
+
+  async getAllOtherUsers() {
+    const snapshot = await this.storeService.getSnapshotChanges(
+      this.dbPath,
+      () => where('uid', '!=', this.user.uid)
+    );
+
+    const usersDataFromDb = [];
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+
+      const userData: UserDataFromDb = {
+        displayName: data.displayName,
+        email: data.email,
+        uid: data.uid,
+        userRef: doc.id,
+      };
+
+      usersDataFromDb.push(userData);
+    });
+
+    return usersDataFromDb;
   }
 }
