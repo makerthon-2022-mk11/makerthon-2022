@@ -1,3 +1,5 @@
+import { FieldValue } from '@angular/fire/firestore';
+
 export type TextFormData = {
   text: string;
   title?: string;
@@ -5,7 +7,9 @@ export type TextFormData = {
 };
 
 export type TextPostData = TextFormData & {
-  userRef: string;
+  creatorRef: string;
+  createdAt: FieldValue;
+  updatedAt: FieldValue;
 };
 
 export type TextData = TextPostData;

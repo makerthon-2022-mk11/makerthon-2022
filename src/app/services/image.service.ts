@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { where } from '@angular/fire/firestore';
+import { serverTimestamp, where } from '@angular/fire/firestore';
 import {
   ImagePostData,
   ImageUploadData,
@@ -32,9 +32,11 @@ export class ImageService {
 
     const postData: ImagePostData = {
       storageRef: uploadResult.ref.fullPath,
-      userRef: this.userService.docId,
+      creatorRef: this.userService.docId,
       title: imageUploadData.title,
       description: imageUploadData.description,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     };
 
     return this.create(postData);
@@ -46,7 +48,7 @@ export class ImageService {
 
   async getRandom(): Promise<ImageData> {
     const doc = await this.storeService.getRandomDoc(this.dbPath, () =>
-      where('userRef', '==', this.userService.docId)
+      where('creatorRef', '==', this.userService.docId)
     );
 
     const imageData: ImageStoreData = doc.data() as ImageStoreData;

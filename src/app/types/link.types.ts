@@ -1,3 +1,5 @@
+import { FieldValue } from '@angular/fire/firestore';
+
 export type LinkFormData = {
   link: string;
   title?: string;
@@ -5,7 +7,9 @@ export type LinkFormData = {
 };
 
 export type LinkPostData = LinkFormData & {
-  userRef: string;
+  creatorRef: string;
+  createdAt: FieldValue;
+  updatedAt: FieldValue;
 };
 
 export type LinkData = LinkPostData;

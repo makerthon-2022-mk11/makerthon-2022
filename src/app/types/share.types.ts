@@ -1,4 +1,4 @@
-import { FieldValue } from 'firebase/firestore';
+import { FieldValue } from '@angular/fire/firestore';
 
 export type ShareFormData = {
   itemRef: string;
