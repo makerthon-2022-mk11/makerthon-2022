@@ -58,7 +58,7 @@ export class UserService {
       const data = snapshot.data();
       const user: UserSendData = {
         displayName: data.displayName,
-        docId: data.docId,
+        docId: snapshot.id,
       };
       users.push(user);
     });
