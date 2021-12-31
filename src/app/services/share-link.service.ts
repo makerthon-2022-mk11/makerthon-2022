@@ -4,15 +4,15 @@ import { ShareService } from './share.service';
 @Injectable({
   providedIn: 'root',
 })
-export class ShareTextService {
-  private dbPath = 'shareTexts';
+export class ShareLinkService {
+  private dbPath = 'shareLinks';
 
   constructor(private shareService: ShareService) {}
 
-  shareTextWithRecipients(textRef: string, recipientRefs: string[]) {
+  shareLinkWithRecipients(linkRef: string, recipientRefs: string[]) {
     return this.shareService.shareItemWithRecipients(
       this.dbPath,
-      textRef,
+      linkRef,
       recipientRefs
     );
   }
