@@ -12,4 +12,13 @@ export type TextPostData = TextFormData & {
   updatedAt: FieldValue;
 };
 
-export type TextData = TextPostData;
+export type TextData = {
+  text: string;
+  title?: string;
+  description?: string;
+  docId: string;
+};
+
+export type TextSelectData = TextData & {
+  isSelected: boolean;
+};

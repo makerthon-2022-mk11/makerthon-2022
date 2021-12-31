@@ -27,10 +27,10 @@ export class TextService {
   }
 
   async getRandom(): Promise<TextData> {
-    const doc = await this.storeService.getRandomDoc(this.dbPath, () =>
+    const snapshot = await this.storeService.getRandomDoc(this.dbPath, () =>
       where('creatorRef', '==', this.userService.docId)
     );
 
-    return doc.data() as TextData;
+    return { ...snapshot.data(), docId: snapshot.id } as TextData;
   }
 }
