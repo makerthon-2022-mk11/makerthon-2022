@@ -3,13 +3,17 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ModalController, Platform } from '@ionic/angular';
-import { SendComponent } from 'src/app/components/send/send.component';
 import { ERR_NO_IMAGE_SELECTED } from 'src/app/constants/upload.contants';
 import { ImageService } from 'src/app/services/image.service';
 import { ShareImageService } from 'src/app/services/share-image.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ImageUploadData } from 'src/app/types/image.types';
-import { isEmpty, trimInput } from 'src/app/utils/form.util';
+import {
+  getUploadButtonText,
+  isEmpty,
+  trimInput,
+} from 'src/app/utils/form.util';
+import { createModal } from 'src/app/utils/send.util';
 import { v4 } from 'uuid';
 
 @Component({
@@ -84,10 +88,7 @@ export class UploadImagePage implements OnInit {
   }
 
   async openModal() {
-    const modal = await this.modalCtrl.create({
-      component: SendComponent,
-      swipeToClose: true,
-    });
+    const modal = await createModal(this.modalCtrl);
 
     modal.onDidDismiss().then(async (event) => {
       const recipientIds: string[] = event?.data;
@@ -143,7 +144,7 @@ export class UploadImagePage implements OnInit {
   }
 
   get uploadButtonText() {
-    return this.isUploading ? 'Uploading...' : 'Upload';
+    return getUploadButtonText(this.isUploading);
   }
 
   private setDefault() {

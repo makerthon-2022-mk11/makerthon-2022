@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { SendComponent } from 'src/app/components/send/send.component';
 import { LinkService } from 'src/app/services/link.service';
 import { ShareLinkService } from 'src/app/services/share-link.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Validations } from 'src/app/types/form.types';
 import { LinkFormData } from 'src/app/types/link.types';
-import { isEmpty, trimInput } from 'src/app/utils/form.util';
+import {
+  getUploadButtonText,
+  isEmpty,
+  trimInput,
+} from 'src/app/utils/form.util';
+import { createModal } from 'src/app/utils/send.util';
 
 @Component({
   selector: 'app-upload-link',
@@ -57,10 +61,7 @@ export class UploadLinkPage implements OnInit {
   }
 
   async openModal() {
-    const modal = await this.modalCtrl.create({
-      component: SendComponent,
-      swipeToClose: true,
-    });
+    const modal = await createModal(this.modalCtrl);
 
     modal.onDidDismiss().then(async (event) => {
       const recipientIds: string[] = event?.data;
@@ -104,7 +105,7 @@ export class UploadLinkPage implements OnInit {
   }
 
   get uploadButtonText() {
-    return this.isUploading ? 'Uploading...' : 'Upload';
+    return getUploadButtonText(this.isUploading);
   }
 
   private setDefault() {

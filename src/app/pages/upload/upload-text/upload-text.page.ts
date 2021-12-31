@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { SendComponent } from 'src/app/components/send/send.component';
 import { ShareTextService } from 'src/app/services/share-text.service';
 import { TextService } from 'src/app/services/text.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Validations } from 'src/app/types/form.types';
 import { TextFormData } from 'src/app/types/text.types';
-import { isEmpty, trimInput } from 'src/app/utils/form.util';
+import {
+  getUploadButtonText,
+  isEmpty,
+  trimInput,
+} from 'src/app/utils/form.util';
+import { createModal } from 'src/app/utils/send.util';
 
 @Component({
   selector: 'app-upload-text',
@@ -57,10 +61,7 @@ export class UploadTextPage implements OnInit {
   }
 
   async openModal() {
-    const modal = await this.modalCtrl.create({
-      component: SendComponent,
-      swipeToClose: true,
-    });
+    const modal = await createModal(this.modalCtrl);
 
     modal.onDidDismiss().then(async (event) => {
       const recipientIds: string[] = event?.data;
@@ -104,7 +105,7 @@ export class UploadTextPage implements OnInit {
   }
 
   get uploadButtonText() {
-    return this.isUploading ? 'Uploading...' : 'Upload';
+    return getUploadButtonText(this.isUploading);
   }
 
   private setDefault() {
