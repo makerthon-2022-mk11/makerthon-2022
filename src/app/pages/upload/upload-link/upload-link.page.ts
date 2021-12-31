@@ -76,7 +76,7 @@ export class UploadLinkPage implements OnInit {
           })
           .catch(() => {
             this.errorMsg =
-              'There was an error uploading your text. Please try again later';
+              'There was an error uploading your link. Please try again later';
           })
           .finally(() => {
             this.isUploading = false;

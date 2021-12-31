@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Platform } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
+import { SendComponent } from 'src/app/components/send/send.component';
 import { ERR_NO_IMAGE_SELECTED } from 'src/app/constants/upload.contants';
 import { ImageService } from 'src/app/services/image.service';
+import { ShareImageService } from 'src/app/services/share-image.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { ImageUploadData } from 'src/app/types/image.types';
 import { isEmpty, trimInput } from 'src/app/utils/form.util';
@@ -20,7 +22,6 @@ export class UploadImagePage implements OnInit {
   base64ImgUrl: string;
   errorMsg: string;
   isUploading: boolean;
-  uploadButtonText: string = 'Upload';
   uploadForm: FormGroup;
 
   galleryOptions: CameraOptions = {
@@ -34,6 +35,8 @@ export class UploadImagePage implements OnInit {
     splashScreen: SplashScreen,
     private camera: Camera,
     private imageService: ImageService,
+    private modalCtrl: ModalController,
+    private shareImageService: ShareImageService,
     private toastService: ToastService
   ) {
     platform.ready().then(() => {
@@ -71,39 +74,60 @@ export class UploadImagePage implements OnInit {
     return this.base64ImgUrl;
   }
 
-  upload() {
+  onUpload() {
     if (this.hasSelectedImage()) {
-      this.isUploading = true;
-      this.uploadButtonText = 'Uploading...';
       this.errorMsg = '';
+      this.isUploading = true;
 
-      const blob = this.convertBase64ToBlob(this.base64ImgUrl);
-      const title = trimInput(this.controls.title.value);
-      const description = trimInput(this.controls.description.value);
-
-      const uploadData: ImageUploadData = {
-        blob: blob,
-        fileName: v4(),
-        title: isEmpty(title) ? undefined : title,
-        description: isEmpty(description) ? undefined : description,
-      };
-      this.imageService
-        .upload(uploadData)
-        .then(() => {
-          this.toastService.presentSuccessToast(
-            'Successfully uploaded your image!'
-          );
-          this.setDefault();
-        })
-        .catch(() => {
-          this.errorMsg =
-            'There was an error uploading your image, please try again later';
-        })
-        .finally(() => {
-          this.isUploading = false;
-          this.uploadButtonText = 'Upload';
-        });
+      this.openModal();
     }
+  }
+
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: SendComponent,
+      swipeToClose: true,
+    });
+
+    modal.onDidDismiss().then(async (event) => {
+      const recipientIds: string[] = event?.data;
+      if (recipientIds && recipientIds.length > 0) {
+        const doc = await this.upload();
+        this.shareImageService
+          .shareImageWithRecipients(doc.id, recipientIds)
+          .then(() => {
+            this.toastService.presentSuccessToast(
+              'Successfully uploaded your image'
+            );
+            this.setDefault();
+          })
+          .catch(() => {
+            this.errorMsg =
+              'There was an error uploading your image. Please try again later';
+          })
+          .finally(() => {
+            this.isUploading = false;
+          });
+      } else {
+        this.isUploading = false;
+      }
+    });
+
+    await modal.present();
+  }
+
+  upload() {
+    const blob = this.convertBase64ToBlob(this.base64ImgUrl);
+    const title = trimInput(this.controls.title.value);
+    const description = trimInput(this.controls.description.value);
+
+    const uploadData: ImageUploadData = {
+      blob: blob,
+      fileName: v4(),
+      title: isEmpty(title) ? undefined : title,
+      description: isEmpty(description) ? undefined : description,
+    };
+    return this.imageService.upload(uploadData);
   }
 
   private convertBase64ToBlob(dataURI: string) {
@@ -116,6 +140,10 @@ export class UploadImagePage implements OnInit {
     }
     const blob = new Blob([arrayBuffer], { type: 'image/png' });
     return blob;
+  }
+
+  get uploadButtonText() {
+    return this.isUploading ? 'Uploading...' : 'Upload';
   }
 
   private setDefault() {

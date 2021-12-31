@@ -41,7 +41,7 @@ export class ImageService {
   }
 
   private create(imagePostData: ImagePostData) {
-    this.storeService.post(this.dbPath, imagePostData);
+    return this.storeService.post(this.dbPath, imagePostData);
   }
 
   async getRandom(): Promise<ImageData> {
