@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
+import { SendComponent } from 'src/app/components/send/send.component';
 import { TextService } from 'src/app/services/text.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Validations } from 'src/app/types/form.types';
@@ -26,6 +28,7 @@ export class UploadTextPage implements OnInit {
   };
 
   constructor(
+    private modalCtrl: ModalController,
     private textService: TextService,
     private toastService: ToastService
   ) {}
@@ -39,6 +42,19 @@ export class UploadTextPage implements OnInit {
       title: new FormControl(undefined),
       description: new FormControl(undefined),
     });
+  }
+
+  onUpload() {
+    this.openModal();
+  }
+
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: SendComponent,
+      swipeToClose: true,
+    });
+
+    await modal.present();
   }
 
   upload() {

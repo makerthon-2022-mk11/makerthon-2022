@@ -1,5 +1,5 @@
 <ion-content>
-  <form [formGroup]="uploadForm" (submit)="upload()" (keyup.enter)="upload()">
+  <form [formGroup]="uploadForm" (submit)="onUpload()" (keyup.enter)="upload()">
     <ion-item class="input ion-no-padding">
       <ion-input color="dark" formControlName="text" placeholder="Enter text">
       </ion-input>

@@ -8,6 +8,7 @@ import { UploadTextPageRoutingModule } from './upload-text-routing.module';
 
 import { UploadTextPage } from './upload-text.page';
 import { FormValidationModule } from 'src/app/components/form-validation/form-validation.module';
+import { SendModule } from 'src/app/components/send/send.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { FormValidationModule } from 'src/app/components/form-validation/form-va
     FormsModule,
     FormValidationModule,
     IonicModule,
+    SendModule,
     ReactiveFormsModule,
     UploadTextPageRoutingModule,
   ],

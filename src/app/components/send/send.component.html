@@ -1,0 +1,24 @@
+<div id="container">
+  <ion-text id="title">Send to...</ion-text>
+
+  <ion-card id="card">
+    <ion-searchbar
+      (ionInput)="filterRecipients($event.target.value)"
+    ></ion-searchbar>
+
+    <ion-content id="list-container">
+      <ion-list *ngFor="let recipient of filteredRecipients">
+        <ion-item>
+          <ion-checkbox
+            (ionChange)="toggleRecipientIsSelected(recipient)"
+            [checked]="recipient.isSelected"
+            color="dark"
+          ></ion-checkbox>
+          <ion-text color="dark">{{ recipient.displayName }}</ion-text>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+
+    <ion-button expand="block" [disabled]="isSending"> Send </ion-button>
+  </ion-card>
+</div>
