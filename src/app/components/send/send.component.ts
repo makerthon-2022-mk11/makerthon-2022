@@ -18,6 +18,15 @@ export class SendComponent implements OnInit {
       this.recipients.sort((firstUser, secondUser) =>
         firstUser.displayName.localeCompare(secondUser.displayName)
       );
+
+      // Add my collection to the top of the list
+      // Recipient would be the user themself
+      this.recipients.unshift({
+        displayName: 'My collection',
+        docId: userService.docId,
+        isSelected: false,
+      });
+
       this.filteredRecipients = this.recipients;
     });
   }
