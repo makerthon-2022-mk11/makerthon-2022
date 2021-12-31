@@ -44,6 +44,13 @@ const routes: Routes = [
       import('./pages/upload/upload.module').then((m) => m.UploadPageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: routePaths.SHARED_COLLECTION,
+    loadChildren: () =>
+      import('./pages/shared-collection/shared-collection.module').then(
+        (m) => m.SharedCollectionPageModule
+      ),
+  },
 ];
 
 @NgModule({
