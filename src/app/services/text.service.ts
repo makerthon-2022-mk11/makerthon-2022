@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { where } from 'firebase/firestore';
+import { where } from '@angular/fire/firestore';
 import {
-  TextDataFromDb,
+  TextData,
   TextFormData,
   TextPostData,
+  TextDataFromDb,
 } from '../types/text.types';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
@@ -57,5 +58,13 @@ export class TextService {
     } as TextDataFromDb;
 
     return textData;
+  }
+
+  async getRandom(): Promise<TextData> {
+    const doc = await this.storeService.getRandomDoc(this.dbPath, () =>
+      where('userRef', '==', this.userService.docId)
+    );
+
+    return doc.data() as TextData;
   }
 }

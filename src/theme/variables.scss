@@ -74,6 +74,10 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #856354;
   --ion-color-light-tint: #a18a70;
+
+  /** super tabs **/
+  --st-base-color-inactive: #977d60;
+  --st-base-color-active: #5e4636;
 }
 
 @media (prefers-color-scheme: dark) {

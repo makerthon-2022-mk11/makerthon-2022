@@ -14,3 +14,5 @@ export type LinkFormData = {
 export type LinkPostData = LinkFormData & {
   userRef: string;
 };
+
+export type LinkData = LinkPostData;

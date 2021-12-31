@@ -18,3 +18,9 @@ export type ImageDataFromDb = {
   description?: string;
   docRef: string;
 };
+
+export type ImageStoreData = ImagePostData;
+
+export type ImageData = ImageStoreData & {
+  downloadUrl: string;
+};

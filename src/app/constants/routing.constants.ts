@@ -10,7 +10,7 @@ export const routePaths = {
   SEND_LINK: 'send-link',
   SEND_TEXT: 'send-text',
   UPLOAD: 'upload',
-  UPLOAD_IMAGE: 'upload-image',
-  UPLOAD_LINK: 'upload-link',
-  UPLOAD_TEXT: 'upload-text',
+  UPLOAD_IMAGE: 'image',
+  UPLOAD_LINK: 'link',
+  UPLOAD_TEXT: 'text',
 };

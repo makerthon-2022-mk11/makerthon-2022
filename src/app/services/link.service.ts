@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { where } from 'firebase/firestore';
+import { where } from '@angular/fire/firestore';
 import {
-  LinkDataFromDb,
+  LinkData,
   LinkFormData,
   LinkPostData,
+  LinkDataFromDb,
 } from '../types/link.types';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
@@ -57,5 +58,13 @@ export class LinkService {
     } as LinkDataFromDb;
 
     return linkData;
+  }
+
+  async getRandom(): Promise<LinkData> {
+    const doc = await this.storeService.getRandomDoc(this.dbPath, () =>
+      where('userRef', '==', this.userService.docId)
+    );
+
+    return doc.data() as LinkData;
   }
 }

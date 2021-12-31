@@ -14,3 +14,5 @@ export type TextFormData = {
 export type TextPostData = TextFormData & {
   userRef: string;
 };
+
+export type TextData = TextPostData;
