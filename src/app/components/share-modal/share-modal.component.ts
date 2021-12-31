@@ -87,13 +87,13 @@ export class ShareModalComponent implements OnInit {
       this.shareImageService.create(shareImageFormData);
     });
 
-    // postLinkDataRef.forEach((docRef) => {
-    //   const shareLinkFormData: ShareLinkFormData = {
-    //     docRef: docRef,
-    //     recipientRef: recipientRef,
-    //   }
-    //   this.shareLinkService.create(shareLinkFormData);
-    // })
+    postLinkDataRef.forEach((docRef) => {
+      const shareLinkFormData: ShareLinkFormData = {
+        docRef: docRef,
+        recipientRef: recipientRef,
+      };
+      this.shareLinkService.create(shareLinkFormData);
+    });
 
     this.dismissModal();
   }

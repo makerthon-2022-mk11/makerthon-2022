@@ -1,0 +1,29 @@
+<ion-content>
+  <ion-label color="secondary" *ngIf="!isLoading && links.length == 0">
+    {{emptyListMsg}}
+  </ion-label>
+
+  <ion-label color="secondary" *ngIf="isLoading"> {{loadingMsg}} </ion-label>
+
+  <ion-label>
+    <ion-link color="danger" *ngIf="errorMsg">{{errorMsg}}</ion-link>
+  </ion-label>
+
+  <ion-content [scrollEvents]="true" *ngIf="!isLoading">
+    <ion-list *ngFor="let link of links" (click)="onSelect(link)">
+      <ion-row>
+        <ion-col size="1" id="checkbox"
+          ><ion-icon
+            name="checkmark"
+            color="secondary"
+            *ngIf="isSelected(link)"
+          ></ion-icon>
+        </ion-col>
+        <ion-col id="link"> <app-link [link]="link"></app-link></ion-col>
+      </ion-row>
+    </ion-list>
+  </ion-content>
+</ion-content>
+<ion-button expand="full" (click)="openModal()" [disabled]="isNothingSelected()"
+  >Send</ion-button
+>
