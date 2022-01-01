@@ -2,6 +2,7 @@
   <ion-list class="card-container" *ngIf="!isSelectableMode">
     <ion-card
       id="normal-card"
+      (press)="enterSelectMode()"
       (pressup)="enterSelectMode()"
       *ngFor="let textData of textDatas"
     >
