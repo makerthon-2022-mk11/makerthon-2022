@@ -83,7 +83,7 @@ export class SharedTextsPage implements OnInit {
             this.isSelectableMode = false;
           })
           .catch(() => {
-            this.toastService.presentSuccessToast(
+            this.toastService.presentErrorToast(
               'There was an error sharing your texts. Please try again later'
             );
           });

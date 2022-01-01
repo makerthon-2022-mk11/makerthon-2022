@@ -88,7 +88,7 @@ export class SharedImagesPage implements OnInit {
             this.isSelectableMode = false;
           })
           .catch(() => {
-            this.toastService.presentSuccessToast(
+            this.toastService.presentErrorToast(
               'There was an error sharing your images. Please try again later'
             );
           });
