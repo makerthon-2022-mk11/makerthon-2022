@@ -11,15 +11,15 @@
   </ion-list>
 
   <ion-list class="card-container" *ngIf="isSelectableMode">
-    <div *ngFor="let textData of textDatas">
-      <ion-card id="selectable-card" (click)="toggleItemIsSelected(textData)">
+    <div *ngFor="let linkData of linkDatas">
+      <ion-card id="selectable-card" (click)="toggleItemIsSelected(linkData)">
         <ion-checkbox
           color="dark"
-          [checked]="textData.isSelected"
+          [checked]="linkData.isSelected"
         ></ion-checkbox>
 
         <div id="content-container">
-          <h4 *ngIf="hasTitle(textData)">{{linkData.title}}</h4>
+          <h4 *ngIf="hasTitle(linkData)">{{linkData.title}}</h4>
           <div id="link-container">{{linkData.link}}</div>
         </div>
       </ion-card>

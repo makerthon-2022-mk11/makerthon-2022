@@ -16,4 +16,8 @@ export class ShareLinkService {
       recipientRefs
     );
   }
+
+  getUniqueSharedLinkRefs() {
+    return this.shareService.getUniqueSharedItemRefs(this.dbPath);
+  }
 }

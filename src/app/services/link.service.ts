@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { serverTimestamp, where } from '@angular/fire/firestore';
 import { LinkData, LinkFormData, LinkPostData } from '../types/link.types';
+import { ShareLinkService } from './share-link.service';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
 
@@ -11,6 +12,7 @@ export class LinkService {
   private dbPath = 'links';
 
   constructor(
+    private shareLinkService: ShareLinkService,
     private storeService: StoreService,
     private userService: UserService
   ) {}
@@ -32,5 +34,19 @@ export class LinkService {
     );
 
     return doc.data() as LinkData;
+  }
+
+  async getUniqueSharedLinks(): Promise<LinkData[]> {
+    const linkIds: string[] =
+      await this.shareLinkService.getUniqueSharedLinkRefs();
+
+    return this.storeService.getDocsByIds(this.dbPath, linkIds).then((docs) =>
+      docs.map((doc) => ({
+        link: doc.data().link,
+        title: doc.data().title,
+        description: doc.data().description,
+        docId: doc.id,
+      }))
+    );
   }
 }
