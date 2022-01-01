@@ -1,0 +1,38 @@
+#card {
+  margin-top: 2%;
+  margin-bottom: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  height: 80%;
+}
+
+#container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#list-container {
+  height: 78%;
+}
+
+#title {
+  color: #ffffff;
+  font-size: xx-large;
+  margin-left: 8%;
+  font-weight: bold;
+}
+
+#recipient-container {
+  position: absolute;
+  height: 100%;
+  background: rgba(94, 70, 54, 0.3);
+  z-index: 3;
+}
+
+ion-button {
+  width: 80%;
+  margin: 2% auto;
+  --background: #ffffff !important;
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { where } from '@angular/fire/firestore';
+import { serverTimestamp, where } from '@angular/fire/firestore';
 import {
   ImagePostData,
   ImageUploadData,
@@ -7,6 +7,7 @@ import {
   ImageData,
 } from '../types/image.types';
 import { UploadData } from '../types/storage.types';
+import { ShareImageService } from './share-image.service';
 import { StorageService } from './storage.service';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
@@ -18,6 +19,7 @@ export class ImageService {
   dbPath = 'images';
 
   constructor(
+    private shareImageService: ShareImageService,
     private storageService: StorageService,
     private storeService: StoreService,
     private userService: UserService
@@ -32,21 +34,23 @@ export class ImageService {
 
     const postData: ImagePostData = {
       storageRef: uploadResult.ref.fullPath,
-      userRef: this.userService.docId,
+      creatorRef: this.userService.docId,
       title: imageUploadData.title,
       description: imageUploadData.description,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     };
 
     return this.create(postData);
   }
 
   private create(imagePostData: ImagePostData) {
-    this.storeService.post(this.dbPath, imagePostData);
+    return this.storeService.post(this.dbPath, imagePostData);
   }
 
   async getRandom(): Promise<ImageData> {
     const doc = await this.storeService.getRandomDoc(this.dbPath, () =>
-      where('userRef', '==', this.userService.docId)
+      where('creatorRef', '==', this.userService.docId)
     );
 
     const imageData: ImageStoreData = doc.data() as ImageStoreData;
@@ -54,6 +58,28 @@ export class ImageService {
       imageData.storageRef
     );
 
-    return { ...imageData, downloadUrl: downloadUrl };
+    return { ...imageData, docId: doc.id, downloadUrl: downloadUrl };
+  }
+
+  async getUniqueSharedImages(): Promise<ImageData[]> {
+    const imageIds: string[] =
+      await this.shareImageService.getUniqueSharedImageRefs();
+
+    const imageDocs = await this.storeService.getDocsByIds(
+      this.dbPath,
+      imageIds
+    );
+
+    const promises = imageDocs.map(async (doc) => ({
+      storageRef: doc.data().storageRef,
+      title: doc.data().title,
+      description: doc.data().description,
+      docId: doc.id,
+      downloadUrl: await this.storageService.getDownloadUrl(
+        doc.data().storageRef
+      ),
+    }));
+
+    return Promise.all(promises);
   }
 }

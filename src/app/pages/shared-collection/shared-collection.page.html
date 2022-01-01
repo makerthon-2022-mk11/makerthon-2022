@@ -1,0 +1,32 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-title>Shared Collection</ion-title>
+    <ion-menu-button slot="start" menu="appMenu" color="dark"></ion-menu-button>
+  </ion-toolbar>
+</ion-header>
+
+<super-tabs>
+  <super-tabs-toolbar slot="top" scrollable>
+    <super-tab-button>
+      <ion-label>Images</ion-label>
+    </super-tab-button>
+    <super-tab-button>
+      <ion-label>Links</ion-label>
+    </super-tab-button>
+    <super-tab-button>
+      <ion-label>Texts</ion-label>
+    </super-tab-button>
+  </super-tabs-toolbar>
+
+  <super-tabs-container>
+    <super-tab>
+      <ion-nav [root]="images"></ion-nav>
+    </super-tab>
+    <super-tab>
+      <ion-nav [root]="links"></ion-nav>
+    </super-tab>
+    <super-tab>
+      <ion-nav [root]="texts"></ion-nav>
+    </super-tab>
+  </super-tabs-container>
+</super-tabs>

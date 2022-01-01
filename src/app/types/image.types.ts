@@ -1,10 +1,13 @@
+import { FieldValue } from '@angular/fire/firestore';
 import { UploadData } from './storage.types';
 
 export type ImagePostData = {
   storageRef: string;
-  userRef: string;
+  creatorRef: string;
   title?: string;
   description?: string;
+  createdAt: FieldValue;
+  updatedAt: FieldValue;
 };
 
 export type ImageUploadData = UploadData & {
@@ -14,6 +17,14 @@ export type ImageUploadData = UploadData & {
 
 export type ImageStoreData = ImagePostData;
 
-export type ImageData = ImageStoreData & {
+export type ImageData = {
+  storageRef: string;
+  title?: string;
+  description?: string;
   downloadUrl: string;
+  docId: string;
+};
+
+export type ImageSelectData = ImageData & {
+  isSelected: boolean;
 };

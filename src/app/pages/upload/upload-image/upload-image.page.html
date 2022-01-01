@@ -31,7 +31,7 @@
 <ion-button
   *ngIf="hasSelectedImage()"
   expand="block"
-  (click)="upload()"
+  (click)="onUpload()"
   [disabled]="isUploading"
 >
   {{uploadButtonText}}

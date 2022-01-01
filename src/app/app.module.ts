@@ -1,5 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -38,6 +38,7 @@ function initializeFirebase(): ModuleWithProviders<any>[] {
     AppRoutingModule,
     ...initializeFirebase(),
     BrowserModule,
+    HammerModule,
     BrowserAnimationsModule,
     IonicModule.forRoot(),
     SuperTabsModule.forRoot(),
