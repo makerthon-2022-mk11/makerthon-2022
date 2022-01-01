@@ -94,4 +94,26 @@ export class SharedLinksPage implements OnInit {
 
     await modal.present();
   }
+
+  onDelete() {
+    const linkIds = this.linkDatas
+      .filter((linkData) => linkData.isSelected)
+      .map((linkData) => linkData.docId);
+
+    if (linkIds.length > 0) {
+      this.shareLinkService
+        .deleteSharedLinksWithDocRef(linkIds)
+        .then(() => {
+          this.toastService.presentSuccessToast(
+            'Successfully deleted your links'
+          );
+          this.isSelectableMode = false;
+        })
+        .catch(() => {
+          this.toastService.presentErrorToast(
+            'There was an error deleting your links. Please try again later'
+          );
+        });
+    }
+  }
 }

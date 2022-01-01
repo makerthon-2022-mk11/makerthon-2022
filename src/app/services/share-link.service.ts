@@ -27,4 +27,15 @@ export class ShareLinkService {
   getUniqueSharedLinkRefs() {
     return this.shareService.getUniqueSharedItemRefs(this.dbPath);
   }
+
+  deleteSharedLinkWithDocRef(docRef: string) {
+    return this.shareService.deleteItemsWithDocRef(this.dbPath, docRef);
+  }
+
+  deleteSharedLinksWithDocRef(docRefs: string[]) {
+    const promises = docRefs.map((docRef) => {
+      this.deleteSharedLinkWithDocRef(docRef);
+    });
+    return Promise.all(promises);
+  }
 }
