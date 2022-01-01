@@ -17,6 +17,13 @@ export class ShareLinkService {
     );
   }
 
+  shareLinksWithRecipients(linkRefs: string[], recipientRefs: string[]) {
+    const promises = linkRefs.map((linkRef) =>
+      this.shareLinkWithRecipients(linkRef, recipientRefs)
+    );
+    return Promise.all(promises);
+  }
+
   getUniqueSharedLinkRefs() {
     return this.shareService.getUniqueSharedItemRefs(this.dbPath);
   }
