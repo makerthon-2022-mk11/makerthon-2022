@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { serverTimestamp, where } from '@angular/fire/firestore';
+import { doc, serverTimestamp, where } from '@angular/fire/firestore';
 import { ShareFormData, SharePostData } from '../types/share.types';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
@@ -50,6 +50,10 @@ export class ShareService {
       .getSnapshotChanges(dbPath, () =>
         where('senderRef', '==', this.userService.docId)
       )
-      .then((snapshot) => snapshot.docs.map((doc) => doc.data().itemRef));
+      .then((snapshot) =>
+        snapshot.docs
+          .filter((doc) => doc.data().recipientRef != this.userService.docId)
+          .map((doc) => doc.data().itemRef)
+      );
   }
 }
