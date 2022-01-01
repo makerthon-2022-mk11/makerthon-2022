@@ -4,7 +4,6 @@ export const routePaths = {
   PROFILE: 'profile',
   RESET_PASSWORD: 'reset-password',
   SHARED_COLLECTION: 'shared-collection',
-  SHARED_COLLECTION_ALL: 'all',
   SHARED_COLLECTION_IMAGES: 'images',
   SHARED_COLLECTION_LINKS: 'links',
   SHARED_COLLECTION_TEXTS: 'texts',

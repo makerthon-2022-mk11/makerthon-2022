@@ -10,13 +10,6 @@ const routes: Routes = [
     component: SharedCollectionPage,
     children: [
       {
-        path: routePaths.SHARED_COLLECTION_ALL,
-        loadChildren: () =>
-          import('./shared-all/shared-all.module').then(
-            (m) => m.SharedAllPageModule
-          ),
-      },
-      {
         path: routePaths.SHARED_COLLECTION_IMAGES,
         loadChildren: () =>
           import('./shared-images/shared-images.module').then(
@@ -39,7 +32,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: routePaths.SHARED_COLLECTION_ALL,
+        redirectTo: routePaths.SHARED_COLLECTION_IMAGES,
         pathMatch: 'full',
       },
     ],
