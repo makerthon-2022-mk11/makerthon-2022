@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { RouterService } from 'src/app/services/router.service';
+import { ShareTextService } from 'src/app/services/share-text.service';
 import { TextService } from 'src/app/services/text.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
-import { TextData, TextSelectData } from 'src/app/types/text.types';
+import { TextSelectData } from 'src/app/types/text.types';
+import { createModal as createSendModal } from 'src/app/utils/send.util';
 
 @Component({
   selector: 'app-shared-texts',
@@ -14,7 +18,10 @@ export class SharedTextsPage implements OnInit {
   _textDatas: TextSelectData[];
 
   constructor(
+    private modalCtrl: ModalController,
+    private shareTextService: ShareTextService,
     private textService: TextService,
+    private toastService: ToastService,
     private userService: UserService,
     private routerService: RouterService
   ) {
@@ -51,5 +58,37 @@ export class SharedTextsPage implements OnInit {
     }
 
     return this._textDatas;
+  }
+
+  onShare() {
+    this.openModal();
+  }
+
+  async openModal() {
+    const modal = await createSendModal(this.modalCtrl);
+
+    modal.onDidDismiss().then((event) => {
+      const recipientIds: string[] = event?.data;
+      if (recipientIds && recipientIds.length > 0) {
+        const textIds = this.textDatas
+          .filter((textData) => textData.isSelected)
+          .map((textData) => textData.docId);
+
+        this.shareTextService
+          .shareTextsWithRecipients(textIds, recipientIds)
+          .then(() => {
+            this.toastService.presentSuccessToast(
+              'Successfully shared your texts'
+            );
+          })
+          .catch(() => {
+            this.toastService.presentSuccessToast(
+              'There was an error sharing your texts. Please try again later'
+            );
+          });
+      }
+    });
+
+    await modal.present();
   }
 }

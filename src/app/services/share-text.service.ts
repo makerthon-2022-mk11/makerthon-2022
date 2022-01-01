@@ -17,6 +17,13 @@ export class ShareTextService {
     );
   }
 
+  shareTextsWithRecipients(textRefs: string[], recipientRefs: string[]) {
+    const promises = textRefs.map((textRef) =>
+      this.shareTextWithRecipients(textRef, recipientRefs)
+    );
+    return Promise.all(promises);
+  }
+
   getUniqueSharedTextRefs() {
     return this.shareService.getUniqueSharedItemRefs(this.dbPath);
   }
