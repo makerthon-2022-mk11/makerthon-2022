@@ -50,10 +50,18 @@ export class ShareService {
       .getSnapshotChanges(dbPath, () =>
         where('senderRef', '==', this.userService.docId)
       )
-      .then((snapshot) =>
-        snapshot.docs
-          .filter((doc) => doc.data().recipientRef != this.userService.docId)
-          .map((doc) => doc.data().itemRef)
-      );
+      .then((snapshot) => {
+        const docs = snapshot.docs.filter(
+          (doc) => doc.data().recipientRef != this.userService.docId
+        );
+
+        docs.sort(
+          (firstDoc, secondDoc) =>
+            secondDoc.data().createdAt.seconds -
+            firstDoc.data().createdAt.seconds
+        );
+
+        return docs.map((doc) => doc.data().itemRef);
+      });
   }
 }
