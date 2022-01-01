@@ -92,4 +92,26 @@ export class SharedTextsPage implements OnInit {
 
     await modal.present();
   }
+
+  onDelete() {
+    const textIds = this.textDatas
+      .filter((textData) => textData.isSelected)
+      .map((textData) => textData.docId);
+
+    if (textIds.length > 0) {
+      this.shareTextService
+        .deleteShareTextsWithDocRef(textIds)
+        .then(() => {
+          this.toastService.presentSuccessToast(
+            'Successfully deleted your texts'
+          );
+          this.isSelectableMode = false;
+        })
+        .catch(() => {
+          this.toastService.presentErrorToast(
+            'There was an error deleting your texts. Please try again later'
+          );
+        });
+    }
+  }
 }

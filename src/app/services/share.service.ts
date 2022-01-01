@@ -24,6 +24,10 @@ export class ShareService {
     return this.storeService.post(dbPath, postData);
   }
 
+  delete(dbPath: string, docId: string) {
+    return this.storeService.delete(dbPath, docId);
+  }
+
   shareItemWithRecipients(
     dbPath: string,
     itemRef: string,
@@ -43,6 +47,18 @@ export class ShareService {
     return this.getSharedItemRefs(dbPath).then((docIds) => [
       ...new Set(docIds),
     ]);
+  }
+
+  deleteItemsWithDocRef(dbPath: string, docRef: string) {
+    return this.storeService
+      .getSnapshotChanges(dbPath, () => where('itemRef', '==', docRef))
+      .then((snapshot) => {
+        const promises = snapshot.forEach((docData) => {
+          this.delete(dbPath, docData.id);
+        });
+
+        return promises;
+      });
   }
 
   private getSharedItemRefs(dbPath: string) {

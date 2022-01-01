@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   DocumentData,
   documentId,
@@ -75,5 +76,10 @@ export class StoreService {
   update(path: string, updateData: any, docId: string): Promise<void> {
     const docRef = doc(this.firestore, path, docId);
     return updateDoc(docRef, updateData);
+  }
+
+  delete(path: string, docId: string): Promise<void> {
+    const docRef = doc(this.firestore, path, docId);
+    return deleteDoc(docRef);
   }
 }
