@@ -7,6 +7,7 @@ import {
   ImageData,
 } from '../types/image.types';
 import { UploadData } from '../types/storage.types';
+import { ShareImageService } from './share-image.service';
 import { StorageService } from './storage.service';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
@@ -18,6 +19,7 @@ export class ImageService {
   dbPath = 'images';
 
   constructor(
+    private shareImageService: ShareImageService,
     private storageService: StorageService,
     private storeService: StoreService,
     private userService: UserService
@@ -57,5 +59,27 @@ export class ImageService {
     );
 
     return { ...imageData, docId: doc.id, downloadUrl: downloadUrl };
+  }
+
+  async getUniqueSharedImages(): Promise<ImageData[]> {
+    const imageIds: string[] =
+      await this.shareImageService.getUniqueSharedImageRefs();
+
+    const imageDocs = await this.storeService.getDocsByIds(
+      this.dbPath,
+      imageIds
+    );
+
+    const promises = imageDocs.map(async (doc) => ({
+      storageRef: doc.data().storageRef,
+      title: doc.data().title,
+      description: doc.data().description,
+      docId: doc.id,
+      downloadUrl: await this.storageService.getDownloadUrl(
+        doc.data().storageRef
+      ),
+    }));
+
+    return Promise.all(promises);
   }
 }

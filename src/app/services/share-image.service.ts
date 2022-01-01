@@ -16,4 +16,8 @@ export class ShareImageService {
       recipientRefs
     );
   }
+
+  getUniqueSharedImageRefs() {
+    return this.shareService.getUniqueSharedItemRefs(this.dbPath);
+  }
 }

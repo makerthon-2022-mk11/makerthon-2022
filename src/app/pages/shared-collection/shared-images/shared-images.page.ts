@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ImageService } from 'src/app/services/image.service';
+import { RouterService } from 'src/app/services/router.service';
+import { UserService } from 'src/app/services/user.service';
 import { ImageSelectData } from 'src/app/types/image.types';
 
 @Component({
@@ -8,9 +11,20 @@ import { ImageSelectData } from 'src/app/types/image.types';
 })
 export class SharedImagesPage implements OnInit {
   isSelectableMode: boolean = false;
+  hasLoaded: boolean = false;
   _imageDatas: ImageSelectData[];
 
-  constructor() {}
+  constructor(
+    private imageService: ImageService,
+    private routerService: RouterService,
+    private userService: UserService
+  ) {
+    this.routerService.getReloadSubject().subscribe((isReload) => {
+      if (isReload) {
+        this.hasLoaded = false;
+      }
+    });
+  }
 
   ngOnInit() {}
 
@@ -31,6 +45,16 @@ export class SharedImagesPage implements OnInit {
   }
 
   get imageDatas() {
+    if (this.userService.user && !this.hasLoaded) {
+      this.hasLoaded = true;
+      this.imageService.getUniqueSharedImages().then((images) => {
+        this._imageDatas = images.map((image) => ({
+          ...image,
+          isSelected: false,
+        }));
+      });
+    }
+
     return this._imageDatas;
   }
 }

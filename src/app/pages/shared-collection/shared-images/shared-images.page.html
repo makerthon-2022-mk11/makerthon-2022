@@ -6,6 +6,7 @@
       *ngFor="let imageData of imageDatas"
     >
       <h4 *ngIf="hasTitle(imageData)">{{imageData.title}}</h4>
+      <img src="{{imageData.downloadUrl}}" alt="image" />
     </ion-card>
   </ion-list>
 
@@ -19,6 +20,7 @@
 
         <div id="content-container">
           <h4 *ngIf="hasTitle(imageData)">{{imageData.title}}</h4>
+          <img src="{{imageData.downloadUrl}}" alt="image" />
         </div>
       </ion-card>
     </div>
