@@ -1,6 +1,6 @@
 <ion-content>
   <ion-list class="card-container" *ngIf="isSelectableMode">
-    <div *ngFor="let textData of texts">
+    <div *ngFor="let textData of textDatas">
       <ion-card id="selectable-card" (click)="toggleItemIsSelected(textData)">
         <ion-checkbox
           color="dark"
@@ -19,7 +19,7 @@
     <ion-card
       id="normal-card"
       (pressup)="enterSelectMode()"
-      *ngFor="let textData of texts"
+      *ngFor="let textData of textDatas"
     >
       <h4 *ngIf="hasTitle(textData)">{{textData.title}}</h4>
       <p>{{textData.text}}</p>

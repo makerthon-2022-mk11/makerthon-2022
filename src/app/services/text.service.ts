@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { serverTimestamp, where } from '@angular/fire/firestore';
 import { TextData, TextFormData, TextPostData } from '../types/text.types';
+import { ShareTextService } from './share-text.service';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
 
@@ -11,6 +12,7 @@ export class TextService {
   private dbPath = 'texts';
 
   constructor(
+    private shareTextService: ShareTextService,
     private storeService: StoreService,
     private userService: UserService
   ) {}
@@ -32,5 +34,21 @@ export class TextService {
     );
 
     return { ...snapshot.data(), docId: snapshot.id } as TextData;
+  }
+
+  async getUniqueSharedTexts(): Promise<TextData[]> {
+    const textIds: string[] =
+      await this.shareTextService.getUniqueSharedTextRefs();
+
+    return this.storeService
+      .getDocsByIds(this.dbPath, textIds)
+      .then((snapshot) =>
+        snapshot.docs.map((doc) => ({
+          text: doc.data().text,
+          title: doc.data().title,
+          description: doc.data().description,
+          docId: doc.id,
+        }))
+      );
   }
 }

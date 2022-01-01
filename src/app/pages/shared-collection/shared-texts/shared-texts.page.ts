@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TextService } from 'src/app/services/text.service';
+import { UserService } from 'src/app/services/user.service';
 import { TextData, TextSelectData } from 'src/app/types/text.types';
 
 @Component({
@@ -8,54 +10,12 @@ import { TextData, TextSelectData } from 'src/app/types/text.types';
 })
 export class SharedTextsPage implements OnInit {
   isSelectableMode: boolean = false;
-  texts: TextSelectData[] = [
-    {
-      title: 'hello',
-      text: 'A fine sunny day',
-      docId: 'random',
-      isSelected: false,
-    },
-    {
-      title: 'hello',
-      description: 'Chocolate pudding',
-      text: 'I want to eat',
-      docId: 'random',
-      isSelected: false,
-    },
-    { text: 'Random just a little random', docId: 'random', isSelected: false },
-    {
-      title: 'wowow',
-      text: 'A very long text A very long text A very long text A very long text A very long text A very long text A very long text',
-      docId: 'random',
-      isSelected: false,
-    },
-    {
-      title: 'wowow',
-      text: 'A fine sunny day',
-      docId: 'random',
-      isSelected: false,
-    },
-    {
-      title: 'wowow',
-      text: 'A fine sunny day',
-      docId: 'random',
-      isSelected: false,
-    },
-    {
-      title: 'wowow',
-      text: 'A fine sunny day',
-      docId: 'random',
-      isSelected: false,
-    },
-    {
-      title: 'wowow',
-      text: 'A fine sunny day',
-      docId: 'random',
-      isSelected: false,
-    },
-  ];
+  _textDatas: TextSelectData[];
 
-  constructor() {}
+  constructor(
+    private textService: TextService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {}
 
@@ -73,5 +33,15 @@ export class SharedTextsPage implements OnInit {
 
   toggleItemIsSelected(textData: TextSelectData) {
     textData.isSelected = !textData.isSelected;
+  }
+
+  get textDatas() {
+    if (this.userService.user && !this._textDatas) {
+      this.textService.getUniqueSharedTexts().then((texts) => {
+        this._textDatas = texts.map((text) => ({ ...text, isSelected: false }));
+      });
+    }
+
+    return this._textDatas;
   }
 }

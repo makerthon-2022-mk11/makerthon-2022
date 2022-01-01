@@ -4,6 +4,7 @@ import {
   collection,
   doc,
   DocumentData,
+  documentId,
   DocumentReference,
   Firestore,
   getDocs,
@@ -12,6 +13,7 @@ import {
   QueryDocumentSnapshot,
   QuerySnapshot,
   updateDoc,
+  where,
 } from '@angular/fire/firestore';
 import { getRandomInt } from '../utils/random.util';
 
@@ -41,6 +43,12 @@ export class StoreService {
     return this.getSnapshotChanges(path, queryFn).then((snapshot) => {
       return snapshot.size > 0 ? snapshot.docs[0] : null;
     });
+  }
+
+  getDocsByIds(path: string, docIds: string[]) {
+    return this.getSnapshotChanges(path, () =>
+      where(documentId(), 'in', docIds)
+    );
   }
 
   getRandomDoc(path: string, queryFn: () => QueryConstraint) {

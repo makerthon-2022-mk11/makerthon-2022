@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { serverTimestamp } from '@angular/fire/firestore';
+import { serverTimestamp, where } from '@angular/fire/firestore';
 import { ShareFormData, SharePostData } from '../types/share.types';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
@@ -37,5 +37,19 @@ export class ShareService {
     );
 
     return Promise.all(promises);
+  }
+
+  getUniqueSharedItemRefs(dbPath: string) {
+    return this.getSharedItemRefs(dbPath).then((docIds) => [
+      ...new Set(docIds),
+    ]);
+  }
+
+  private getSharedItemRefs(dbPath: string) {
+    return this.storeService
+      .getSnapshotChanges(dbPath, () =>
+        where('senderRef', '==', this.userService.docId)
+      )
+      .then((snapshot) => snapshot.docs.map((doc) => doc.data().itemRef));
   }
 }
