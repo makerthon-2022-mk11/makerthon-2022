@@ -100,7 +100,7 @@ export class SharedTextsPage implements OnInit {
 
     if (textIds.length > 0) {
       this.shareTextService
-        .deleteShareTextsWithDocRef(textIds)
+        .deleteSharedTextsWithDocRef(textIds)
         .then(() => {
           this.toastService.presentSuccessToast(
             'Successfully deleted your texts'

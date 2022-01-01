@@ -97,4 +97,26 @@ export class SharedImagesPage implements OnInit {
 
     await modal.present();
   }
+
+  onDelete() {
+    const imageIds = this.imageDatas
+      .filter((imageData) => imageData.isSelected)
+      .map((imageData) => imageData.docId);
+
+    if (imageIds.length > 0) {
+      this.shareImageService
+        .deleteSharedImagesWithDocRef(imageIds)
+        .then(() => {
+          this.toastService.presentSuccessToast(
+            'Successfully deleted your images'
+          );
+          this.isSelectableMode = false;
+        })
+        .catch(() => {
+          this.toastService.presentErrorToast(
+            'There was an error deleting your images. Please try again later'
+          );
+        });
+    }
+  }
 }
