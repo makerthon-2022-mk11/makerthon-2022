@@ -56,6 +56,6 @@ export class ImageService {
       imageData.storageRef
     );
 
-    return { ...imageData, downloadUrl: downloadUrl };
+    return { ...imageData, docId: doc.id, downloadUrl: downloadUrl };
   }
 }

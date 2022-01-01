@@ -33,7 +33,7 @@ export class LinkService {
       where('creatorRef', '==', this.userService.docId)
     );
 
-    return doc.data() as LinkData;
+    return { ...doc.data(), docId: doc.id } as LinkData;
   }
 
   async getUniqueSharedLinks(): Promise<LinkData[]> {

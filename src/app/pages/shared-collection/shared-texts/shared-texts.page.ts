@@ -27,7 +27,7 @@ export class SharedTextsPage implements OnInit {
 
   ngOnInit() {}
 
-  hasTitle(textData: TextData) {
+  hasTitle(textData: TextSelectData) {
     return textData.title;
   }
 

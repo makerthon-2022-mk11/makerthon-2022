@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ImageSelectData } from 'src/app/types/image.types';
 
 @Component({
   selector: 'app-shared-images',
@@ -6,10 +7,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shared-images.page.scss'],
 })
 export class SharedImagesPage implements OnInit {
+  isSelectableMode: boolean = false;
+  _imageDatas: ImageSelectData[];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  enterSelectMode() {
+    this.isSelectableMode = true;
   }
 
+  exitSelectMode() {
+    this.isSelectableMode = false;
+  }
+
+  hasTitle(imageData: ImageSelectData) {
+    return imageData.title;
+  }
+
+  toggleItemIsSelected(imageData: ImageSelectData) {
+    imageData.isSelected = !imageData.isSelected;
+  }
+
+  get imageDatas() {
+    return this._imageDatas;
+  }
 }

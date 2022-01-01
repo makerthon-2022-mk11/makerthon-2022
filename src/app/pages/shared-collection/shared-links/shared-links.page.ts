@@ -35,7 +35,7 @@ export class SharedLinksPage implements OnInit {
     this.isSelectableMode = false;
   }
 
-  hasTitle(linkData: LinkData) {
+  hasTitle(linkData: LinkSelectData) {
     return linkData.title;
   }
 

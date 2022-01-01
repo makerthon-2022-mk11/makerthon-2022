@@ -17,6 +17,14 @@ export type ImageUploadData = UploadData & {
 
 export type ImageStoreData = ImagePostData;
 
-export type ImageData = ImageStoreData & {
+export type ImageData = {
+  storageRef: string;
+  title?: string;
+  description?: string;
   downloadUrl: string;
+  docId: string;
+};
+
+export type ImageSelectData = ImageData & {
+  isSelected: boolean;
 };
