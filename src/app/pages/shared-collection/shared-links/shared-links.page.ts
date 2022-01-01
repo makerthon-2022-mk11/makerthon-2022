@@ -53,8 +53,8 @@ export class SharedLinksPage implements OnInit {
   get linkDatas() {
     if (this.userService.user && !this._linkDatas) {
       this.linkService.getUniqueSharedLinks().then((links) => {
-        this._linkDatas = links.map((text) => ({
-          ...text,
+        this._linkDatas = links.map((link) => ({
+          ...link,
           isSelected: false,
         }));
       });
@@ -82,6 +82,7 @@ export class SharedLinksPage implements OnInit {
             this.toastService.presentSuccessToast(
               'Successfully shared your links'
             );
+            this.isSelectableMode = false;
           })
           .catch(() => {
             this.toastService.presentSuccessToast(

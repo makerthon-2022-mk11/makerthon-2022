@@ -17,6 +17,13 @@ export class ShareImageService {
     );
   }
 
+  shareImagesWithRecipients(imageRefs: string[], recipientRefs: string[]) {
+    const promises = imageRefs.map((imageRef) =>
+      this.shareImageWithRecipients(imageRef, recipientRefs)
+    );
+    return Promise.all(promises);
+  }
+
   getUniqueSharedImageRefs() {
     return this.shareService.getUniqueSharedItemRefs(this.dbPath);
   }

@@ -80,6 +80,7 @@ export class SharedTextsPage implements OnInit {
             this.toastService.presentSuccessToast(
               'Successfully shared your texts'
             );
+            this.isSelectableMode = false;
           })
           .catch(() => {
             this.toastService.presentSuccessToast(
