@@ -1,4 +1,15 @@
 <ion-content>
+  <ion-list class="card-container" *ngIf="!isSelectableMode">
+    <ion-card
+      id="normal-card"
+      (pressup)="enterSelectMode()"
+      *ngFor="let textData of textDatas"
+    >
+      <h4 *ngIf="hasTitle(textData)">{{textData.title}}</h4>
+      <p>{{textData.text}}</p>
+    </ion-card>
+  </ion-list>
+
   <ion-list class="card-container" *ngIf="isSelectableMode">
     <div *ngFor="let textData of textDatas">
       <ion-card id="selectable-card" (click)="toggleItemIsSelected(textData)">
@@ -14,21 +25,10 @@
       </ion-card>
     </div>
   </ion-list>
-
-  <ion-list class="card-container" *ngIf="!isSelectableMode">
-    <ion-card
-      id="normal-card"
-      (pressup)="enterSelectMode()"
-      *ngFor="let textData of textDatas"
-    >
-      <h4 *ngIf="hasTitle(textData)">{{textData.title}}</h4>
-      <p>{{textData.text}}</p>
-    </ion-card>
-  </ion-list>
 </ion-content>
 
 <div id="button-container" *ngIf="isSelectableMode">
-  <ion-button (click)="exitSelectMode()"> Back </ion-button>
-  <ion-button> Share </ion-button>
-  <ion-button> Delete </ion-button>
+  <ion-button (click)="exitSelectMode()">Back</ion-button>
+  <ion-button>Share</ion-button>
+  <ion-button>Delete</ion-button>
 </div>

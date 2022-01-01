@@ -12,4 +12,13 @@ export type LinkPostData = LinkFormData & {
   updatedAt: FieldValue;
 };
 
-export type LinkData = LinkPostData;
+export type LinkData = {
+  link: string;
+  title?: string;
+  description?: string;
+  docId: string;
+};
+
+export type LinkSelectData = LinkData & {
+  isSelected: boolean;
+};
