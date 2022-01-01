@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterService } from 'src/app/services/router.service';
 import { TextService } from 'src/app/services/text.service';
 import { UserService } from 'src/app/services/user.service';
 import { TextData, TextSelectData } from 'src/app/types/text.types';
@@ -14,8 +15,15 @@ export class SharedTextsPage implements OnInit {
 
   constructor(
     private textService: TextService,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private routerService: RouterService
+  ) {
+    this.routerService.getReloadSubject().subscribe((isReload) => {
+      if (isReload) {
+        this._textDatas = undefined;
+      }
+    });
+  }
 
   ngOnInit() {}
 

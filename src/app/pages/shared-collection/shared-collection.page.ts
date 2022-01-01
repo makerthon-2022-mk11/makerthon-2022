@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterService } from 'src/app/services/router.service';
 import { SharedAllPage } from './shared-all/shared-all.page';
 import { SharedImagesPage } from './shared-images/shared-images.page';
 import { SharedLinksPage } from './shared-links/shared-links.page';
@@ -15,7 +16,11 @@ export class SharedCollectionPage implements OnInit {
   links = SharedLinksPage;
   texts = SharedTextsPage;
 
-  constructor() {}
+  constructor(private routerService: RouterService) {}
 
   ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.routerService.reload();
+  }
 }

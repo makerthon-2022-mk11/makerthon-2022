@@ -40,15 +40,13 @@ export class TextService {
     const textIds: string[] =
       await this.shareTextService.getUniqueSharedTextRefs();
 
-    return this.storeService
-      .getDocsByIds(this.dbPath, textIds)
-      .then((snapshot) =>
-        snapshot.docs.map((doc) => ({
-          text: doc.data().text,
-          title: doc.data().title,
-          description: doc.data().description,
-          docId: doc.id,
-        }))
-      );
+    return this.storeService.getDocsByIds(this.dbPath, textIds).then((docs) =>
+      docs.map((doc) => ({
+        text: doc.data().text,
+        title: doc.data().title,
+        description: doc.data().description,
+        docId: doc.id,
+      }))
+    );
   }
 }

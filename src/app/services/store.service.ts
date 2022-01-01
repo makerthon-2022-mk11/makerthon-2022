@@ -7,6 +7,7 @@ import {
   documentId,
   DocumentReference,
   Firestore,
+  getDoc,
   getDocs,
   query,
   QueryConstraint,
@@ -45,10 +46,14 @@ export class StoreService {
     });
   }
 
+  getDocById(path: string, docId: string) {
+    const docRef = doc(this.firestore, path, docId);
+    return getDoc(docRef);
+  }
+
   getDocsByIds(path: string, docIds: string[]) {
-    return this.getSnapshotChanges(path, () =>
-      where(documentId(), 'in', docIds)
-    );
+    const promises = docIds.map((docId) => this.getDocById(path, docId));
+    return Promise.all(promises);
   }
 
   getRandomDoc(path: string, queryFn: () => QueryConstraint) {
