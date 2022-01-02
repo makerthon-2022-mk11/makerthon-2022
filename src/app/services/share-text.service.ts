@@ -24,6 +24,10 @@ export class ShareTextService {
     return Promise.all(promises);
   }
 
+  getRandomOwnTextRef() {
+    return this.shareService.getRandomOwnItemRef(this.dbPath);
+  }
+
   getUniqueOwnTextRefs() {
     return this.shareService.getUniqueOwnItemRefs(this.dbPath);
   }

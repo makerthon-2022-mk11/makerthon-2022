@@ -47,7 +47,7 @@ export class HomePage implements OnInit {
   knobUrl: string;
   ballUrl: string;
   addButtonUrl: string;
-  isShowingMessage: boolean;
+  isShowingBooster: boolean;
   addButtonState: AddButtonStateEnum;
   booster: BoosterTypeEnum;
   imageData: ImageData;
@@ -68,7 +68,7 @@ export class HomePage implements OnInit {
     this.baseUrl = '../../../assets/images/gacha/base.png';
     this.knobUrl = '../../../assets/images/gacha/knob.png';
     this.addButtonUrl = '../../assets/images/gacha/add-button.png';
-    this.isShowingMessage = false;
+    this.isShowingBooster = false;
     this.addButtonState = AddButtonStateEnum.Down;
   }
 
@@ -77,10 +77,10 @@ export class HomePage implements OnInit {
   }
 
   onClickKnob() {
-    if (!this.isShowingMessage) {
+    if (!this.isShowingBooster) {
       this.setRandomBall();
       this.animateMachine();
-      this.getRandomMessage();
+      this.getRandomBooster();
     }
   }
 
@@ -91,7 +91,7 @@ export class HomePage implements OnInit {
         this.animateMachine(index + 1);
       } else {
         this.machineUrl = this.machineImages[0].src;
-        this.isShowingMessage = true;
+        this.isShowingBooster = true;
       }
     }, 200);
   }
@@ -108,8 +108,8 @@ export class HomePage implements OnInit {
     }
   }
 
-  hideMessage() {
-    this.isShowingMessage = false;
+  hideBooster() {
+    this.isShowingBooster = false;
   }
 
   toggleAddButtonState() {
@@ -124,7 +124,7 @@ export class HomePage implements OnInit {
     this.ballUrl = `../../../assets/images/gacha/gacha-balls/${ballId}.png`;
   }
 
-  getRandomMessage() {
+  getRandomBooster() {
     const collection = getRandomInt(3);
     switch (collection) {
       case 0:

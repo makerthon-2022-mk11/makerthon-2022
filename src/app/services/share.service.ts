@@ -43,6 +43,14 @@ export class ShareService {
     return Promise.all(promises);
   }
 
+  getRandomOwnItemRef(dbPath: string) {
+    return this.storeService
+      .getRandomDoc(dbPath, () =>
+        where('recipientRef', '==', this.userService.docId)
+      )
+      .then((doc) => doc.data().itemRef);
+  }
+
   getUniqueOwnItemRefs(dbPath: string) {
     return this.getOwnItemRefs(dbPath).then((docIds) => [...new Set(docIds)]);
   }
@@ -71,14 +79,6 @@ export class ShareService {
     ]);
   }
 
-  deleteSharedItems(dbPath: string, docRef: string) {
-    return this.storeService
-      .getSnapshotChanges(dbPath, () => where('itemRef', '==', docRef))
-      .then((snapshot) => {
-        snapshot.docs.forEach((doc) => this.delete(dbPath, doc.id));
-      });
-  }
-
   private getSharedItemRefs(dbPath: string) {
     return this.storeService
       .getSnapshotChanges(dbPath, () =>
@@ -96,6 +96,14 @@ export class ShareService {
         );
 
         return docs.map((doc) => doc.data().itemRef);
+      });
+  }
+
+  deleteSharedItems(dbPath: string, docRef: string) {
+    return this.storeService
+      .getSnapshotChanges(dbPath, () => where('itemRef', '==', docRef))
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => this.delete(dbPath, doc.id));
       });
   }
 }

@@ -39,9 +39,8 @@ export class LinkService {
   }
 
   async getRandom(): Promise<LinkData> {
-    const doc = await this.storeService.getRandomDoc(this.dbPath, () =>
-      where('creatorRef', '==', this.userService.docId)
-    );
+    const docId: string = await this.shareLinkService.getRandomOwnLinkRef();
+    const doc = await this.storeService.getDocById(this.dbPath, docId);
 
     return { ...doc.data(), docId: doc.id } as LinkData;
   }

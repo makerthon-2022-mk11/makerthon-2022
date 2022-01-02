@@ -63,10 +63,8 @@ export class ImageService {
   }
 
   async getRandom(): Promise<ImageData> {
-    const doc = await this.storeService.getRandomDoc(this.dbPath, () =>
-      where('creatorRef', '==', this.userService.docId)
-    );
-
+    const docId: string = await this.shareImageService.getRandomOwnImageRef();
+    const doc = await this.storeService.getDocById(this.dbPath, docId);
     const imageData: ImageStoreData = doc.data() as ImageStoreData;
     const downloadUrl: string = await this.storageService.getDownloadUrl(
       imageData.storageRef

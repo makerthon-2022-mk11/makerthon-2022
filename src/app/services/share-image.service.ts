@@ -24,6 +24,10 @@ export class ShareImageService {
     return Promise.all(promises);
   }
 
+  getRandomOwnImageRef() {
+    return this.shareService.getRandomOwnItemRef(this.dbPath);
+  }
+
   getUniqueOwnImageRefs() {
     return this.shareService.getUniqueSharedItemRefs(this.dbPath);
   }
