@@ -36,6 +36,20 @@ export class LinkService {
     return { ...doc.data(), docId: doc.id } as LinkData;
   }
 
+  async getUniqueOwnLinks(): Promise<LinkData[]> {
+    const linkIds: string[] =
+      await this.shareLinkService.getUniqueOwnLinkRefs();
+
+    return this.storeService.getDocsByIds(this.dbPath, linkIds).then((docs) =>
+      docs.map((doc) => ({
+        link: doc.data().link,
+        title: doc.data().title,
+        description: doc.data().description,
+        docId: doc.id,
+      }))
+    );
+  }
+
   async getUniqueSharedLinks(): Promise<LinkData[]> {
     const linkIds: string[] =
       await this.shareLinkService.getUniqueSharedLinkRefs();

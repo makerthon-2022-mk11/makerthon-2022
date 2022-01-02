@@ -24,6 +24,10 @@ export class ShareLinkService {
     return Promise.all(promises);
   }
 
+  getUniqueOwnLinkRefs() {
+    return this.shareService.getUniqueOwnItemRefs(this.dbPath);
+  }
+
   getUniqueSharedLinkRefs() {
     return this.shareService.getUniqueSharedItemRefs(this.dbPath);
   }

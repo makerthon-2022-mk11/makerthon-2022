@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { MyLinksPageRoutingModule } from './my-links-routing.module';
 
 import { MyLinksPage } from './my-links.page';
+import { CollectionListsModule } from 'src/app/components/collection-lists/collection-lists.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    CollectionListsModule,
     FormsModule,
     IonicModule,
-    MyLinksPageRoutingModule
+    MyLinksPageRoutingModule,
   ],
-  declarations: [MyLinksPage]
+  declarations: [MyLinksPage],
 })
 export class MyLinksPageModule {}

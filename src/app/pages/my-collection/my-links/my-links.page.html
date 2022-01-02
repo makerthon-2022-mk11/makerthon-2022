@@ -1,9 +1,7 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>my-links</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
-</ion-content>
+<div id="page">
+  <app-collection-links
+    [(isSelectableMode)]="isSelectableMode"
+    [linkDatas]="linkDatas"
+    (share)="onShare()"
+  ></app-collection-links>
+</div>
