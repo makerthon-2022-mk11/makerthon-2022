@@ -27,7 +27,7 @@ export class SharedLinksPage implements OnInit {
   ) {
     this.routerService.getReloadSubject().subscribe((isReload) => {
       if (isReload) {
-        this._linkDatas = undefined;
+        this.reloadData();
       }
     });
   }
@@ -77,5 +77,32 @@ export class SharedLinksPage implements OnInit {
     });
 
     await modal.present();
+  }
+
+  onDelete() {
+    const linkIds = this.linkDatas
+      .filter((linkData) => linkData.isSelected)
+      .map((linkData) => linkData.docId);
+
+    if (linkIds.length > 0) {
+      this.linkService
+        .deleteMultiple(linkIds)
+        .then(() => {
+          this.toastService.presentSuccessToast(
+            'Successfully deleted your links'
+          );
+          this.isSelectableMode = false;
+          this.reloadData();
+        })
+        .catch(() => {
+          this.toastService.presentErrorToast(
+            'There was an error deleting your links. Please try again later'
+          );
+        });
+    }
+  }
+
+  reloadData() {
+    this._linkDatas = undefined;
   }
 }

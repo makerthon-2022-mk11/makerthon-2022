@@ -31,4 +31,8 @@ export class ShareLinkService {
   getUniqueSharedLinkRefs() {
     return this.shareService.getUniqueSharedItemRefs(this.dbPath);
   }
+
+  deleteSharedLinks(docRef: string) {
+    return this.shareService.deleteSharedItems(this.dbPath, docRef);
+  }
 }

@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  Storage,
+} from '@angular/fire/storage';
 import { uploadBytes } from 'firebase/storage';
 import { UploadData } from '../types/storage.types';
 
@@ -17,5 +22,10 @@ export class StorageService {
   getDownloadUrl(filename: string): Promise<string> {
     const storageRef = ref(this.storage, filename);
     return getDownloadURL(storageRef);
+  }
+
+  delete(filename: string) {
+    const storageRef = ref(this.storage, filename);
+    return deleteObject(storageRef);
   }
 }

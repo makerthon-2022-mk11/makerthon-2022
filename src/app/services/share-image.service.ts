@@ -31,4 +31,8 @@ export class ShareImageService {
   getUniqueSharedImageRefs() {
     return this.shareService.getUniqueSharedItemRefs(this.dbPath);
   }
+
+  deleteSharedImages(docRef: string) {
+    return this.shareService.deleteSharedItems(this.dbPath, docRef);
+  }
 }
