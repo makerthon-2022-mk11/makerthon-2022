@@ -39,11 +39,10 @@ export class TextService {
   }
 
   async getRandom(): Promise<TextData> {
-    const snapshot = await this.storeService.getRandomDoc(this.dbPath, () =>
-      where('creatorRef', '==', this.userService.docId)
-    );
+    const docId: string = await this.shareTextService.getRandomOwnTextRef();
+    const doc = await this.storeService.getDocById(this.dbPath, docId);
 
-    return { ...snapshot.data(), docId: snapshot.id } as TextData;
+    return { ...doc.data(), docId: doc.id } as TextData;
   }
 
   async getUniqueOwnTexts(): Promise<TextData[]> {

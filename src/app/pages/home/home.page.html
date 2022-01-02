@@ -10,20 +10,24 @@
 
   <ion-card id="message" *ngIf="isShowingMessage" [@expand]>
     <ion-avatar><img src="{{ballUrl}}" alt="Gachapon ball" /></ion-avatar>
-    <app-booster-text
-      *ngIf="isBoosterText()"
-      [textData]="textData"
-    ></app-booster-text>
 
-    <app-booster-link
-      *ngIf="isBoosterLink()"
-      [linkData]="linkData"
-    ></app-booster-link>
+    <ion-content id="message-content-container">
+      <app-booster-text
+        *ngIf="isBoosterText()"
+        [textData]="textData"
+      ></app-booster-text>
 
-    <app-booster-image
-      *ngIf="isBoosterImage()"
-      [imageData]="imageData"
-    ></app-booster-image>
+      <app-booster-link
+        *ngIf="isBoosterLink()"
+        [linkData]="linkData"
+      ></app-booster-link>
+
+      <app-booster-image
+        *ngIf="isBoosterImage()"
+        [imageData]="imageData"
+      ></app-booster-image>
+    </ion-content>
+
     <ion-button expand="block" (click)="hideMessage()">Done</ion-button>
   </ion-card>
 

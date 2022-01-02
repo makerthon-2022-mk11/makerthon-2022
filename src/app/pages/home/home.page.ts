@@ -80,7 +80,7 @@ export class HomePage implements OnInit {
     if (!this.isShowingMessage) {
       this.setRandomBall();
       this.animateMachine();
-      this.getRandomMessage();
+      this.getRandomBooster();
     }
   }
 
@@ -124,7 +124,7 @@ export class HomePage implements OnInit {
     this.ballUrl = `../../../assets/images/gacha/gacha-balls/${ballId}.png`;
   }
 
-  getRandomMessage() {
+  getRandomBooster() {
     const collection = getRandomInt(3);
     switch (collection) {
       case 0:
