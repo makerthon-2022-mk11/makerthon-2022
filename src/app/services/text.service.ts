@@ -46,6 +46,20 @@ export class TextService {
     return { ...snapshot.data(), docId: snapshot.id } as TextData;
   }
 
+  async getUniqueOwnTexts(): Promise<TextData[]> {
+    const textIds: string[] =
+      await this.shareTextService.getUniqueOwnTextRefs();
+
+    return this.storeService.getDocsByIds(this.dbPath, textIds).then((docs) =>
+      docs.map((doc) => ({
+        text: doc.data().text,
+        title: doc.data().title,
+        description: doc.data().description,
+        docId: doc.id,
+      }))
+    );
+  }
+
   async getUniqueSharedTexts(): Promise<TextData[]> {
     const textIds: string[] =
       await this.shareTextService.getUniqueSharedTextRefs();

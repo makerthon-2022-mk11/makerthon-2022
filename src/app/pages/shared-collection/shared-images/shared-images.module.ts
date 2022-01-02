@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { SharedImagesPageRoutingModule } from './shared-images-routing.module';
 
 import { SharedImagesPage } from './shared-images.page';
+import { CollectionListsModule } from 'src/app/components/collection-lists/collection-lists.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    CollectionListsModule,
     FormsModule,
     IonicModule,
-    SharedImagesPageRoutingModule
+    SharedImagesPageRoutingModule,
   ],
-  declarations: [SharedImagesPage]
+  declarations: [SharedImagesPage],
 })
 export class SharedImagesPageModule {}

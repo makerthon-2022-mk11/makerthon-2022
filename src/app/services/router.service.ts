@@ -5,13 +5,22 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class RouterService {
-  private reloadSubject = new Subject<boolean>();
+  private _reloadSharedCollectionSubject = new Subject<boolean>();
+  private _reloadMyCollectionSubject = new Subject<boolean>();
 
-  reload() {
-    this.reloadSubject.next(true);
+  reloadMyCollection() {
+    this._reloadMyCollectionSubject.next(true);
   }
 
-  getReloadSubject() {
-    return this.reloadSubject;
+  getReloadMyCollectionSubject() {
+    return this._reloadMyCollectionSubject;
+  }
+
+  reloadSharedCollection() {
+    this._reloadSharedCollectionSubject.next(true);
+  }
+
+  getReloadSharedCollectionSubject() {
+    return this._reloadSharedCollectionSubject;
   }
 }

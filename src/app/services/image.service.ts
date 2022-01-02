@@ -75,6 +75,28 @@ export class ImageService {
     return { ...imageData, docId: doc.id, downloadUrl: downloadUrl };
   }
 
+  async getUniqueOwnImages(): Promise<ImageData[]> {
+    const imageIds: string[] =
+      await this.shareImageService.getUniqueOwnImageRefs();
+
+    const imageDocs = await this.storeService.getDocsByIds(
+      this.dbPath,
+      imageIds
+    );
+
+    const promises = imageDocs.map(async (doc) => ({
+      storageRef: doc.data().storageRef,
+      title: doc.data().title,
+      description: doc.data().description,
+      docId: doc.id,
+      downloadUrl: await this.storageService.getDownloadUrl(
+        doc.data().storageRef
+      ),
+    }));
+
+    return Promise.all(promises);
+  }
+
   async getUniqueSharedImages(): Promise<ImageData[]> {
     const imageIds: string[] =
       await this.shareImageService.getUniqueSharedImageRefs();

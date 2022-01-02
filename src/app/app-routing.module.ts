@@ -51,6 +51,13 @@ const routes: Routes = [
         (m) => m.SharedCollectionPageModule
       ),
   },
+  {
+    path: routePaths.MY_COLLECTION,
+    loadChildren: () =>
+      import('./pages/my-collection/my-collection.module').then(
+        (m) => m.MyCollectionPageModule
+      ),
+  },
 ];
 
 @NgModule({

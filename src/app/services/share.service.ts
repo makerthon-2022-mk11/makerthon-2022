@@ -43,6 +43,28 @@ export class ShareService {
     return Promise.all(promises);
   }
 
+  getUniqueOwnItemRefs(dbPath: string) {
+    return this.getOwnItemRefs(dbPath).then((docIds) => [...new Set(docIds)]);
+  }
+
+  private getOwnItemRefs(dbPath: string) {
+    return this.storeService
+      .getSnapshotChanges(dbPath, () =>
+        where('recipientRef', '==', this.userService.docId)
+      )
+      .then((snapshot) => {
+        const docs = snapshot.docs;
+
+        docs.sort(
+          (firstDoc, secondDoc) =>
+            secondDoc.data().createdAt.seconds -
+            firstDoc.data().createdAt.seconds
+        );
+
+        return docs.map((doc) => doc.data().itemRef);
+      });
+  }
+
   getUniqueSharedItemRefs(dbPath: string) {
     return this.getSharedItemRefs(dbPath).then((docIds) => [
       ...new Set(docIds),

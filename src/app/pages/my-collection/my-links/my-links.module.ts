@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SharedLinksPageRoutingModule } from './shared-links-routing.module';
+import { MyLinksPageRoutingModule } from './my-links-routing.module';
 
-import { SharedLinksPage } from './shared-links.page';
+import { MyLinksPage } from './my-links.page';
 import { CollectionListsModule } from 'src/app/components/collection-lists/collection-lists.module';
 
 @NgModule({
@@ -15,8 +15,8 @@ import { CollectionListsModule } from 'src/app/components/collection-lists/colle
     CollectionListsModule,
     FormsModule,
     IonicModule,
-    SharedLinksPageRoutingModule,
+    MyLinksPageRoutingModule,
   ],
-  declarations: [SharedLinksPage],
+  declarations: [MyLinksPage],
 })
-export class SharedLinksPageModule {}
+export class MyLinksPageModule {}

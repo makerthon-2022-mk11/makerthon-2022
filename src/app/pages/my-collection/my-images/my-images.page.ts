@@ -6,14 +6,17 @@ import { ShareImageService } from 'src/app/services/share-image.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 import { ImageDeleteData, ImageSelectData } from 'src/app/types/image.types';
-import { createDefaultSendModal } from 'src/app/utils/send.util';
+import {
+  createDefaultSendModal,
+  createMyCollectionSendModal,
+} from 'src/app/utils/send.util';
 
 @Component({
-  selector: 'app-shared-images',
-  templateUrl: './shared-images.page.html',
-  styleUrls: ['./shared-images.page.scss'],
+  selector: 'app-my-images',
+  templateUrl: './my-images.page.html',
+  styleUrls: ['./my-images.page.scss'],
 })
-export class SharedImagesPage implements OnInit {
+export class MyImagesPage implements OnInit {
   isSelectableMode: boolean = false;
   hasLoaded: boolean = false;
   _imageDatas: ImageSelectData[];
@@ -26,13 +29,11 @@ export class SharedImagesPage implements OnInit {
     private toastService: ToastService,
     private userService: UserService
   ) {
-    this.routerService
-      .getReloadSharedCollectionSubject()
-      .subscribe((isReload) => {
-        if (isReload) {
-          this.reloadData();
-        }
-      });
+    this.routerService.getReloadMyCollectionSubject().subscribe((isReload) => {
+      if (isReload) {
+        this.reloadData();
+      }
+    });
   }
 
   ngOnInit() {}
@@ -40,7 +41,7 @@ export class SharedImagesPage implements OnInit {
   get imageDatas() {
     if (this.userService.user && !this.hasLoaded) {
       this.hasLoaded = true;
-      this.imageService.getUniqueSharedImages().then((images) => {
+      this.imageService.getUniqueOwnImages().then((images) => {
         this._imageDatas = images.map((image) => ({
           ...image,
           isSelected: false,
@@ -56,7 +57,7 @@ export class SharedImagesPage implements OnInit {
   }
 
   async openModal() {
-    const modal = await createDefaultSendModal(this.modalCtrl);
+    const modal = await createMyCollectionSendModal(this.modalCtrl);
 
     modal.onDidDismiss().then((event) => {
       const recipientIds: string[] = event?.data;

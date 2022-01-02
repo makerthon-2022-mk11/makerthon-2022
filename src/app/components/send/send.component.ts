@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
 import { UserSelectData } from 'src/app/types/user.types';
@@ -9,6 +9,9 @@ import { UserSelectData } from 'src/app/types/user.types';
   styleUrls: ['./send.component.scss'],
 })
 export class SendComponent implements OnInit {
+  @Input()
+  hasMyCollectionRecipient: boolean;
+
   recipients: UserSelectData[];
   filteredRecipients: UserSelectData[];
 
@@ -19,13 +22,15 @@ export class SendComponent implements OnInit {
         firstUser.displayName.localeCompare(secondUser.displayName)
       );
 
-      // Add my collection to the top of the list
-      // Recipient would be the user themself
-      this.recipients.unshift({
-        displayName: 'My collection',
-        docId: userService.docId,
-        isSelected: false,
-      });
+      if (this.hasMyCollectionRecipient) {
+        // Add my collection to the top of the list
+        // Recipient would be the user themself
+        this.recipients.unshift({
+          displayName: 'My collection',
+          docId: userService.docId,
+          isSelected: false,
+        });
+      }
 
       this.filteredRecipients = this.recipients;
     });

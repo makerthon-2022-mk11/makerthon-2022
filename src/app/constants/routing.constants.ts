@@ -1,6 +1,10 @@
 export const routePaths = {
   HOME: 'home',
   LOGIN: 'login',
+  MY_COLLECTION: 'my-collection',
+  MY_COLLECTION_IMAGES: 'images',
+  MY_COLLECTION_LINKS: 'links',
+  MY_COLLECTION_TEXTS: 'texts',
   PROFILE: 'profile',
   RESET_PASSWORD: 'reset-password',
   SHARED_COLLECTION: 'shared-collection',

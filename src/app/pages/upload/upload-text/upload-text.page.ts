@@ -11,7 +11,7 @@ import {
   isEmpty,
   trimInput,
 } from 'src/app/utils/form.util';
-import { createSendModal } from 'src/app/utils/send.util';
+import { createDefaultSendModal } from 'src/app/utils/send.util';
 
 @Component({
   selector: 'app-upload-text',
@@ -61,7 +61,7 @@ export class UploadTextPage implements OnInit {
   }
 
   async openModal() {
-    const modal = await createSendModal(this.modalCtrl);
+    const modal = await createDefaultSendModal(this.modalCtrl);
 
     modal.onDidDismiss().then(async (event) => {
       const recipientIds: string[] = event?.data;

@@ -6,39 +6,40 @@ import { ShareLinkService } from 'src/app/services/share-link.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 import { LinkSelectData } from 'src/app/types/link.types';
-import { createDefaultSendModal } from 'src/app/utils/send.util';
+import {
+  createDefaultSendModal,
+  createMyCollectionSendModal,
+} from 'src/app/utils/send.util';
 
 @Component({
-  selector: 'app-shared-links',
-  templateUrl: './shared-links.page.html',
-  styleUrls: ['./shared-links.page.scss'],
+  selector: 'app-my-links',
+  templateUrl: './my-links.page.html',
+  styleUrls: ['./my-links.page.scss'],
 })
-export class SharedLinksPage implements OnInit {
+export class MyLinksPage implements OnInit {
   isSelectableMode: boolean = false;
   _linkDatas: LinkSelectData[];
 
   constructor(
-    private linkService: LinkService,
     private modalCtrl: ModalController,
+    private linkService: LinkService,
     private routerService: RouterService,
     private shareLinkService: ShareLinkService,
     private toastService: ToastService,
     private userService: UserService
   ) {
-    this.routerService
-      .getReloadSharedCollectionSubject()
-      .subscribe((isReload) => {
-        if (isReload) {
-          this.reloadData();
-        }
-      });
+    this.routerService.getReloadMyCollectionSubject().subscribe((isReload) => {
+      if (isReload) {
+        this.reloadData();
+      }
+    });
   }
 
   ngOnInit() {}
 
   get linkDatas() {
     if (this.userService.user && !this._linkDatas) {
-      this.linkService.getUniqueSharedLinks().then((links) => {
+      this.linkService.getUniqueOwnLinks().then((links) => {
         this._linkDatas = links.map((link) => ({
           ...link,
           isSelected: false,
@@ -53,7 +54,7 @@ export class SharedLinksPage implements OnInit {
   }
 
   async openModal() {
-    const modal = await createDefaultSendModal(this.modalCtrl);
+    const modal = await createMyCollectionSendModal(this.modalCtrl);
 
     modal.onDidDismiss().then((event) => {
       const recipientIds: string[] = event?.data;

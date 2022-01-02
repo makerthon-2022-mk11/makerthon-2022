@@ -6,39 +6,40 @@ import { TextService } from 'src/app/services/text.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 import { TextSelectData } from 'src/app/types/text.types';
-import { createDefaultSendModal } from 'src/app/utils/send.util';
+import {
+  createDefaultSendModal,
+  createMyCollectionSendModal,
+} from 'src/app/utils/send.util';
 
 @Component({
-  selector: 'app-shared-texts',
-  templateUrl: './shared-texts.page.html',
-  styleUrls: ['./shared-texts.page.scss'],
+  selector: 'app-my-texts',
+  templateUrl: './my-texts.page.html',
+  styleUrls: ['./my-texts.page.scss'],
 })
-export class SharedTextsPage implements OnInit {
+export class MyTextsPage implements OnInit {
   isSelectableMode: boolean = false;
   _textDatas: TextSelectData[];
 
   constructor(
     private modalCtrl: ModalController,
+    private routerService: RouterService,
     private shareTextService: ShareTextService,
     private textService: TextService,
     private toastService: ToastService,
-    private userService: UserService,
-    private routerService: RouterService
+    private userService: UserService
   ) {
-    this.routerService
-      .getReloadSharedCollectionSubject()
-      .subscribe((isReload) => {
-        if (isReload) {
-          this.reloadData();
-        }
-      });
+    this.routerService.getReloadMyCollectionSubject().subscribe((isReload) => {
+      if (isReload) {
+        this.reloadData();
+      }
+    });
   }
 
   ngOnInit() {}
 
   get textDatas() {
     if (this.userService.user && !this._textDatas) {
-      this.textService.getUniqueSharedTexts().then((texts) => {
+      this.textService.getUniqueOwnTexts().then((texts) => {
         this._textDatas = texts.map((text) => ({ ...text, isSelected: false }));
       });
     }
@@ -51,7 +52,7 @@ export class SharedTextsPage implements OnInit {
   }
 
   async openModal() {
-    const modal = await createDefaultSendModal(this.modalCtrl);
+    const modal = await createMyCollectionSendModal(this.modalCtrl);
 
     modal.onDidDismiss().then((event) => {
       const recipientIds: string[] = event?.data;
