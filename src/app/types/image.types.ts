@@ -28,3 +28,8 @@ export type ImageData = {
 export type ImageSelectData = ImageData & {
   isSelected: boolean;
 };
+
+export type ImageDeleteData = {
+  storageRef: string;
+  docId: string;
+};

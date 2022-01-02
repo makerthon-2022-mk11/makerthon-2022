@@ -28,6 +28,16 @@ export class LinkService {
     return this.storeService.post(this.dbPath, postData);
   }
 
+  async delete(docId: string) {
+    await this.storeService.delete(this.dbPath, docId);
+    return this.shareLinkService.deleteSharedLinks(docId);
+  }
+
+  async deleteMultiple(docIds: string[]) {
+    const promises = docIds.map((docId) => this.delete(docId));
+    return Promise.all(promises);
+  }
+
   async getRandom(): Promise<LinkData> {
     const doc = await this.storeService.getRandomDoc(this.dbPath, () =>
       where('creatorRef', '==', this.userService.docId)

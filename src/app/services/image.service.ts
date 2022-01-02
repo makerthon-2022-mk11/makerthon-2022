@@ -5,6 +5,7 @@ import {
   ImageUploadData,
   ImageStoreData,
   ImageData,
+  ImageDeleteData,
 } from '../types/image.types';
 import { UploadData } from '../types/storage.types';
 import { ShareImageService } from './share-image.service';
@@ -46,6 +47,19 @@ export class ImageService {
 
   private create(imagePostData: ImagePostData) {
     return this.storeService.post(this.dbPath, imagePostData);
+  }
+
+  async delete(imageDeleteData: ImageDeleteData) {
+    await this.storageService.delete(imageDeleteData.storageRef);
+    await this.storeService.delete(this.dbPath, imageDeleteData.docId);
+    return this.shareImageService.deleteSharedImages(imageDeleteData.docId);
+  }
+
+  async deleteMultiple(imageDeleteDatas: ImageDeleteData[]) {
+    const promises = imageDeleteDatas.map((imageDeleteData) =>
+      this.delete(imageDeleteData)
+    );
+    return Promise.all(promises);
   }
 
   async getRandom(): Promise<ImageData> {

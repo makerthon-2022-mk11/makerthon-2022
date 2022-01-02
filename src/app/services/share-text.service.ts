@@ -27,4 +27,8 @@ export class ShareTextService {
   getUniqueSharedTextRefs() {
     return this.shareService.getUniqueSharedItemRefs(this.dbPath);
   }
+
+  deleteSharedTexts(docRef: string) {
+    return this.shareService.deleteSharedItems(this.dbPath, docRef);
+  }
 }
