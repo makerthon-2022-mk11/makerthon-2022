@@ -49,15 +49,11 @@ export class ShareService {
     ]);
   }
 
-  deleteItemsWithDocRef(dbPath: string, docRef: string) {
+  deleteSharedItems(dbPath: string, docRef: string) {
     return this.storeService
       .getSnapshotChanges(dbPath, () => where('itemRef', '==', docRef))
       .then((snapshot) => {
-        const promises = snapshot.forEach((docData) => {
-          this.delete(dbPath, docData.id);
-        });
-
-        return promises;
+        snapshot.docs.forEach((doc) => this.delete(dbPath, doc.id));
       });
   }
 

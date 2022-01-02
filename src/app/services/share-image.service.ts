@@ -29,7 +29,7 @@ export class ShareImageService {
   }
 
   deleteSharedImageWithDocRef(docRef: string) {
-    return this.shareService.deleteItemsWithDocRef(this.dbPath, docRef);
+    return this.shareService.deleteSharedItems(this.dbPath, docRef);
   }
 
   deleteSharedImagesWithDocRef(docRefs: string[]) {

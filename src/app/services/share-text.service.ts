@@ -28,14 +28,7 @@ export class ShareTextService {
     return this.shareService.getUniqueSharedItemRefs(this.dbPath);
   }
 
-  deleteSharedTextWithDocRef(docRef: string) {
-    return this.shareService.deleteItemsWithDocRef(this.dbPath, docRef);
-  }
-
-  deleteSharedTextsWithDocRef(docRefs: string[]) {
-    const promises = docRefs.map((docRef) => {
-      this.deleteSharedTextWithDocRef(docRef);
-    });
-    return Promise.all(promises);
+  deleteSharedTexts(docRef: string) {
+    return this.shareService.deleteSharedItems(this.dbPath, docRef);
   }
 }

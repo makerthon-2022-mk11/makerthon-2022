@@ -101,8 +101,8 @@ export class SharedLinksPage implements OnInit {
       .map((linkData) => linkData.docId);
 
     if (linkIds.length > 0) {
-      this.shareLinkService
-        .deleteSharedLinksWithDocRef(linkIds)
+      this.linkService
+        .deleteMultiple(linkIds)
         .then(() => {
           this.toastService.presentSuccessToast(
             'Successfully deleted your links'
