@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { FormValidationModule } from '../form-validation/form-validation.module';
+import { ImageComponent } from './image/image.component';
 import { LinkComponent } from './link/link.component';
 import { TextComponent } from './text/text.component';
 
@@ -14,7 +15,7 @@ import { TextComponent } from './text/text.component';
     IonicModule,
     ReactiveFormsModule,
   ],
-  declarations: [LinkComponent, TextComponent],
-  exports: [LinkComponent, TextComponent],
+  declarations: [ImageComponent, LinkComponent, TextComponent],
+  exports: [ImageComponent, LinkComponent, TextComponent],
 })
 export class EditModule {}

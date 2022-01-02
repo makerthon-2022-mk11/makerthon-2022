@@ -3,9 +3,10 @@ import { serverTimestamp, where } from '@angular/fire/firestore';
 import {
   ImagePostData,
   ImageUploadData,
-  ImageStoreData,
   ImageData,
   ImageDeleteData,
+  ImageFormData,
+  ImagePutData,
 } from '../types/image.types';
 import { UploadData } from '../types/storage.types';
 import { ShareImageService } from './share-image.service';
@@ -47,6 +48,15 @@ export class ImageService {
 
   private create(imagePostData: ImagePostData) {
     return this.storeService.post(this.dbPath, imagePostData);
+  }
+
+  async update(imageFormData: ImageFormData, docId: string) {
+    const putData: ImagePutData = {
+      ...imageFormData,
+      updatedAt: serverTimestamp(),
+    };
+
+    return this.storeService.update(this.dbPath, putData, docId);
   }
 
   async delete(imageDeleteData: ImageDeleteData) {
@@ -98,6 +108,7 @@ export class ImageService {
     );
 
     const promises = imageDocs.map(async (doc) => ({
+      creatorRef: doc.data().creatorRef,
       storageRef: doc.data().storageRef,
       title: doc.data().title,
       description: doc.data().description,
@@ -120,6 +131,7 @@ export class ImageService {
     );
 
     const promises = imageDocs.map(async (doc) => ({
+      creatorRef: doc.data().creatorRef,
       storageRef: doc.data().storageRef,
       title: doc.data().title,
       description: doc.data().description,

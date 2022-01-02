@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { ImageService } from 'src/app/services/image.service';
+import { UserService } from 'src/app/services/user.service';
 import { ImageData } from 'src/app/types/image.types';
 
 @Component({
@@ -17,7 +18,8 @@ export class ViewImagePage implements OnInit {
   constructor(
     route: ActivatedRoute,
     private navCtrl: NavController,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private userService: UserService
   ) {
     route.params.subscribe((params) => {
       this.docId = params['id'];
@@ -28,6 +30,10 @@ export class ViewImagePage implements OnInit {
   }
 
   ngOnInit() {}
+
+  isOwner() {
+    return this.imageData?.creatorRef === this.userService?.docId;
+  }
 
   fetchData() {
     this.imageService.get(this.docId).then((data) => (this.imageData = data));

@@ -10,14 +10,23 @@ export type ImagePostData = {
   updatedAt: FieldValue;
 };
 
-export type ImageUploadData = UploadData & {
+export type ImagePutData = {
+  title?: string;
+  description?: string;
+  updatedAt: FieldValue;
+};
+
+export type ImageFormData = {
   title?: string;
   description?: string;
 };
 
+export type ImageUploadData = UploadData & ImageFormData;
+
 export type ImageStoreData = ImagePostData;
 
 export type ImageData = {
+  creatorRef: string;
   storageRef: string;
   title?: string;
   description?: string;
