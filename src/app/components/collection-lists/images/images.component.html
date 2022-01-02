@@ -2,6 +2,7 @@
   <ion-list class="card-container" *ngIf="!isSelectableMode">
     <ion-card
       id="normal-card"
+      (click)="navToView(imageData)"
       (press)="enterSelectMode()"
       (pressup)="enterSelectMode()"
       *ngFor="let imageData of imageDatas"

@@ -62,15 +62,30 @@ export class ImageService {
     return Promise.all(promises);
   }
 
-  async getRandom(): Promise<ImageData> {
+  async get(docId: string) {
+    const doc = await this.storeService.getDocById(this.dbPath, docId);
+    const downloadUrl: string = await this.storageService.getDownloadUrl(
+      doc.data().storageRef
+    );
+    return {
+      ...doc.data(),
+      downloadUrl: downloadUrl,
+      docId: doc.id,
+    } as ImageData;
+  }
+
+  async getRandom() {
     const docId: string = await this.shareImageService.getRandomOwnImageRef();
     const doc = await this.storeService.getDocById(this.dbPath, docId);
-    const imageData: ImageStoreData = doc.data() as ImageStoreData;
     const downloadUrl: string = await this.storageService.getDownloadUrl(
-      imageData.storageRef
+      doc.data().storageRef
     );
 
-    return { ...imageData, docId: doc.id, downloadUrl: downloadUrl };
+    return {
+      ...doc.data(),
+      docId: doc.id,
+      downloadUrl: downloadUrl,
+    } as ImageData;
   }
 
   async getUniqueOwnImages(): Promise<ImageData[]> {

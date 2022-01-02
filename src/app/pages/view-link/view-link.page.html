@@ -6,7 +6,7 @@
         name="chevron-back-outline"
         (click)="goBack()"
       ></ion-icon>
-      <img src="{{ballUrl}}" alt="Gachapon ball" />
+      <img id="icon" src="{{ballUrl}}" alt="Gachapon ball" />
       <span>View link</span>
     </ion-title>
   </ion-toolbar>
@@ -18,7 +18,7 @@
 
     <div *ngIf="hasDescription()">
       <p>Description:</p>
-      {{ linkData?.description }}
+      <p>{{ linkData?.description }}</p>
     </div>
 
     <div>

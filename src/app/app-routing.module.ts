@@ -72,6 +72,13 @@ const routes: Routes = [
         (m) => m.ViewLinkPageModule
       ),
   },
+  {
+    path: `${routePaths.IMAGES}/:id`,
+    loadChildren: () =>
+      import('./pages/view-image/view-image.module').then(
+        (m) => m.ViewImagePageModule
+      ),
+  },
 ];
 
 @NgModule({

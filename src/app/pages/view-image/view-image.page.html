@@ -7,23 +7,24 @@
         (click)="goBack()"
       ></ion-icon>
       <img id="icon" src="{{ballUrl}}" alt="Gachapon ball" />
-      <span>View text</span>
+      <span>View Image</span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div>
-    <h4 *ngIf="hasTitle()">{{ textData?.title }}</h4>
+    <h4 *ngIf="hasTitle()">{{ imageData?.title }}</h4>
 
     <div *ngIf="hasDescription()">
       <p>Description:</p>
-      <p>{{ textData?.description }}</p>
+      <p>{{ imageData?.description }}</p>
     </div>
 
-    <div>
-      <p>Text:</p>
-      <p>{{ textData?.text }}</p>
-    </div>
+    <img
+      *ngIf="hasDownloadUrl()"
+      src="{{imageData?.downloadUrl}}"
+      alt="Image"
+    />
   </div>
 </ion-content>

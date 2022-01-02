@@ -12,7 +12,7 @@ import { LinkData } from 'src/app/types/link.types';
 export class ViewLinkPage implements OnInit {
   docId: string;
   linkData: LinkData;
-  ballUrl = `../../../assets/images/gacha/gacha-balls/2.png`;
+  ballUrl = `../../../assets/images/gacha/gacha-balls/1.png`;
 
   constructor(
     route: ActivatedRoute,

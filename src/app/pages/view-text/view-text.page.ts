@@ -12,7 +12,7 @@ import { TextData } from 'src/app/types/text.types';
 export class ViewTextPage implements OnInit {
   docId: string;
   textData: TextData;
-  ballUrl = `../../../assets/images/gacha/gacha-balls/1.png`;
+  ballUrl = `../../../assets/images/gacha/gacha-balls/0.png`;
 
   constructor(
     route: ActivatedRoute,
