@@ -13,7 +13,7 @@ import {
   isEmpty,
   trimInput,
 } from 'src/app/utils/form.util';
-import { createSendModal } from 'src/app/utils/send.util';
+import { createDefaultSendModal } from 'src/app/utils/send.util';
 import { v4 } from 'uuid';
 
 @Component({
@@ -88,7 +88,7 @@ export class UploadImagePage implements OnInit {
   }
 
   async openModal() {
-    const modal = await createSendModal(this.modalCtrl);
+    const modal = await createDefaultSendModal(this.modalCtrl);
 
     modal.onDidDismiss().then(async (event) => {
       const recipientIds: string[] = event?.data;

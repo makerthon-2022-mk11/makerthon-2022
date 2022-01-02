@@ -6,7 +6,7 @@ import { ShareLinkService } from 'src/app/services/share-link.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 import { LinkSelectData } from 'src/app/types/link.types';
-import { createSendModal } from 'src/app/utils/send.util';
+import { createDefaultSendModal } from 'src/app/utils/send.util';
 
 @Component({
   selector: 'app-shared-links',
@@ -53,7 +53,7 @@ export class SharedLinksPage implements OnInit {
   }
 
   async openModal() {
-    const modal = await createSendModal(this.modalCtrl);
+    const modal = await createDefaultSendModal(this.modalCtrl);
 
     modal.onDidDismiss().then((event) => {
       const recipientIds: string[] = event?.data;

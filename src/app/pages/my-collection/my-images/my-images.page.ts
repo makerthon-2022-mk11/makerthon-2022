@@ -6,7 +6,10 @@ import { ShareImageService } from 'src/app/services/share-image.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 import { ImageDeleteData, ImageSelectData } from 'src/app/types/image.types';
-import { createSendModal } from 'src/app/utils/send.util';
+import {
+  createDefaultSendModal,
+  createMyCollectionSendModal,
+} from 'src/app/utils/send.util';
 
 @Component({
   selector: 'app-my-images',
@@ -54,7 +57,7 @@ export class MyImagesPage implements OnInit {
   }
 
   async openModal() {
-    const modal = await createSendModal(this.modalCtrl);
+    const modal = await createMyCollectionSendModal(this.modalCtrl);
 
     modal.onDidDismiss().then((event) => {
       const recipientIds: string[] = event?.data;

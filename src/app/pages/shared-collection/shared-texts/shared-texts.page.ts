@@ -6,7 +6,7 @@ import { TextService } from 'src/app/services/text.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 import { TextSelectData } from 'src/app/types/text.types';
-import { createSendModal } from 'src/app/utils/send.util';
+import { createDefaultSendModal } from 'src/app/utils/send.util';
 
 @Component({
   selector: 'app-shared-texts',
@@ -51,7 +51,7 @@ export class SharedTextsPage implements OnInit {
   }
 
   async openModal() {
-    const modal = await createSendModal(this.modalCtrl);
+    const modal = await createDefaultSendModal(this.modalCtrl);
 
     modal.onDidDismiss().then((event) => {
       const recipientIds: string[] = event?.data;
