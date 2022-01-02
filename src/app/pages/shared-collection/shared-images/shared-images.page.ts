@@ -26,11 +26,13 @@ export class SharedImagesPage implements OnInit {
     private toastService: ToastService,
     private userService: UserService
   ) {
-    this.routerService.getReloadSubject().subscribe((isReload) => {
-      if (isReload) {
-        this.reloadData();
-      }
-    });
+    this.routerService
+      .getReloadSharedCollectionSubject()
+      .subscribe((isReload) => {
+        if (isReload) {
+          this.reloadData();
+        }
+      });
   }
 
   ngOnInit() {}

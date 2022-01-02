@@ -25,11 +25,13 @@ export class SharedTextsPage implements OnInit {
     private userService: UserService,
     private routerService: RouterService
   ) {
-    this.routerService.getReloadSubject().subscribe((isReload) => {
-      if (isReload) {
-        this.reloadData();
-      }
-    });
+    this.routerService
+      .getReloadSharedCollectionSubject()
+      .subscribe((isReload) => {
+        if (isReload) {
+          this.reloadData();
+        }
+      });
   }
 
   ngOnInit() {}

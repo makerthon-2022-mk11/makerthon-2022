@@ -19,6 +19,6 @@ export class SharedCollectionPage implements OnInit {
   ngOnInit() {}
 
   ionViewWillEnter() {
-    this.routerService.reload();
+    this.routerService.reloadSharedCollection();
   }
 }

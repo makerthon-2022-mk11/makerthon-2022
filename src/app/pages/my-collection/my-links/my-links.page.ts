@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { LinkService } from 'src/app/services/link.service';
+import { RouterService } from 'src/app/services/router.service';
 import { ShareLinkService } from 'src/app/services/share-link.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
@@ -19,10 +20,17 @@ export class MyLinksPage implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private linkService: LinkService,
+    private routerService: RouterService,
     private shareLinkService: ShareLinkService,
     private toastService: ToastService,
     private userService: UserService
-  ) {}
+  ) {
+    this.routerService.getReloadMyCollectionSubject().subscribe((isReload) => {
+      if (isReload) {
+        this.reloadData();
+      }
+    });
+  }
 
   ngOnInit() {}
 

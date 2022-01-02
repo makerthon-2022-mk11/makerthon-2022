@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterService } from 'src/app/services/router.service';
 import { MyImagesPage } from './my-images/my-images.page';
 import { MyLinksPage } from './my-links/my-links.page';
 import { MyTextsPage } from './my-texts/my-texts.page';
@@ -13,7 +14,11 @@ export class MyCollectionPage implements OnInit {
   links = MyLinksPage;
   texts = MyTextsPage;
 
-  constructor() {}
+  constructor(private routerService: RouterService) {}
 
   ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.routerService.reloadMyCollection();
+  }
 }

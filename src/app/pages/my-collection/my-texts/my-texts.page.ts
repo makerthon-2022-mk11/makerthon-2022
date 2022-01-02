@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { RouterService } from 'src/app/services/router.service';
 import { ShareTextService } from 'src/app/services/share-text.service';
 import { TextService } from 'src/app/services/text.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -18,11 +19,18 @@ export class MyTextsPage implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
+    private routerService: RouterService,
     private shareTextService: ShareTextService,
     private textService: TextService,
     private toastService: ToastService,
     private userService: UserService
-  ) {}
+  ) {
+    this.routerService.getReloadMyCollectionSubject().subscribe((isReload) => {
+      if (isReload) {
+        this.reloadData();
+      }
+    });
+  }
 
   ngOnInit() {}
 
