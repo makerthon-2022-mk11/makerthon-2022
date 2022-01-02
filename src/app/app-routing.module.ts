@@ -59,10 +59,17 @@ const routes: Routes = [
       ),
   },
   {
-    path: routePaths.VIEW_TEXT,
+    path: `${routePaths.TEXTS}/:id`,
     loadChildren: () =>
       import('./pages/view-text/view-text.module').then(
         (m) => m.ViewTextPageModule
+      ),
+  },
+  {
+    path: `${routePaths.LINKS}/:id`,
+    loadChildren: () =>
+      import('./pages/view-link/view-link.module').then(
+        (m) => m.ViewLinkPageModule
       ),
   },
 ];

@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { routePaths } from 'src/app/constants/routing.constants';
 import { LinkSelectData } from 'src/app/types/link.types';
 
 @Component({
@@ -22,7 +24,7 @@ export class LinksComponent implements OnInit {
   @Output()
   delete: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
@@ -54,5 +56,9 @@ export class LinksComponent implements OnInit {
 
   updateIsSelectableMode() {
     this.isSelectableModeChange.emit(this.isSelectableMode);
+  }
+
+  navToView(linkData: LinkSelectData) {
+    this.router.navigateByUrl(`${routePaths.LINKS}/${linkData.docId}`);
   }
 }

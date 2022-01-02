@@ -38,6 +38,11 @@ export class LinkService {
     return Promise.all(promises);
   }
 
+  async get(docId: string) {
+    const doc = await this.storeService.getDocById(this.dbPath, docId);
+    return { ...doc.data(), docId: doc.id } as LinkData;
+  }
+
   async getRandom(): Promise<LinkData> {
     const docId: string = await this.shareLinkService.getRandomOwnLinkRef();
     const doc = await this.storeService.getDocById(this.dbPath, docId);

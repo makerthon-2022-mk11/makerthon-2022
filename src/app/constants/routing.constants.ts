@@ -13,9 +13,9 @@ export const routePaths = {
   SHARED_COLLECTION_TEXTS: 'texts',
   SIGNUP: 'signup',
   TEXTS: 'texts',
+  LINKS: 'links',
   UPLOAD: 'upload',
   UPLOAD_IMAGE: 'image',
   UPLOAD_LINK: 'link',
   UPLOAD_TEXT: 'text',
-  VIEW_TEXT: 'texts/:id',
 };
