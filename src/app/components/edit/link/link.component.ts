@@ -20,6 +20,7 @@ export class LinkComponent implements OnInit {
   isSubmitted: boolean;
   errorMsg: string;
   isUploading: boolean;
+  hasLoaded: boolean = false;
   hasSetData: boolean = false;
 
   validations: Validations = {
@@ -83,7 +84,8 @@ export class LinkComponent implements OnInit {
   }
 
   get linkData() {
-    if (this.docId && !this._linkData) {
+    if (this.docId && !this.hasLoaded) {
+      this.hasLoaded = true;
       this.linkService.get(this.docId).then((data) => (this._linkData = data));
     }
     return this._linkData;
@@ -112,7 +114,7 @@ export class LinkComponent implements OnInit {
 
   private setDefault() {
     this.editForm.reset();
-    this._linkData = undefined;
+    this.hasLoaded = false;
     this.hasSetData = false;
     this.isSubmitted = false;
   }

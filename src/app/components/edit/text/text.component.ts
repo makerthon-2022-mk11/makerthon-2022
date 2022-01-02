@@ -20,6 +20,7 @@ export class TextComponent implements OnInit {
   isSubmitted: boolean;
   errorMsg: string;
   isUploading: boolean;
+  hasLoaded: boolean;
   hasSetData: boolean = false;
 
   validations: Validations = {
@@ -87,7 +88,8 @@ export class TextComponent implements OnInit {
   }
 
   get textData() {
-    if (this.docId && !this._textData) {
+    if (this.docId && !this.hasLoaded) {
+      this.hasLoaded = true;
       this.textService.get(this.docId).then((data) => (this._textData = data));
     }
     return this._textData;
@@ -112,7 +114,7 @@ export class TextComponent implements OnInit {
 
   private setDefault() {
     this.editForm.reset();
-    this._textData = undefined;
+    this.hasLoaded = false;
     this.hasSetData = false;
     this.isSubmitted = false;
   }

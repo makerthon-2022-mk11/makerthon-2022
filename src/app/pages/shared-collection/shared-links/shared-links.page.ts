@@ -15,6 +15,7 @@ import { createDefaultSendModal } from 'src/app/utils/send.util';
 })
 export class SharedLinksPage implements OnInit {
   isSelectableMode: boolean = false;
+  hasLoaded: boolean = false;
   _linkDatas: LinkSelectData[];
 
   constructor(
@@ -37,7 +38,8 @@ export class SharedLinksPage implements OnInit {
   ngOnInit() {}
 
   get linkDatas() {
-    if (this.userService.user && !this._linkDatas) {
+    if (this.userService.user && !this.hasLoaded) {
+      this.hasLoaded = true;
       this.linkService.getUniqueSharedLinks().then((links) => {
         this._linkDatas = links.map((link) => ({
           ...link,
@@ -105,6 +107,6 @@ export class SharedLinksPage implements OnInit {
   }
 
   reloadData() {
-    this._linkDatas = undefined;
+    this.hasLoaded = false;
   }
 }

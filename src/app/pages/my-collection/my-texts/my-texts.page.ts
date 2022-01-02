@@ -6,10 +6,7 @@ import { TextService } from 'src/app/services/text.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 import { TextSelectData } from 'src/app/types/text.types';
-import {
-  createDefaultSendModal,
-  createMyCollectionSendModal,
-} from 'src/app/utils/send.util';
+import { createMyCollectionSendModal } from 'src/app/utils/send.util';
 
 @Component({
   selector: 'app-my-texts',
@@ -18,6 +15,7 @@ import {
 })
 export class MyTextsPage implements OnInit {
   isSelectableMode: boolean = false;
+  hasLoaded: boolean = false;
   _textDatas: TextSelectData[];
 
   constructor(
@@ -38,7 +36,8 @@ export class MyTextsPage implements OnInit {
   ngOnInit() {}
 
   get textDatas() {
-    if (this.userService.user && !this._textDatas) {
+    if (this.userService.user && !this.hasLoaded) {
+      this.hasLoaded = true;
       this.textService.getUniqueOwnTexts().then((texts) => {
         this._textDatas = texts.map((text) => ({ ...text, isSelected: false }));
       });
@@ -104,6 +103,6 @@ export class MyTextsPage implements OnInit {
   }
 
   reloadData() {
-    this._textDatas = undefined;
+    this.hasLoaded = false;
   }
 }
