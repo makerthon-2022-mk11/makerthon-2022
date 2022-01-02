@@ -58,6 +58,13 @@ const routes: Routes = [
         (m) => m.MyCollectionPageModule
       ),
   },
+  {
+    path: routePaths.VIEW_TEXT,
+    loadChildren: () =>
+      import('./pages/view-text/view-text.module').then(
+        (m) => m.ViewTextPageModule
+      ),
+  },
 ];
 
 @NgModule({

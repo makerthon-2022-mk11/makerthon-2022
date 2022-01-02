@@ -38,6 +38,11 @@ export class TextService {
     return Promise.all(promises);
   }
 
+  async get(docId: string) {
+    const doc = await this.storeService.getDocById(this.dbPath, docId);
+    return { ...doc.data(), docId: doc.id } as TextData;
+  }
+
   async getRandom(): Promise<TextData> {
     const docId: string = await this.shareTextService.getRandomOwnTextRef();
     const doc = await this.storeService.getDocById(this.dbPath, docId);

@@ -16,4 +16,5 @@ export const routePaths = {
   UPLOAD_IMAGE: 'image',
   UPLOAD_LINK: 'link',
   UPLOAD_TEXT: 'text',
+  VIEW_TEXT: 'texts/:id',
 };
