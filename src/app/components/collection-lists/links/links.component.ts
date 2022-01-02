@@ -19,6 +19,9 @@ export class LinksComponent implements OnInit {
   @Output()
   share: EventEmitter<void> = new EventEmitter<void>();
 
+  @Output()
+  delete: EventEmitter<void> = new EventEmitter<void>();
+
   constructor() {}
 
   ngOnInit() {}
@@ -43,6 +46,10 @@ export class LinksComponent implements OnInit {
 
   onShare() {
     this.share.emit();
+  }
+
+  onDelete() {
+    this.delete.emit();
   }
 
   updateIsSelectableMode() {

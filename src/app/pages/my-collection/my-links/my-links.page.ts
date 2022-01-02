@@ -70,4 +70,31 @@ export class MyLinksPage implements OnInit {
 
     await modal.present();
   }
+
+  onDelete() {
+    const linkIds = this.linkDatas
+      .filter((linkData) => linkData.isSelected)
+      .map((linkData) => linkData.docId);
+
+    if (linkIds.length > 0) {
+      this.linkService
+        .deleteMultiple(linkIds)
+        .then(() => {
+          this.toastService.presentSuccessToast(
+            'Successfully deleted your links'
+          );
+          this.isSelectableMode = false;
+          this.reloadData();
+        })
+        .catch(() => {
+          this.toastService.presentErrorToast(
+            'There was an error deleting your links. Please try again later'
+          );
+        });
+    }
+  }
+
+  reloadData() {
+    this._linkDatas = undefined;
+  }
 }
