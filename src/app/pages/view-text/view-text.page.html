@@ -13,7 +13,9 @@
 </ion-header>
 
 <ion-content>
-  <div>
+  <app-edit-text *ngIf="isOwner()" [docId]="docId"></app-edit-text>
+
+  <div *ngIf="!isOwner()">
     <h4 *ngIf="hasTitle()">{{ textData?.title }}</h4>
 
     <div *ngIf="hasDescription()">

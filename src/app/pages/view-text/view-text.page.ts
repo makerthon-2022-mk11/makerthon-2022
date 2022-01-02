@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { TextService } from 'src/app/services/text.service';
+import { UserService } from 'src/app/services/user.service';
 import { TextData } from 'src/app/types/text.types';
 
 @Component({
@@ -17,7 +18,8 @@ export class ViewTextPage implements OnInit {
   constructor(
     route: ActivatedRoute,
     private navCtrl: NavController,
-    private textService: TextService
+    private textService: TextService,
+    private userService: UserService
   ) {
     route.params.subscribe((params) => {
       this.docId = params['id'];
@@ -28,6 +30,10 @@ export class ViewTextPage implements OnInit {
   }
 
   ngOnInit() {}
+
+  isOwner() {
+    return this.textData?.creatorRef === this.userService?.docId;
+  }
 
   fetchData() {
     this.textService.get(this.docId).then((data) => (this.textData = data));

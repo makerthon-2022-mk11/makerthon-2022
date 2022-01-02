@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { serverTimestamp, where } from '@angular/fire/firestore';
-import { TextData, TextFormData, TextPostData } from '../types/text.types';
+import {
+  TextData,
+  TextFormData,
+  TextPostData,
+  TextPutData,
+} from '../types/text.types';
 import { ShareTextService } from './share-text.service';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
@@ -26,6 +31,15 @@ export class TextService {
     };
 
     return this.storeService.post(this.dbPath, postData);
+  }
+
+  async update(textFormData: TextFormData, docId: string) {
+    const putData: TextPutData = {
+      ...textFormData,
+      updatedAt: serverTimestamp(),
+    };
+
+    return this.storeService.update(this.dbPath, putData, docId);
   }
 
   async delete(docId: string) {
@@ -55,12 +69,13 @@ export class TextService {
       await this.shareTextService.getUniqueOwnTextRefs();
 
     return this.storeService.getDocsByIds(this.dbPath, textIds).then((docs) =>
-      docs.map((doc) => ({
-        text: doc.data().text,
-        title: doc.data().title,
-        description: doc.data().description,
-        docId: doc.id,
-      }))
+      docs.map(
+        (doc) =>
+          ({
+            ...doc.data(),
+            docId: doc.id,
+          } as TextData)
+      )
     );
   }
 
@@ -69,12 +84,13 @@ export class TextService {
       await this.shareTextService.getUniqueSharedTextRefs();
 
     return this.storeService.getDocsByIds(this.dbPath, textIds).then((docs) =>
-      docs.map((doc) => ({
-        text: doc.data().text,
-        title: doc.data().title,
-        description: doc.data().description,
-        docId: doc.id,
-      }))
+      docs.map(
+        (doc) =>
+          ({
+            ...doc.data(),
+            docId: doc.id,
+          } as TextData)
+      )
     );
   }
 }
