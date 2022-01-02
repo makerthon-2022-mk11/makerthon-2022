@@ -6,12 +6,12 @@
 </ion-header>
 
 <ion-content>
-  <div id="overlay" *ngIf="isShowingMessage"></div>
+  <div id="overlay" *ngIf="isShowingBooster"></div>
 
-  <ion-card id="message" *ngIf="isShowingMessage" [@expand]>
+  <ion-card id="booster" *ngIf="isShowingBooster" [@expand]>
     <ion-avatar><img src="{{ballUrl}}" alt="Gachapon ball" /></ion-avatar>
 
-    <ion-content id="message-content-container">
+    <ion-content id="booster-content-container">
       <app-booster-text
         *ngIf="isBoosterText()"
         [textData]="textData"
@@ -28,7 +28,7 @@
       ></app-booster-image>
     </ion-content>
 
-    <ion-button expand="block" (click)="hideMessage()">Done</ion-button>
+    <ion-button expand="block" (click)="hideBooster()">Done</ion-button>
   </ion-card>
 
   <div id="machine-container">
