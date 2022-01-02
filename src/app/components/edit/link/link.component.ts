@@ -1,42 +1,42 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TextService } from 'src/app/services/text.service';
+import { LinkService } from 'src/app/services/link.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Validations } from 'src/app/types/form.types';
-import { TextData, TextFormData } from 'src/app/types/text.types';
+import { LinkData, LinkFormData } from 'src/app/types/link.types';
 import { getSaveButtonText, isEmpty, trimInput } from 'src/app/utils/form.util';
 
 @Component({
-  selector: 'app-edit-text',
-  templateUrl: './text.component.html',
-  styleUrls: ['./text.component.scss'],
+  selector: 'app-edit-link',
+  templateUrl: './link.component.html',
+  styleUrls: ['./link.component.scss'],
 })
-export class TextComponent implements OnInit {
+export class LinkComponent implements OnInit {
   @Input()
   docId: string;
 
   _editForm: FormGroup;
-  _textData: TextData;
+  _linkData: LinkData;
   isSubmitted: boolean;
   errorMsg: string;
   isUploading: boolean;
   hasSetData: boolean = false;
 
   validations: Validations = {
-    text: [
-      { type: 'required', message: 'Text is required' },
-      { type: 'pattern', message: 'Empty text is not allowed' },
+    link: [
+      { type: 'required', message: 'Link is required' },
+      { type: 'pattern', message: 'Empty link is not allowed' },
     ],
   };
 
   constructor(
-    private textService: TextService,
+    private linkService: LinkService,
     private toastService: ToastService
   ) {}
 
   ngOnInit() {
     this._editForm = new FormGroup({
-      text: new FormControl(undefined, [
+      link: new FormControl(undefined, [
         Validators.required,
         Validators.pattern(/(.|\s)*\S(.|\s)*/),
       ]),
@@ -69,41 +69,41 @@ export class TextComponent implements OnInit {
   }
 
   upload() {
-    const text = trimInput(this.controls.text.value);
+    const link = trimInput(this.controls.link.value);
     const title = trimInput(this.controls.title.value);
     const description = trimInput(this.controls.description.value);
 
-    const textFormData: TextFormData = {
-      text: text,
+    const linkFormData: LinkFormData = {
+      link: link,
       title: isEmpty(title) ? undefined : title,
       description: isEmpty(description) ? undefined : description,
     };
 
-    return this.textService.update(textFormData, this.docId);
+    return this.linkService.update(linkFormData, this.docId);
   }
 
-  get saveButtonText() {
-    return getSaveButtonText(this.isUploading);
-  }
-
-  get textData() {
-    if (this.docId && !this._textData) {
-      this.textService.get(this.docId).then((data) => (this._textData = data));
+  get linkData() {
+    if (this.docId && !this._linkData) {
+      this.linkService.get(this.docId).then((data) => (this._linkData = data));
     }
-    return this._textData;
+    return this._linkData;
   }
 
   get editForm() {
-    if (this.textData && !this.hasSetData) {
+    if (this.linkData && !this.hasSetData) {
       this.hasSetData = true;
-      this._editForm.controls.text.setValue(this.textData['text']);
-      this._editForm.controls.title.setValue(this.textData['title']);
+      this._editForm.controls.link.setValue(this.linkData['link']);
+      this._editForm.controls.title.setValue(this.linkData['title']);
       this._editForm.controls.description.setValue(
-        this.textData['description']
+        this.linkData['description']
       );
     }
 
     return this._editForm;
+  }
+
+  get saveButtonText() {
+    return getSaveButtonText(this.isUploading);
   }
 
   private get controls() {
@@ -112,7 +112,7 @@ export class TextComponent implements OnInit {
 
   private setDefault() {
     this.editForm.reset();
-    this._textData = undefined;
+    this._linkData = undefined;
     this.hasSetData = false;
     this.isSubmitted = false;
   }

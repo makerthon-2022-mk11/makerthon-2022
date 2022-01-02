@@ -12,11 +12,16 @@ export type LinkPostData = LinkFormData & {
   updatedAt: FieldValue;
 };
 
+export type LinkPutData = LinkFormData & {
+  updatedAt: FieldValue;
+};
+
 export type LinkData = {
   link: string;
   title?: string;
   description?: string;
   docId: string;
+  creatorRef: string;
 };
 
 export type LinkSelectData = LinkData & {

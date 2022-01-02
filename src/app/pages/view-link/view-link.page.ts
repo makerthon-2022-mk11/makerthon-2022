@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { LinkService } from 'src/app/services/link.service';
+import { UserService } from 'src/app/services/user.service';
 import { LinkData } from 'src/app/types/link.types';
 
 @Component({
@@ -17,7 +18,8 @@ export class ViewLinkPage implements OnInit {
   constructor(
     route: ActivatedRoute,
     private navCtrl: NavController,
-    private linkService: LinkService
+    private linkService: LinkService,
+    private userService: UserService
   ) {
     route.params.subscribe((params) => {
       this.docId = params['id'];
@@ -28,6 +30,10 @@ export class ViewLinkPage implements OnInit {
   }
 
   ngOnInit() {}
+
+  isOwner() {
+    return this.linkData?.creatorRef === this.userService?.docId;
+  }
 
   fetchData() {
     this.linkService.get(this.docId).then((data) => (this.linkData = data));

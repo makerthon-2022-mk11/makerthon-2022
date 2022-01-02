@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { ViewLinkPageRoutingModule } from './view-link-routing.module';
 
 import { ViewLinkPage } from './view-link.page';
+import { EditModule } from 'src/app/components/edit/edit.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    EditModule,
     FormsModule,
     IonicModule,
-    ViewLinkPageRoutingModule
+    ViewLinkPageRoutingModule,
   ],
-  declarations: [ViewLinkPage]
+  declarations: [ViewLinkPage],
 })
 export class ViewLinkPageModule {}
