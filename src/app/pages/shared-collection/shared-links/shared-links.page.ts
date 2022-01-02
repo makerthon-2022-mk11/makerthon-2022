@@ -27,7 +27,7 @@ export class SharedLinksPage implements OnInit {
   ) {
     this.routerService.getReloadSubject().subscribe((isReload) => {
       if (isReload) {
-        this._linkDatas = undefined;
+        this.reloadData();
       }
     });
   }
@@ -108,6 +108,7 @@ export class SharedLinksPage implements OnInit {
             'Successfully deleted your links'
           );
           this.isSelectableMode = false;
+          this.reloadData();
         })
         .catch(() => {
           this.toastService.presentErrorToast(
@@ -115,5 +116,9 @@ export class SharedLinksPage implements OnInit {
           );
         });
     }
+  }
+
+  reloadData() {
+    this._linkDatas = undefined;
   }
 }

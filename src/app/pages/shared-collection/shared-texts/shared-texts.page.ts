@@ -27,7 +27,7 @@ export class SharedTextsPage implements OnInit {
   ) {
     this.routerService.getReloadSubject().subscribe((isReload) => {
       if (isReload) {
-        this._textDatas = undefined;
+        this.reloadData();
       }
     });
   }
@@ -106,6 +106,7 @@ export class SharedTextsPage implements OnInit {
             'Successfully deleted your texts'
           );
           this.isSelectableMode = false;
+          this.reloadData();
         })
         .catch(() => {
           this.toastService.presentErrorToast(
@@ -113,5 +114,9 @@ export class SharedTextsPage implements OnInit {
           );
         });
     }
+  }
+
+  reloadData() {
+    this._textDatas = undefined;
   }
 }

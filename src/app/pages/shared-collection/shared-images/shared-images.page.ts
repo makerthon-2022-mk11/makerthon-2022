@@ -28,7 +28,7 @@ export class SharedImagesPage implements OnInit {
   ) {
     this.routerService.getReloadSubject().subscribe((isReload) => {
       if (isReload) {
-        this.hasLoaded = false;
+        this.reloadData();
       }
     });
   }
@@ -114,6 +114,7 @@ export class SharedImagesPage implements OnInit {
             'Successfully deleted your images'
           );
           this.isSelectableMode = false;
+          this.reloadData();
         })
         .catch(() => {
           this.toastService.presentErrorToast(
@@ -121,5 +122,9 @@ export class SharedImagesPage implements OnInit {
           );
         });
     }
+  }
+
+  reloadData() {
+    this.hasLoaded = false;
   }
 }
