@@ -1,0 +1,31 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-title>
+      <ion-icon
+        id="back"
+        name="chevron-back-outline"
+        (click)="goBack()"
+      ></ion-icon>
+      <img id="icon" src="{{ballUrl}}" alt="Gachapon ball" />
+      <span>View text</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-edit-text *ngIf="isOwner()" [docId]="docId"></app-edit-text>
+
+  <div *ngIf="!isOwner()">
+    <h4 *ngIf="hasTitle()">{{ textData?.title }}</h4>
+
+    <div *ngIf="hasDescription()">
+      <p>Description:</p>
+      <p>{{ textData?.description }}</p>
+    </div>
+
+    <div>
+      <p>Text:</p>
+      <p>{{ textData?.text }}</p>
+    </div>
+  </div>
+</ion-content>

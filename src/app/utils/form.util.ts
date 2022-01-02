@@ -9,3 +9,7 @@ export const isEmpty = (input: string | undefined) => {
 export const getUploadButtonText = (isUploading: boolean) => {
   return isUploading ? 'Uploading...' : 'Upload';
 };
+
+export const getSaveButtonText = (isSaving: boolean) => {
+  return isSaving ? 'Saving...' : 'Save';
+};

@@ -1,5 +1,7 @@
 export const routePaths = {
   HOME: 'home',
+  IMAGES: 'images',
+  LINKS: 'links',
   LOGIN: 'login',
   MY_COLLECTION: 'my-collection',
   MY_COLLECTION_IMAGES: 'images',
@@ -12,6 +14,7 @@ export const routePaths = {
   SHARED_COLLECTION_LINKS: 'links',
   SHARED_COLLECTION_TEXTS: 'texts',
   SIGNUP: 'signup',
+  TEXTS: 'texts',
   UPLOAD: 'upload',
   UPLOAD_IMAGE: 'image',
   UPLOAD_LINK: 'link',

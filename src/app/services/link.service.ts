@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { serverTimestamp, where } from '@angular/fire/firestore';
-import { LinkData, LinkFormData, LinkPostData } from '../types/link.types';
+import {
+  LinkData,
+  LinkFormData,
+  LinkPostData,
+  LinkPutData,
+} from '../types/link.types';
 import { ShareLinkService } from './share-link.service';
 import { StoreService } from './store.service';
 import { UserService } from './user.service';
@@ -28,6 +33,15 @@ export class LinkService {
     return this.storeService.post(this.dbPath, postData);
   }
 
+  async update(linkFormData: LinkFormData, docId: string) {
+    const putData: LinkPutData = {
+      ...linkFormData,
+      updatedAt: serverTimestamp(),
+    };
+
+    return this.storeService.update(this.dbPath, putData, docId);
+  }
+
   async delete(docId: string) {
     await this.storeService.delete(this.dbPath, docId);
     return this.shareLinkService.deleteSharedLinks(docId);
@@ -36,6 +50,11 @@ export class LinkService {
   async deleteMultiple(docIds: string[]) {
     const promises = docIds.map((docId) => this.delete(docId));
     return Promise.all(promises);
+  }
+
+  async get(docId: string) {
+    const doc = await this.storeService.getDocById(this.dbPath, docId);
+    return { ...doc.data(), docId: doc.id } as LinkData;
   }
 
   async getRandom(): Promise<LinkData> {
@@ -50,12 +69,13 @@ export class LinkService {
       await this.shareLinkService.getUniqueOwnLinkRefs();
 
     return this.storeService.getDocsByIds(this.dbPath, linkIds).then((docs) =>
-      docs.map((doc) => ({
-        link: doc.data().link,
-        title: doc.data().title,
-        description: doc.data().description,
-        docId: doc.id,
-      }))
+      docs.map(
+        (doc) =>
+          ({
+            ...doc.data(),
+            docId: doc.id,
+          } as LinkData)
+      )
     );
   }
 
@@ -64,12 +84,13 @@ export class LinkService {
       await this.shareLinkService.getUniqueSharedLinkRefs();
 
     return this.storeService.getDocsByIds(this.dbPath, linkIds).then((docs) =>
-      docs.map((doc) => ({
-        link: doc.data().link,
-        title: doc.data().title,
-        description: doc.data().description,
-        docId: doc.id,
-      }))
+      docs.map(
+        (doc) =>
+          ({
+            ...doc.data(),
+            docId: doc.id,
+          } as LinkData)
+      )
     );
   }
 }

@@ -1,0 +1,37 @@
+<form [formGroup]="editForm" (submit)="onSubmit()" (keyup.enter)="onSubmit()">
+  <ion-item class="input ion-no-padding">
+    <ion-input
+      color="dark"
+      formControlName="title"
+      placeholder="Title (optional)"
+    >
+    </ion-input>
+  </ion-item>
+
+  <ion-item class="input ion-no-padding">
+    <ion-input
+      color="dark"
+      formControlName="description"
+      placeholder="Description (optional)"
+    >
+    </ion-input>
+  </ion-item>
+
+  <ion-button
+    expand="block"
+    type="submit"
+    [disabled]="isUploading || !editForm.dirty"
+  >
+    {{ saveButtonText }}
+  </ion-button>
+
+  <img
+    *ngIf="hasDownloadUrl()"
+    src="{{ imageData?.downloadUrl }}"
+    alt="Image"
+  />
+
+  <div id="errorMsg">
+    <ion-text color="danger" *ngIf="errorMsg">{{ errorMsg }}</ion-text>
+  </div>
+</form>

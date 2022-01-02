@@ -12,11 +12,16 @@ export type TextPostData = TextFormData & {
   updatedAt: FieldValue;
 };
 
+export type TextPutData = TextFormData & {
+  updatedAt: FieldValue;
+};
+
 export type TextData = {
   text: string;
   title?: string;
   description?: string;
   docId: string;
+  creatorRef: string;
 };
 
 export type TextSelectData = TextData & {

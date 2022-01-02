@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { routePaths } from 'src/app/constants/routing.constants';
 import { ImageSelectData } from 'src/app/types/image.types';
 
 @Component({
@@ -22,7 +24,7 @@ export class ImagesComponent implements OnInit {
   @Output()
   delete: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
@@ -54,5 +56,9 @@ export class ImagesComponent implements OnInit {
 
   updateIsSelectableMode() {
     this.isSelectableModeChange.emit(this.isSelectableMode);
+  }
+
+  navToView(imageData: ImageSelectData) {
+    this.router.navigateByUrl(`${routePaths.IMAGES}/${imageData.docId}`);
   }
 }

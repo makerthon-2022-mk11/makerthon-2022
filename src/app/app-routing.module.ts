@@ -58,6 +58,27 @@ const routes: Routes = [
         (m) => m.MyCollectionPageModule
       ),
   },
+  {
+    path: `${routePaths.TEXTS}/:id`,
+    loadChildren: () =>
+      import('./pages/view-text/view-text.module').then(
+        (m) => m.ViewTextPageModule
+      ),
+  },
+  {
+    path: `${routePaths.LINKS}/:id`,
+    loadChildren: () =>
+      import('./pages/view-link/view-link.module').then(
+        (m) => m.ViewLinkPageModule
+      ),
+  },
+  {
+    path: `${routePaths.IMAGES}/:id`,
+    loadChildren: () =>
+      import('./pages/view-image/view-image.module').then(
+        (m) => m.ViewImagePageModule
+      ),
+  },
 ];
 
 @NgModule({

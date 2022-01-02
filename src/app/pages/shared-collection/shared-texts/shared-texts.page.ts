@@ -15,6 +15,7 @@ import { createDefaultSendModal } from 'src/app/utils/send.util';
 })
 export class SharedTextsPage implements OnInit {
   isSelectableMode: boolean = false;
+  hasLoaded: boolean = false;
   _textDatas: TextSelectData[];
 
   constructor(
@@ -37,7 +38,8 @@ export class SharedTextsPage implements OnInit {
   ngOnInit() {}
 
   get textDatas() {
-    if (this.userService.user && !this._textDatas) {
+    if (this.userService.user && !this.hasLoaded) {
+      this.hasLoaded = true;
       this.textService.getUniqueSharedTexts().then((texts) => {
         this._textDatas = texts.map((text) => ({ ...text, isSelected: false }));
       });
@@ -103,6 +105,6 @@ export class SharedTextsPage implements OnInit {
   }
 
   reloadData() {
-    this._textDatas = undefined;
+    this.hasLoaded = false;
   }
 }

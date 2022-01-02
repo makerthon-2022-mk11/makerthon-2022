@@ -6,10 +6,7 @@ import { ShareLinkService } from 'src/app/services/share-link.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 import { LinkSelectData } from 'src/app/types/link.types';
-import {
-  createDefaultSendModal,
-  createMyCollectionSendModal,
-} from 'src/app/utils/send.util';
+import { createMyCollectionSendModal } from 'src/app/utils/send.util';
 
 @Component({
   selector: 'app-my-links',
@@ -18,6 +15,7 @@ import {
 })
 export class MyLinksPage implements OnInit {
   isSelectableMode: boolean = false;
+  hasLoaded: boolean = false;
   _linkDatas: LinkSelectData[];
 
   constructor(
@@ -38,7 +36,8 @@ export class MyLinksPage implements OnInit {
   ngOnInit() {}
 
   get linkDatas() {
-    if (this.userService.user && !this._linkDatas) {
+    if (this.userService.user && !this.hasLoaded) {
+      this.hasLoaded = true;
       this.linkService.getUniqueOwnLinks().then((links) => {
         this._linkDatas = links.map((link) => ({
           ...link,
@@ -106,6 +105,6 @@ export class MyLinksPage implements OnInit {
   }
 
   reloadData() {
-    this._linkDatas = undefined;
+    this.hasLoaded = false;
   }
 }

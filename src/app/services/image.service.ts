@@ -3,9 +3,10 @@ import { serverTimestamp, where } from '@angular/fire/firestore';
 import {
   ImagePostData,
   ImageUploadData,
-  ImageStoreData,
   ImageData,
   ImageDeleteData,
+  ImageFormData,
+  ImagePutData,
 } from '../types/image.types';
 import { UploadData } from '../types/storage.types';
 import { ShareImageService } from './share-image.service';
@@ -49,6 +50,15 @@ export class ImageService {
     return this.storeService.post(this.dbPath, imagePostData);
   }
 
+  async update(imageFormData: ImageFormData, docId: string) {
+    const putData: ImagePutData = {
+      ...imageFormData,
+      updatedAt: serverTimestamp(),
+    };
+
+    return this.storeService.update(this.dbPath, putData, docId);
+  }
+
   async delete(imageDeleteData: ImageDeleteData) {
     await this.storageService.delete(imageDeleteData.storageRef);
     await this.storeService.delete(this.dbPath, imageDeleteData.docId);
@@ -62,15 +72,30 @@ export class ImageService {
     return Promise.all(promises);
   }
 
-  async getRandom(): Promise<ImageData> {
+  async get(docId: string) {
+    const doc = await this.storeService.getDocById(this.dbPath, docId);
+    const downloadUrl: string = await this.storageService.getDownloadUrl(
+      doc.data().storageRef
+    );
+    return {
+      ...doc.data(),
+      downloadUrl: downloadUrl,
+      docId: doc.id,
+    } as ImageData;
+  }
+
+  async getRandom() {
     const docId: string = await this.shareImageService.getRandomOwnImageRef();
     const doc = await this.storeService.getDocById(this.dbPath, docId);
-    const imageData: ImageStoreData = doc.data() as ImageStoreData;
     const downloadUrl: string = await this.storageService.getDownloadUrl(
-      imageData.storageRef
+      doc.data().storageRef
     );
 
-    return { ...imageData, docId: doc.id, downloadUrl: downloadUrl };
+    return {
+      ...doc.data(),
+      docId: doc.id,
+      downloadUrl: downloadUrl,
+    } as ImageData;
   }
 
   async getUniqueOwnImages(): Promise<ImageData[]> {
@@ -83,6 +108,7 @@ export class ImageService {
     );
 
     const promises = imageDocs.map(async (doc) => ({
+      creatorRef: doc.data().creatorRef,
       storageRef: doc.data().storageRef,
       title: doc.data().title,
       description: doc.data().description,
@@ -105,6 +131,7 @@ export class ImageService {
     );
 
     const promises = imageDocs.map(async (doc) => ({
+      creatorRef: doc.data().creatorRef,
       storageRef: doc.data().storageRef,
       title: doc.data().title,
       description: doc.data().description,
