@@ -35,22 +35,6 @@ export class SharedImagesPage implements OnInit {
 
   ngOnInit() {}
 
-  enterSelectMode() {
-    this.isSelectableMode = true;
-  }
-
-  exitSelectMode() {
-    this.isSelectableMode = false;
-  }
-
-  hasTitle(imageData: ImageSelectData) {
-    return imageData.title;
-  }
-
-  toggleItemIsSelected(imageData: ImageSelectData) {
-    imageData.isSelected = !imageData.isSelected;
-  }
-
   get imageDatas() {
     if (this.userService.user && !this.hasLoaded) {
       this.hasLoaded = true;
