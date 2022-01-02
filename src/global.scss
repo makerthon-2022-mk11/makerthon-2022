@@ -28,3 +28,21 @@
 .modal-wrapper {
   background: #0000002b !important;
 }
+
+.alert-title.sc-ion-alert-md {
+  color: var(--ion-color-dark);
+}
+
+.alert-message.sc-ion-alert-md {
+  color: var(--ion-color-light);
+}
+
+.alert-wrapper {
+  .alert-button:nth-child(1) {
+    color: var(--ion-color-light);
+  }
+
+  .alert-button:nth-child(2) {
+    color: var(--ion-color-danger);
+  }
+}

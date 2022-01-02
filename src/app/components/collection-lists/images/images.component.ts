@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { routePaths } from 'src/app/constants/routing.constants';
 import { ImageSelectData } from 'src/app/types/image.types';
 
@@ -24,7 +25,7 @@ export class ImagesComponent implements OnInit {
   @Output()
   delete: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private router: Router) {}
+  constructor(private alertCtrl: AlertController, private router: Router) {}
 
   ngOnInit() {}
 
@@ -50,8 +51,26 @@ export class ImagesComponent implements OnInit {
     this.share.emit();
   }
 
+  showDeleteAlert() {
+    this.alertCtrl
+      .create({
+        header: 'Are you sure?',
+        message: 'This deletes the content for all users, including yourself',
+        buttons: [
+          { text: 'Cancel' },
+          {
+            text: 'Delete',
+            handler: () => this.delete.emit(),
+          },
+        ],
+      })
+      .then((alert) => {
+        alert.present();
+      });
+  }
+
   onDelete() {
-    this.delete.emit();
+    this.showDeleteAlert();
   }
 
   updateIsSelectableMode() {
