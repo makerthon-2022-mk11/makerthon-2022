@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { MyImagesPageRoutingModule } from './my-images-routing.module';
 
 import { MyImagesPage } from './my-images.page';
+import { CollectionListsModule } from 'src/app/components/collection-lists/collection-lists.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    CollectionListsModule,
     FormsModule,
     IonicModule,
-    MyImagesPageRoutingModule
+    MyImagesPageRoutingModule,
   ],
-  declarations: [MyImagesPage]
+  declarations: [MyImagesPage],
 })
 export class MyImagesPageModule {}

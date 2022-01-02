@@ -24,6 +24,10 @@ export class ShareImageService {
     return Promise.all(promises);
   }
 
+  getUniqueOwnImageRefs() {
+    return this.shareService.getUniqueSharedItemRefs(this.dbPath);
+  }
+
   getUniqueSharedImageRefs() {
     return this.shareService.getUniqueSharedItemRefs(this.dbPath);
   }

@@ -1,9 +1,7 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>my-images</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
-</ion-content>
+<div id="page">
+  <app-collection-images
+    [(isSelectableMode)]="isSelectableMode"
+    [imageDatas]="imageDatas"
+    (share)="onShare()"
+  ></app-collection-images>
+</div>
