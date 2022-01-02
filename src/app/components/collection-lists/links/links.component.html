@@ -1,0 +1,35 @@
+<ion-content>
+  <ion-list class="card-container" *ngIf="!isSelectableMode">
+    <ion-card
+      id="normal-card"
+      (press)="enterSelectMode()"
+      (pressup)="enterSelectMode()"
+      *ngFor="let linkData of linkDatas"
+    >
+      <h4 *ngIf="hasTitle(linkData)">{{ linkData.title }}</h4>
+      <p>{{ linkData.link }}</p>
+    </ion-card>
+  </ion-list>
+
+  <ion-list class="card-container" *ngIf="isSelectableMode">
+    <div *ngFor="let linkData of linkDatas">
+      <ion-card id="selectable-card" (click)="toggleItemIsSelected(linkData)">
+        <ion-checkbox
+          color="dark"
+          [checked]="linkData.isSelected"
+        ></ion-checkbox>
+
+        <div id="content-container">
+          <h4 *ngIf="hasTitle(linkData)">{{ linkData.title }}</h4>
+          <div id="link-container">{{ linkData.link }}</div>
+        </div>
+      </ion-card>
+    </div>
+  </ion-list>
+</ion-content>
+
+<div id="button-container" *ngIf="isSelectableMode">
+  <ion-button (click)="exitSelectMode()">Back</ion-button>
+  <ion-button (click)="onShare()">Share</ion-button>
+  <ion-button>Delete</ion-button>
+</div>

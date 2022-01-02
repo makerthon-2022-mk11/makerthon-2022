@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { SharedLinksPageRoutingModule } from './shared-links-routing.module';
 
 import { SharedLinksPage } from './shared-links.page';
+import { CollectionListsModule } from 'src/app/components/collection-lists/collection-lists.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    CollectionListsModule,
     FormsModule,
     IonicModule,
-    SharedLinksPageRoutingModule
+    SharedLinksPageRoutingModule,
   ],
-  declarations: [SharedLinksPage]
+  declarations: [SharedLinksPage],
 })
 export class SharedLinksPageModule {}

@@ -34,22 +34,6 @@ export class SharedLinksPage implements OnInit {
 
   ngOnInit() {}
 
-  enterSelectMode() {
-    this.isSelectableMode = true;
-  }
-
-  exitSelectMode() {
-    this.isSelectableMode = false;
-  }
-
-  hasTitle(linkData: LinkSelectData) {
-    return linkData.title;
-  }
-
-  toggleItemIsSelected(linkData: LinkSelectData) {
-    linkData.isSelected = !linkData.isSelected;
-  }
-
   get linkDatas() {
     if (this.userService.user && !this._linkDatas) {
       this.linkService.getUniqueSharedLinks().then((links) => {

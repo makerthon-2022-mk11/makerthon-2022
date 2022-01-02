@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TextSelectData } from 'src/app/types/text.types';
+import { LinkSelectData } from 'src/app/types/link.types';
 
 @Component({
-  selector: 'app-collection-texts',
-  templateUrl: './texts.component.html',
-  styleUrls: ['./texts.component.scss'],
+  selector: 'app-collection-links',
+  templateUrl: './links.component.html',
+  styleUrls: ['./links.component.scss'],
 })
-export class TextsComponent implements OnInit {
+export class LinksComponent implements OnInit {
   @Input()
   isSelectableMode: boolean;
 
@@ -14,7 +14,7 @@ export class TextsComponent implements OnInit {
   isSelectableModeChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input()
-  textDatas: TextSelectData[];
+  linkDatas: LinkSelectData[];
 
   @Output()
   share: EventEmitter<void> = new EventEmitter<void>();
@@ -33,12 +33,12 @@ export class TextsComponent implements OnInit {
     this.updateIsSelectableMode();
   }
 
-  hasTitle(textData: TextSelectData) {
-    return textData.title;
+  hasTitle(linkData: LinkSelectData) {
+    return linkData.title;
   }
 
-  toggleItemIsSelected(textData: TextSelectData) {
-    textData.isSelected = !textData.isSelected;
+  toggleItemIsSelected(linkData: LinkSelectData) {
+    linkData.isSelected = !linkData.isSelected;
   }
 
   onShare() {
