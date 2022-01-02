@@ -34,22 +34,6 @@ export class SharedTextsPage implements OnInit {
 
   ngOnInit() {}
 
-  hasTitle(textData: TextSelectData) {
-    return textData.title;
-  }
-
-  enterSelectMode() {
-    this.isSelectableMode = true;
-  }
-
-  exitSelectMode() {
-    this.isSelectableMode = false;
-  }
-
-  toggleItemIsSelected(textData: TextSelectData) {
-    textData.isSelected = !textData.isSelected;
-  }
-
   get textDatas() {
     if (this.userService.user && !this._textDatas) {
       this.textService.getUniqueSharedTexts().then((texts) => {

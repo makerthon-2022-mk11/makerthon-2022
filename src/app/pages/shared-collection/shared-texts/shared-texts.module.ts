@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { SharedTextsPageRoutingModule } from './shared-texts-routing.module';
 
 import { SharedTextsPage } from './shared-texts.page';
+import { CollectionListsModule } from 'src/app/components/collection-lists/collection-lists.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    CollectionListsModule,
     FormsModule,
     IonicModule,
-    SharedTextsPageRoutingModule
+    SharedTextsPageRoutingModule,
   ],
-  declarations: [SharedTextsPage]
+  declarations: [SharedTextsPage],
 })
 export class SharedTextsPageModule {}
