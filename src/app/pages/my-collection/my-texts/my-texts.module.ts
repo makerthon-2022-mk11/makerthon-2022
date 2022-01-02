@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { MyTextsPageRoutingModule } from './my-texts-routing.module';
 
 import { MyTextsPage } from './my-texts.page';
+import { CollectionListsModule } from 'src/app/components/collection-lists/collection-lists.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    CollectionListsModule,
     FormsModule,
     IonicModule,
-    MyTextsPageRoutingModule
+    MyTextsPageRoutingModule,
   ],
-  declarations: [MyTextsPage]
+  declarations: [MyTextsPage],
 })
 export class MyTextsPageModule {}

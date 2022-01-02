@@ -1,1 +1,7 @@
-<ion-content> </ion-content>
+<div id="page">
+  <collection-texts
+    [(isSelectableMode)]="isSelectableMode"
+    [textDatas]="textDatas"
+    (share)="onShare()"
+  ></collection-texts>
+</div>

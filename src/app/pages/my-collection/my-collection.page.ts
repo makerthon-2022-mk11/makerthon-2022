@@ -11,7 +11,7 @@ import { MyTextsPage } from './my-texts/my-texts.page';
 export class MyCollectionPage implements OnInit {
   images = MyImagesPage;
   links = MyLinksPage;
-  text = MyTextsPage;
+  texts = MyTextsPage;
 
   constructor() {}
 
