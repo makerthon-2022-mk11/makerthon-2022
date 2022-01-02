@@ -68,4 +68,31 @@ export class MyTextsPage implements OnInit {
 
     await modal.present();
   }
+
+  onDelete() {
+    const textIds = this.textDatas
+      .filter((textData) => textData.isSelected)
+      .map((textData) => textData.docId);
+
+    if (textIds.length > 0) {
+      this.textService
+        .deleteMultiple(textIds)
+        .then(() => {
+          this.toastService.presentSuccessToast(
+            'Successfully deleted your texts'
+          );
+          this.isSelectableMode = false;
+          this.reloadData();
+        })
+        .catch(() => {
+          this.toastService.presentErrorToast(
+            'There was an error deleting your texts. Please try again later'
+          );
+        });
+    }
+  }
+
+  reloadData() {
+    this._textDatas = undefined;
+  }
 }
