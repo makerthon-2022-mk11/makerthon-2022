@@ -5,7 +5,7 @@ import { RouterService } from 'src/app/services/router.service';
 import { ShareImageService } from 'src/app/services/share-image.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
-import { ImageSelectData } from 'src/app/types/image.types';
+import { ImageDeleteData, ImageSelectData } from 'src/app/types/image.types';
 import { createSendModal } from 'src/app/utils/send.util';
 
 @Component({
@@ -99,13 +99,16 @@ export class SharedImagesPage implements OnInit {
   }
 
   onDelete() {
-    const imageIds = this.imageDatas
+    const imageDeleteDatas: ImageDeleteData[] = this.imageDatas
       .filter((imageData) => imageData.isSelected)
-      .map((imageData) => imageData.docId);
+      .map((imageData) => ({
+        storageRef: imageData.storageRef,
+        docId: imageData.docId,
+      }));
 
-    if (imageIds.length > 0) {
-      this.shareImageService
-        .deleteSharedImagesWithDocRef(imageIds)
+    if (imageDeleteDatas.length > 0) {
+      this.imageService
+        .deleteMultiple(imageDeleteDatas)
         .then(() => {
           this.toastService.presentSuccessToast(
             'Successfully deleted your images'

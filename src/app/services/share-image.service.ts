@@ -28,14 +28,7 @@ export class ShareImageService {
     return this.shareService.getUniqueSharedItemRefs(this.dbPath);
   }
 
-  deleteSharedImageWithDocRef(docRef: string) {
+  deleteSharedImages(docRef: string) {
     return this.shareService.deleteSharedItems(this.dbPath, docRef);
-  }
-
-  deleteSharedImagesWithDocRef(docRefs: string[]) {
-    const promises = docRefs.map((docRef) => {
-      this.deleteSharedImageWithDocRef(docRef);
-    });
-    return Promise.all(promises);
   }
 }
