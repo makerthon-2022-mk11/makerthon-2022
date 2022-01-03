@@ -7,16 +7,14 @@
     ></ion-searchbar>
 
     <ion-content id="list-container">
-      <ion-list *ngFor="let recipient of filteredRecipients">
-        <ion-item>
-          <ion-checkbox
-            (ionChange)="toggleRecipientIsSelected(recipient)"
-            [checked]="recipient.isSelected"
-            color="dark"
-          ></ion-checkbox>
-          <ion-text color="dark">{{ recipient.displayName }}</ion-text>
-        </ion-item>
-      </ion-list>
+      <ion-item *ngFor="let recipient of filteredRecipients">
+        <ion-checkbox
+          (ionChange)="toggleRecipientIsSelected(recipient)"
+          [checked]="recipient.isSelected"
+          color="dark"
+        ></ion-checkbox>
+        <ion-text color="dark">{{ recipient.displayName }}</ion-text>
+      </ion-item>
     </ion-content>
 
     <ion-button expand="block" (click)="send()"> Send </ion-button>
