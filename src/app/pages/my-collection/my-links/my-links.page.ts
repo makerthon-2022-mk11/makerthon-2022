@@ -45,6 +45,7 @@ export class MyLinksPage implements OnInit {
         }));
       });
     }
+
     return this._linkDatas;
   }
 

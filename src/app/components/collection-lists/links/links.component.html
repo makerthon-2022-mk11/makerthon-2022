@@ -1,5 +1,5 @@
-<ion-content>
-  <ion-list class="card-container" *ngIf="!isSelectableMode">
+<ion-content id="non-selectable-list" *ngIf="!isSelectableMode">
+  <ion-list class="card-container">
     <ion-card
       id="normal-card"
       (click)="navToView(linkData)"
@@ -11,8 +11,10 @@
       <p>{{ linkData.link }}</p>
     </ion-card>
   </ion-list>
+</ion-content>
 
-  <ion-list class="card-container" *ngIf="isSelectableMode">
+<ion-content id="selectable-list" *ngIf="isSelectableMode">
+  <ion-list class="card-container">
     <div *ngFor="let linkData of linkDatas">
       <ion-card id="selectable-card" (click)="toggleItemIsSelected(linkData)">
         <ion-checkbox

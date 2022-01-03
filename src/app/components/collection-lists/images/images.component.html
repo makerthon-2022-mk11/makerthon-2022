@@ -1,5 +1,5 @@
-<ion-content>
-  <ion-list class="card-container" *ngIf="!isSelectableMode">
+<ion-content id="non-selectable-list" *ngIf="!isSelectableMode">
+  <ion-list class="card-container">
     <ion-card
       id="normal-card"
       (click)="navToView(imageData)"
@@ -11,8 +11,10 @@
       <img src="{{ imageData.downloadUrl }}" alt="image" />
     </ion-card>
   </ion-list>
+</ion-content>
 
-  <ion-list class="card-container" *ngIf="isSelectableMode">
+<ion-content id="selectable-list" *ngIf="isSelectableMode">
+  <ion-list class="card-container">
     <div *ngFor="let imageData of imageDatas">
       <ion-card id="selectable-card" (click)="toggleItemIsSelected(imageData)">
         <ion-checkbox
