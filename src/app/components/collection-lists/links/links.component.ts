@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { routePaths } from 'src/app/constants/routing.constants';
 import { LinkSelectData } from 'src/app/types/link.types';
+import { formatLink } from 'src/app/utils/link.util';
 
 @Component({
   selector: 'app-collection-links',
@@ -79,5 +80,9 @@ export class LinksComponent implements OnInit {
 
   navToView(linkData: LinkSelectData) {
     this.router.navigateByUrl(`${routePaths.LINKS}/${linkData.docId}`);
+  }
+
+  formatLink(link: string) {
+    return formatLink(link);
   }
 }

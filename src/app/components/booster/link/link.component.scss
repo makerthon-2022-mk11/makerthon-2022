@@ -1,3 +1,11 @@
+a {
+  display: inline-block;
+  text-align: justify;
+  text-justify: inter-word;
+  color: var(--ion-color-dark);
+  margin: 0 5% 5% 5%;
+}
+
 div {
   text-align: justify;
   text-justify: inter-word;

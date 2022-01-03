@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import { LinkService } from 'src/app/services/link.service';
 import { UserService } from 'src/app/services/user.service';
 import { LinkData } from 'src/app/types/link.types';
+import { formatLink } from 'src/app/utils/link.util';
 
 @Component({
   selector: 'app-view-link',
@@ -49,5 +50,9 @@ export class ViewLinkPage implements OnInit {
 
   goBack() {
     this.navCtrl.back();
+  }
+
+  formatLink(link: string) {
+    return formatLink(link);
   }
 }
