@@ -29,7 +29,7 @@ export class ShareImageService {
   }
 
   getUniqueOwnImageRefs() {
-    return this.shareService.getUniqueSharedItemRefs(this.dbPath);
+    return this.shareService.getUniqueOwnItemRefs(this.dbPath);
   }
 
   getUniqueSharedImageRefs() {
